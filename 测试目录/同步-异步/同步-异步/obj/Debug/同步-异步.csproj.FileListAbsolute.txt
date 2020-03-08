@@ -1,0 +1,10 @@
+E:\C#练习\同步-异步\同步-异步\bin\Debug\同步-异步.exe.config
+E:\C#练习\同步-异步\同步-异步\bin\Debug\同步-异步.exe
+E:\C#练习\同步-异步\同步-异步\bin\Debug\同步-异步.pdb
+E:\C#练习\同步-异步\同步-异步\obj\Debug\同步-异步.csprojAssemblyReference.cache
+E:\C#练习\同步-异步\同步-异步\obj\Debug\同步_异步.Form1.resources
+E:\C#练习\同步-异步\同步-异步\obj\Debug\同步_异步.Properties.Resources.resources
+E:\C#练习\同步-异步\同步-异步\obj\Debug\同步-异步.csproj.GenerateResource.cache
+E:\C#练习\同步-异步\同步-异步\obj\Debug\同步-异步.csproj.CoreCompileInputs.cache
+E:\C#练习\同步-异步\同步-异步\obj\Debug\同步-异步.exe
+E:\C#练习\同步-异步\同步-异步\obj\Debug\同步-异步.pdb
