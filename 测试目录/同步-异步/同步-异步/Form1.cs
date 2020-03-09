@@ -35,9 +35,9 @@ namespace 同步_异步
 
         private void DoSomethingLong(string name)
         {
-            Console.WriteLine($"########### 方法中开始 {name}{Thread.CurrentThread.ManagedThreadId.ToString("00")} {DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff")}*******");
+            Console.WriteLine($"###########方法中开始 {name}  {Thread.CurrentThread.ManagedThreadId.ToString("00")}  {DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff")}*******");
             Thread.Sleep(2000);
-            Console.WriteLine($"###########方法中结束 {name}{Thread.CurrentThread.ManagedThreadId.ToString("00")} {DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff")} *******");
+            Console.WriteLine($"###########方法中结束 {name}  {Thread.CurrentThread.ManagedThreadId.ToString("00")}  {DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff")} *******");
 
         }
 
@@ -85,7 +85,7 @@ namespace 同步_异步
                 Console.WriteLine(days);
                 Console.WriteLine(days);
                 Console.WriteLine(days);
-            },null);
+            }, null);
             int day = func.EndInvoke(asyncResult);
         }
         private void button4_Click(object sender, EventArgs e)
@@ -183,25 +183,98 @@ namespace 同步_异步
 
         private void button6_Click(object sender, EventArgs e)
         {
-            Console.WriteLine($"Task 开始测试... {Thread.CurrentThread.ManagedThreadId},{DateTime.Now.ToString("HH:mm:ss.fff")}");
-            //{
-            //    Task task = new Task(() =>
-            //   {
-            //       Console.WriteLine($"Task 开启线程... {Thread.CurrentThread.ManagedThreadId},{DateTime.Now.ToString("HH:mm:ss.fff")}");
-            //    //Thread.Sleep(2000);
-            //    Console.WriteLine($"Task 结束线程... {Thread.CurrentThread.ManagedThreadId},{DateTime.Now.ToString("HH:mm:ss.fff")}");
-            //   });
-            //    task.Start();
-            //    //task.RunSynchronously(); //Task 同步
-            //    //Thread.Sleep(5000);
-            //}
-            Task task = Task.Run(()=>
-            {
-                Console.WriteLine($"Task 开启线程... {Thread.CurrentThread.ManagedThreadId},{DateTime.Now.ToString("HH:mm:ss.fff")}");
-                Console.WriteLine($"Task 结束线程... {Thread.CurrentThread.ManagedThreadId},{DateTime.Now.ToString("HH:mm:ss.fff")}");
+            //{ 
+            //    Console.WriteLine($"Task 开始测试... {Thread.CurrentThread.ManagedThreadId},{DateTime.Now.ToString("HH:mm:ss.fff")}");
+            //    //{
+            //    //    Task task = new Task(() =>
+            //    //   {
+            //    //       Console.WriteLine($"Task 开启线程... {Thread.CurrentThread.ManagedThreadId},{DateTime.Now.ToString("HH:mm:ss.fff")}");
+            //    //    //Thread.Sleep(2000);
+            //    //    Console.WriteLine($"Task 结束线程... {Thread.CurrentThread.ManagedThreadId},{DateTime.Now.ToString("HH:mm:ss.fff")}");
+            //    //   });
+            //    //    task.Start();
+            //    //    //task.RunSynchronously(); //Task 同步
+            //    //    //Thread.Sleep(5000);
+            //    //}
+            //    Task task = Task.Run(()=>
+            //    {
+            //        Console.WriteLine($"Task 开启线程... {Thread.CurrentThread.ManagedThreadId},{DateTime.Now.ToString("HH:mm:ss.fff")}");
+            //        Console.WriteLine($"Task 结束线程... {Thread.CurrentThread.ManagedThreadId},{DateTime.Now.ToString("HH:mm:ss.fff")}");
 
-            });
-            Console.WriteLine($"Task 结束测试... {Thread.CurrentThread.ManagedThreadId},{DateTime.Now.ToString("HH:mm:ss.fff")}");
+            //    });
+            //    Console.WriteLine($"Task 结束测试... {Thread.CurrentThread.ManagedThreadId},{DateTime.Now.ToString("HH:mm:ss.fff")}");
+            //}
+            {
+                TaskFactory taskFactory = new TaskFactory();
+                List<Task> tasks = new List<Task>();
+                Console.WriteLine("老师开始讲课");
+                lecture("第一章");
+                lecture("第二章");
+                lecture("第三章");
+                lecture("第四章");
+                lecture("第五章");
+                Console.WriteLine("讲课完毕");
+                Console.WriteLine("开始做作业，需要多个人共同完成。");
+                tasks.Add(taskFactory.StartNew(() => { homework("小明", "美工"); }));
+                tasks.Add(taskFactory.StartNew(() => { homework("小王", "前端"); }));
+                tasks.Add(taskFactory.StartNew(() => { homework("小微", "后台"); }));
+                //Task.WaitAll(tasks.ToArray());
+                //Task.WaitAny(tasks.ToArray());
+                taskFactory.ContinueWhenAll(tasks.ToArray(), t =>
+                 {
+                     Console.WriteLine("做完了，老师点评。。。");
+                 });
+
+
+            }
+        }
+        public void lecture(string str)
+        {
+            Console.WriteLine($"{str} 开始学习。。。 ");
+            long Result = 0;
+            for (int i = 0; i < 1000_000; i++)
+            {
+                Result += i;
+            }
+
+        }
+        public void homework(string name, string work)
+        {
+            Console.WriteLine($"{name},完成{work}");
+            long Result = 0;
+            for (int i = 0; i < 1000_000; i++)
+            {
+                Result += i;
+            }
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            Console.WriteLine("*************Invoke Start*****************");
+            Parallel.Invoke(
+                () => { Console.WriteLine($"Invoke_01  {Thread.CurrentThread.ManagedThreadId}  {DateTime.Now.ToString("HH:mm:ss.fff")}"); },
+                () => { Console.WriteLine($"Invoke_02  {Thread.CurrentThread.ManagedThreadId}  {DateTime.Now.ToString("HH:mm:ss.fff")}"); },
+                () => { Console.WriteLine($"Invoke_03  {Thread.CurrentThread.ManagedThreadId}  {DateTime.Now.ToString("HH:mm:ss.fff")}"); },
+                () => { Console.WriteLine($"Invoke_04  {Thread.CurrentThread.ManagedThreadId}  {DateTime.Now.ToString("HH:mm:ss.fff")}"); });
+            Console.WriteLine("*************Invoke End*****************");
+
+            Console.WriteLine("**************For Start************************");
+            Parallel.For(0, 10, t => { Console.WriteLine($"For  {Thread.CurrentThread.ManagedThreadId}  {DateTime.Now.ToString("HH:mm:ss.fff")}"); });
+            Console.WriteLine("**************For End************************");
+
+            Console.WriteLine("**************Foreach Start************************");
+            Parallel.ForEach(new int[] { 1, 3, 5, 7, 9}, t => { Console.WriteLine($"Foreach  {Thread.CurrentThread.ManagedThreadId}  {DateTime.Now.ToString("HH:mm:ss.fff")}"); });
+            Console.WriteLine("**************Foreach End************************");
+            Console.WriteLine("*************Invoke ParallelOptions Start**********************");
+            ParallelOptions parallelOptions = new ParallelOptions();
+            parallelOptions.MaxDegreeOfParallelism = 3;
+            Parallel.Invoke(parallelOptions,
+                () => { DoSomethingLong("ParallelOptions"); },
+                () => { DoSomethingLong("ParallelOptions");  },
+                () => { DoSomethingLong("ParallelOptions"); },
+                () => { DoSomethingLong("ParallelOptions"); },
+                () => { DoSomethingLong("ParallelOptions"); });
+            Console.WriteLine("*************Invoke ParallelOptions End**********************");
 
         }
     }
