@@ -311,7 +311,68 @@ namespace 同步_异步
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
-                throw;
+            }
+        }
+
+        private void button9_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                CancellationTokenSource cts = new CancellationTokenSource();
+                List<Task> tasks = new List<Task>();
+                for (int i = 0; i < 1000; i++)
+                {
+                    string name = $"线程开始_{i}";
+                    tasks.Add(Task.Run(() =>
+                    {
+                        try
+                        {
+
+                            if (!cts.IsCancellationRequested)
+                            {
+                                Console.WriteLine($"线程开始_{i}, {Thread.CurrentThread.ManagedThreadId} {DateTime.Now.ToString("HH:mm:ss.fff")}");
+                            }
+                            else
+                            {
+                                Console.WriteLine("线程结束");
+                            }
+                            if (name.Equals($"线程开始_10"))
+                            {
+                                throw new Exception("线程_10异常");
+                            }
+                            else if (name.Equals($"线程开始_20"))
+                            {
+                                throw new Exception("线程_20异常");
+                            }
+                            if (!cts.IsCancellationRequested)
+                            {
+                                Console.WriteLine($"线程结束_{i}, {Thread.CurrentThread.ManagedThreadId} {DateTime.Now.ToString("HH:mm:ss.fff")}");
+                            }
+                            else
+                            {
+                                Console.WriteLine("线程结束");
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine(ex.Message);
+                            cts.Cancel();
+                        }
+                    }, cts.Token));
+
+                }
+                Task.WaitAll(tasks.ToArray());
+            }
+            catch (AggregateException aex)
+            {
+                foreach (var ex in aex.InnerExceptions)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+            }
+            catch (Exception ext)
+            {
+                
             }
         }
     }
