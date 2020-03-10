@@ -277,5 +277,42 @@ namespace 同步_异步
             Console.WriteLine("*************Invoke ParallelOptions End**********************");
 
         }
+
+        private void button8_Click(object sender, EventArgs e)
+        {
+            List<Task> tasks = new List<Task>();
+            try
+            {
+                for (int i = 0; i < 1000; i++)
+                {
+                    string name = $"button8_Click_{i}";
+                    tasks.Add(Task.Run(()=> {
+                        Console.WriteLine(name);
+                        if (name.Equals("button8_Click_10"))
+                        {
+                            throw new Exception("button8_Click_10异常");
+                        }
+                        else if (name.Equals("button8_Click_15"))
+                        {
+                            throw new Exception("button8_Click_15异常");
+                        }
+                    }));
+                }
+                Task.WaitAll(tasks.ToArray());
+            }
+            
+            catch (AggregateException aex)
+            {
+                foreach (var ex in aex.InnerExceptions)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                throw;
+            }
+        }
     }
 }

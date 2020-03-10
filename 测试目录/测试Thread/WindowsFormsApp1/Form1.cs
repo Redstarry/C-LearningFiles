@@ -95,7 +95,6 @@ namespace WindowsFormsApp1
             sqlDataAdapter.Fill(dataSet);
             foreach (DataRow row in dataSet.Tables["path"].Rows)
             {
-                
                 string name = row.ItemArray[0].ToString();
                 //Console.WriteLine(Path.GetExtension(name));
                 if (Path.GetExtension(name) == ".mdf")

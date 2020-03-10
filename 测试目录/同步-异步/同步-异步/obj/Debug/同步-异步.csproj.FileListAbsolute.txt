@@ -18,3 +18,11 @@ D:\GitHub\C#Learn\C-LearningFiles\测试目录\同步-异步\同步-异步\obj\D
 D:\GitHub\C#Learn\C-LearningFiles\测试目录\同步-异步\同步-异步\obj\Debug\同步-异步.csproj.CoreCompileInputs.cache
 D:\GitHub\C#Learn\C-LearningFiles\测试目录\同步-异步\同步-异步\obj\Debug\同步-异步.exe
 D:\GitHub\C#Learn\C-LearningFiles\测试目录\同步-异步\同步-异步\obj\Debug\同步-异步.pdb
+F:\GIthub\Cshap\测试目录\同步-异步\同步-异步\bin\Debug\同步-异步.exe.config
+F:\GIthub\Cshap\测试目录\同步-异步\同步-异步\bin\Debug\同步-异步.exe
+F:\GIthub\Cshap\测试目录\同步-异步\同步-异步\bin\Debug\同步-异步.pdb
+F:\GIthub\Cshap\测试目录\同步-异步\同步-异步\obj\Debug\同步_异步.Form1.resources
+F:\GIthub\Cshap\测试目录\同步-异步\同步-异步\obj\Debug\同步_异步.Properties.Resources.resources
+F:\GIthub\Cshap\测试目录\同步-异步\同步-异步\obj\Debug\同步-异步.csproj.GenerateResource.cache
+F:\GIthub\Cshap\测试目录\同步-异步\同步-异步\obj\Debug\同步-异步.exe
+F:\GIthub\Cshap\测试目录\同步-异步\同步-异步\obj\Debug\同步-异步.pdb
