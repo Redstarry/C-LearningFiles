@@ -1,0 +1,6 @@
+F:\C#\Directory\Directory\bin\Debug\Directory.exe.config
+F:\C#\Directory\Directory\bin\Debug\Directory.exe
+F:\C#\Directory\Directory\bin\Debug\Directory.pdb
+F:\C#\Directory\Directory\obj\Debug\Directory.csprojAssemblyReference.cache
+F:\C#\Directory\Directory\obj\Debug\Directory.exe
+F:\C#\Directory\Directory\obj\Debug\Directory.pdb

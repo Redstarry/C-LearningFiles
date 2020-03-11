@@ -1,0 +1,9 @@
+F:\C#完成的项目\HN运维小工具\HN运维小工具\bin\Debug\HN运维小工具.exe.config
+F:\C#完成的项目\HN运维小工具\HN运维小工具\bin\Debug\HN运维小工具.exe
+F:\C#完成的项目\HN运维小工具\HN运维小工具\bin\Debug\HN运维小工具.pdb
+F:\C#完成的项目\HN运维小工具\HN运维小工具\obj\Debug\HN运维小工具.csprojAssemblyReference.cache
+F:\C#完成的项目\HN运维小工具\HN运维小工具\obj\Debug\HN运维小工具.Properties.Resources.resources
+F:\C#完成的项目\HN运维小工具\HN运维小工具\obj\Debug\HN运维小工具.csproj.GenerateResource.cache
+F:\C#完成的项目\HN运维小工具\HN运维小工具\obj\Debug\HN运维小工具.exe
+F:\C#完成的项目\HN运维小工具\HN运维小工具\obj\Debug\HN运维小工具.pdb
+F:\C#完成的项目\HN运维小工具\HN运维小工具\obj\Debug\HN运维小工具.MianForm.resources

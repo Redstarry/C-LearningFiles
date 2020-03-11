@@ -1,0 +1,12 @@
+F:\C#\Directory\Directory\bin\Debug\Directory.exe.config
+F:\C#\Directory\Directory\bin\Debug\Directory.exe
+F:\C#\Directory\Directory\bin\Debug\Directory.pdb
+F:\C#\Directory\Directory\obj\Debug\HNTool.csprojAssemblyReference.cache
+F:\C#\Directory\Directory\obj\Debug\Directory.exe
+F:\C#\Directory\Directory\obj\Debug\Directory.pdb
+F:\C#完成的项目\HN数据库移植工具\Directory\bin\Debug\Directory.exe.config
+F:\C#完成的项目\HN数据库移植工具\Directory\bin\Debug\Directory.exe
+F:\C#完成的项目\HN数据库移植工具\Directory\bin\Debug\Directory.pdb
+F:\C#完成的项目\HN数据库移植工具\Directory\obj\Debug\HNTool.csprojAssemblyReference.cache
+F:\C#完成的项目\HN数据库移植工具\Directory\obj\Debug\Directory.exe
+F:\C#完成的项目\HN数据库移植工具\Directory\obj\Debug\Directory.pdb

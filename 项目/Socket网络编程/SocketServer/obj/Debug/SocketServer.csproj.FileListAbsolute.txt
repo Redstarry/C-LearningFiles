@@ -1,0 +1,9 @@
+F:\C#完成的项目\Socket网络编程\SocketServer\bin\Debug\SocketServer.exe.config
+F:\C#完成的项目\Socket网络编程\SocketServer\bin\Debug\SocketServer.exe
+F:\C#完成的项目\Socket网络编程\SocketServer\bin\Debug\SocketServer.pdb
+F:\C#完成的项目\Socket网络编程\SocketServer\obj\Debug\SocketServer.csprojAssemblyReference.cache
+F:\C#完成的项目\Socket网络编程\SocketServer\obj\Debug\SocketServer.Properties.Resources.resources
+F:\C#完成的项目\Socket网络编程\SocketServer\obj\Debug\SocketServer.SocketServer.resources
+F:\C#完成的项目\Socket网络编程\SocketServer\obj\Debug\SocketServer.csproj.GenerateResource.cache
+F:\C#完成的项目\Socket网络编程\SocketServer\obj\Debug\SocketServer.exe
+F:\C#完成的项目\Socket网络编程\SocketServer\obj\Debug\SocketServer.pdb
