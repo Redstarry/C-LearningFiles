@@ -7,3 +7,13 @@ F:\C#完成的项目\Socket网络编程\SocketServer\obj\Debug\SocketServer.Sock
 F:\C#完成的项目\Socket网络编程\SocketServer\obj\Debug\SocketServer.csproj.GenerateResource.cache
 F:\C#完成的项目\Socket网络编程\SocketServer\obj\Debug\SocketServer.exe
 F:\C#完成的项目\Socket网络编程\SocketServer\obj\Debug\SocketServer.pdb
+D:\GitHub\C#Learn\C-LearningFiles\项目\Socket网络编程\SocketServer\bin\Debug\SocketServer.exe.config
+D:\GitHub\C#Learn\C-LearningFiles\项目\Socket网络编程\SocketServer\bin\Debug\SocketServer.exe
+D:\GitHub\C#Learn\C-LearningFiles\项目\Socket网络编程\SocketServer\bin\Debug\SocketServer.pdb
+D:\GitHub\C#Learn\C-LearningFiles\项目\Socket网络编程\SocketServer\obj\Debug\SocketServer.csprojAssemblyReference.cache
+D:\GitHub\C#Learn\C-LearningFiles\项目\Socket网络编程\SocketServer\obj\Debug\SocketServer.Properties.Resources.resources
+D:\GitHub\C#Learn\C-LearningFiles\项目\Socket网络编程\SocketServer\obj\Debug\SocketServer.SocketServer.resources
+D:\GitHub\C#Learn\C-LearningFiles\项目\Socket网络编程\SocketServer\obj\Debug\SocketServer.csproj.GenerateResource.cache
+D:\GitHub\C#Learn\C-LearningFiles\项目\Socket网络编程\SocketServer\obj\Debug\SocketServer.csproj.CoreCompileInputs.cache
+D:\GitHub\C#Learn\C-LearningFiles\项目\Socket网络编程\SocketServer\obj\Debug\SocketServer.exe
+D:\GitHub\C#Learn\C-LearningFiles\项目\Socket网络编程\SocketServer\obj\Debug\SocketServer.pdb

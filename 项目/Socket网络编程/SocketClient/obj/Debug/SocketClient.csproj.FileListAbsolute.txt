@@ -1,0 +1,9 @@
+D:\GitHub\C#Learn\C-LearningFiles\项目\Socket网络编程\SocketClient\bin\Debug\SocketClient.exe.config
+D:\GitHub\C#Learn\C-LearningFiles\项目\Socket网络编程\SocketClient\bin\Debug\SocketClient.exe
+D:\GitHub\C#Learn\C-LearningFiles\项目\Socket网络编程\SocketClient\bin\Debug\SocketClient.pdb
+D:\GitHub\C#Learn\C-LearningFiles\项目\Socket网络编程\SocketClient\obj\Debug\SocketClient.Client.resources
+D:\GitHub\C#Learn\C-LearningFiles\项目\Socket网络编程\SocketClient\obj\Debug\SocketClient.Properties.Resources.resources
+D:\GitHub\C#Learn\C-LearningFiles\项目\Socket网络编程\SocketClient\obj\Debug\SocketClient.csproj.GenerateResource.cache
+D:\GitHub\C#Learn\C-LearningFiles\项目\Socket网络编程\SocketClient\obj\Debug\SocketClient.csproj.CoreCompileInputs.cache
+D:\GitHub\C#Learn\C-LearningFiles\项目\Socket网络编程\SocketClient\obj\Debug\SocketClient.exe
+D:\GitHub\C#Learn\C-LearningFiles\项目\Socket网络编程\SocketClient\obj\Debug\SocketClient.pdb
