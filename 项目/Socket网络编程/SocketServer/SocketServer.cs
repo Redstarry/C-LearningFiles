@@ -26,9 +26,9 @@ namespace SocketServer
 
 
         Socket socketCommunication = null;
+        Dictionary<string,Socket> CommunicationDic = new Dictionary<string, Socket>();
         private void SocketListen_Click(object sender, EventArgs e)
         {
-            bool Ison = true;
             Socket socketWatch = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             var IP = IPAddress.Parse(txtIP.Text.Trim());
             IPEndPoint point = new IPEndPoint(IP, Convert.ToInt32(txtPort.Text.Trim()));
@@ -41,21 +41,28 @@ namespace SocketServer
 
             
             Task.Run(() => {
-                while (Ison)
+                while (true)
                 {
                     try
                     {
                         socketCommunication = socketWatch.Accept();
+                        CommunicationDic.Add(socketCommunication.RemoteEndPoint.ToString(), socketCommunication);
+                        AddUser();
                         ShowLog($"{socketCommunication.RemoteEndPoint.ToString()}: 连接成功");
                         Task.Run(() =>
                         {
                             byte[] Data = new byte[1024 * 1024 * 2];
-                            while (Ison)
+                            while (true)
                             {
                                 try
                                 {
                                     int Result = socketCommunication.Receive(Data);
-                                    if (Result <= 0) Ison = false;
+                                    if (Result <= 0)
+                                    {
+                                        socketCommunication.Shutdown(SocketShutdown.Both);
+                                        socketCommunication.Close();
+                                        return;
+                                    }
                                     string message = Encoding.UTF8.GetString(Data);
                                     ShowMessage(message, $"{socketCommunication.RemoteEndPoint.ToString()}");
                                 }
@@ -75,6 +82,19 @@ namespace SocketServer
             
             
             
+        }
+
+        public void AddUser()
+        {
+            if (txtUser.InvokeRequired)
+            {
+                Action action = () => { txtUser.Items.Add(socketCommunication.RemoteEndPoint.ToString()); };
+                txtUser.Invoke(action, null);
+            }
+            else
+            {
+                txtUser.Items.Add(socketCommunication.RemoteEndPoint.ToString());
+            }
         }
         /// <summary>
         /// 显示日志信息，解决了跨线程问题
@@ -114,9 +134,16 @@ namespace SocketServer
         {
             byte[] Data = new byte[1024 * 1024 * 2];
             Data = Encoding.UTF8.GetBytes(txtPath.Text.Trim());
-            ShowMessage(txtPath.Text.Trim(), txtIP.Text.Trim());
-            socketCommunication.Send(Data);
+            
+            Socket name = CommunicationDic[txtUser.SelectedItem.ToString()];
+            ShowMessage(txtPath.Text.Trim(), txtUser.SelectedItem.ToString());
+            name.Send(Data);
             txtPath.Text = "";
+            
+        }
+
+        private void txtUser_SelectedIndexChanged(object sender, EventArgs e)
+        {
             
         }
     }

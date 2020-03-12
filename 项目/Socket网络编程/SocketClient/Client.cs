@@ -45,12 +45,12 @@ namespace SocketClient
                 txtLog.AppendText($"{DateTime.Now.ToString("F")} {msg} \r\n");
             }
         }
-        public void ShowMessage(string message)
+        public void ShowMessage(string message,string use)
         {
             if (txtMsg.InvokeRequired)
             {
-                Action<string> action = (msg) => { txtMsg.AppendText($"\r\n {DateTime.Now.ToString("F")} \r\n {msg} "); };
-                txtMsg.Invoke(action, message);
+                Action<string,string> action = (msg,user) => { txtMsg.AppendText($"\r\n {DateTime.Now.ToString("F")} {user} \r\n {msg} "); };
+                txtMsg.Invoke(action, message,use);
             }
             else
             {
@@ -63,7 +63,7 @@ namespace SocketClient
         {
             byte[] Data = new byte[1024 * 1024 * 2];
             string mes = txtStr.Text.Trim();
-            ShowMessage(mes);
+            ShowMessage(mes, socketCommuiation.RemoteEndPoint.ToString());
             Data = Encoding.UTF8.GetBytes(mes);
             socketCommuiation.Send(Data);
             txtStr.Text = "";
@@ -71,15 +71,19 @@ namespace SocketClient
 
         public void ReceiveInformation()
         {
-            bool Isok = true;
             Task.Run(()=> {
-                while (Isok)
+                while (true)
                 {
                     byte[] Data = new byte[1024 * 1024 * 2];
                     int Result = socketCommuiation.Receive(Data);
-                    if (Result <= 0) Isok = false;
+                    if (Result <= 0)
+                    {
+                        socketCommuiation.Shutdown(SocketShutdown.Both);
+                        socketCommuiation.Close();
+                        return;
+                    }
                     string message = Encoding.UTF8.GetString(Data);
-                    ShowMessage(message);
+                    ShowMessage(message, socketCommuiation.RemoteEndPoint.ToString());
                 }
             });
             
