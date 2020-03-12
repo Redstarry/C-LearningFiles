@@ -24,20 +24,22 @@ namespace SocketServer
 
         }
 
+
+        Socket socketCommunication = null;
         private void SocketListen_Click(object sender, EventArgs e)
         {
             bool Ison = true;
-
-            Socket socketWatch = new Socket(AddressFamily.InterNetwork, SocketType.Stream,ProtocolType.Tcp);
-
+            Socket socketWatch = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             var IP = IPAddress.Parse(txtIP.Text.Trim());
-            IPEndPoint point = new IPEndPoint(IP,Convert.ToInt32(txtPort.Text.Trim()));
+            IPEndPoint point = new IPEndPoint(IP, Convert.ToInt32(txtPort.Text.Trim()));
+
+
             socketWatch.Bind(point);
             ShowLog("监听开始");
 
             socketWatch.Listen(10);
 
-            Socket socketCommunication = null;
+            
             Task.Run(() => {
                 while (Ison)
                 {
@@ -106,6 +108,16 @@ namespace SocketServer
             {
                 txtMessage.AppendText($"\r\n {DateTime.Now.ToString("F")} {user} \r\n {message} ");
             }
+        }
+
+        private void txtSend_Click(object sender, EventArgs e)
+        {
+            byte[] Data = new byte[1024 * 1024 * 2];
+            Data = Encoding.UTF8.GetBytes(txtPath.Text.Trim());
+            ShowMessage(txtPath.Text.Trim(), txtIP.Text.Trim());
+            socketCommunication.Send(Data);
+            txtPath.Text = "";
+            
         }
     }
 }

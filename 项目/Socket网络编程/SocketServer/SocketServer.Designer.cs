@@ -134,6 +134,7 @@
             this.txtSend.TabIndex = 7;
             this.txtSend.Text = "发送";
             this.txtSend.UseVisualStyleBackColor = true;
+            this.txtSend.Click += new System.EventHandler(this.txtSend_Click);
             // 
             // SelectFile
             // 

@@ -30,6 +30,7 @@ namespace SocketClient
             EndPoint endPoint = new IPEndPoint(ip, int.Parse(txtPort.Text.Trim()));
             socketCommuiation.Connect(endPoint);
             ShowLog("连接成功");
+            ReceiveInformation();
         }
 
         public void ShowLog(string msg)
@@ -41,12 +42,21 @@ namespace SocketClient
             }
             else
             {
-                txtLog.AppendText($"\r\n {DateTime.Now.ToString("F")} {msg} \r\n");
+                txtLog.AppendText($"{DateTime.Now.ToString("F")} {msg} \r\n");
             }
         }
         public void ShowMessage(string message)
         {
-            txtMsg.AppendText($"{DateTime.Now.ToString("F")} {message}");
+            if (txtMsg.InvokeRequired)
+            {
+                Action<string> action = (msg) => { txtMsg.AppendText($"\r\n {DateTime.Now.ToString("F")} \r\n {msg} "); };
+                txtMsg.Invoke(action, message);
+            }
+            else
+            {
+                txtMsg.AppendText($"\r\n {DateTime.Now.ToString("F")} \r\n {message} ");
+            }
+            
         }
 
         private void txtSend_Click(object sender, EventArgs e)
@@ -56,6 +66,23 @@ namespace SocketClient
             ShowMessage(mes);
             Data = Encoding.UTF8.GetBytes(mes);
             socketCommuiation.Send(Data);
+            txtStr.Text = "";
+        }
+
+        public void ReceiveInformation()
+        {
+            bool Isok = true;
+            Task.Run(()=> {
+                while (Isok)
+                {
+                    byte[] Data = new byte[1024 * 1024 * 2];
+                    int Result = socketCommuiation.Receive(Data);
+                    if (Result <= 0) Isok = false;
+                    string message = Encoding.UTF8.GetString(Data);
+                    ShowMessage(message);
+                }
+            });
+            
         }
     }
 }

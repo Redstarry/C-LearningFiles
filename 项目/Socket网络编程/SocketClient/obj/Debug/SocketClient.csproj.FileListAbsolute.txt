@@ -7,3 +7,12 @@ D:\GitHub\C#Learn\C-LearningFiles\项目\Socket网络编程\SocketClient\obj\Deb
 D:\GitHub\C#Learn\C-LearningFiles\项目\Socket网络编程\SocketClient\obj\Debug\SocketClient.csproj.CoreCompileInputs.cache
 D:\GitHub\C#Learn\C-LearningFiles\项目\Socket网络编程\SocketClient\obj\Debug\SocketClient.exe
 D:\GitHub\C#Learn\C-LearningFiles\项目\Socket网络编程\SocketClient\obj\Debug\SocketClient.pdb
+F:\GIthub\Cshap\项目\Socket网络编程\SocketClient\bin\Debug\SocketClient.exe.config
+F:\GIthub\Cshap\项目\Socket网络编程\SocketClient\bin\Debug\SocketClient.exe
+F:\GIthub\Cshap\项目\Socket网络编程\SocketClient\bin\Debug\SocketClient.pdb
+F:\GIthub\Cshap\项目\Socket网络编程\SocketClient\obj\Debug\SocketClient.Client.resources
+F:\GIthub\Cshap\项目\Socket网络编程\SocketClient\obj\Debug\SocketClient.Properties.Resources.resources
+F:\GIthub\Cshap\项目\Socket网络编程\SocketClient\obj\Debug\SocketClient.csproj.GenerateResource.cache
+F:\GIthub\Cshap\项目\Socket网络编程\SocketClient\obj\Debug\SocketClient.exe
+F:\GIthub\Cshap\项目\Socket网络编程\SocketClient\obj\Debug\SocketClient.pdb
+F:\GIthub\Cshap\项目\Socket网络编程\SocketClient\obj\Debug\SocketClient.csprojAssemblyReference.cache
