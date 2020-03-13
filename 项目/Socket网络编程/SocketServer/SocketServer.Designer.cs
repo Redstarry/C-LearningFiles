@@ -46,29 +46,26 @@
             // 
             // txtIP
             // 
-            this.txtIP.Location = new System.Drawing.Point(8, 13);
-            this.txtIP.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.txtIP.Location = new System.Drawing.Point(12, 20);
             this.txtIP.Name = "txtIP";
-            this.txtIP.Size = new System.Drawing.Size(84, 21);
+            this.txtIP.Size = new System.Drawing.Size(124, 28);
             this.txtIP.TabIndex = 0;
             this.txtIP.Text = "192.168.1.47";
             // 
             // txtPort
             // 
-            this.txtPort.Location = new System.Drawing.Point(108, 13);
-            this.txtPort.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.txtPort.Location = new System.Drawing.Point(162, 20);
             this.txtPort.Name = "txtPort";
-            this.txtPort.Size = new System.Drawing.Size(47, 21);
+            this.txtPort.Size = new System.Drawing.Size(68, 28);
             this.txtPort.TabIndex = 1;
             this.txtPort.Text = "50000";
             this.txtPort.TextChanged += new System.EventHandler(this.txtPort_TextChanged);
             // 
             // SocketListen
             // 
-            this.SocketListen.Location = new System.Drawing.Point(169, 8);
-            this.SocketListen.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.SocketListen.Location = new System.Drawing.Point(254, 12);
             this.SocketListen.Name = "SocketListen";
-            this.SocketListen.Size = new System.Drawing.Size(88, 27);
+            this.SocketListen.Size = new System.Drawing.Size(132, 40);
             this.SocketListen.TabIndex = 2;
             this.SocketListen.Text = "开始监听";
             this.SocketListen.UseVisualStyleBackColor = true;
@@ -77,73 +74,64 @@
             // txtUser
             // 
             this.txtUser.FormattingEnabled = true;
-            this.txtUser.Location = new System.Drawing.Point(271, 13);
-            this.txtUser.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.txtUser.Location = new System.Drawing.Point(406, 20);
             this.txtUser.Name = "txtUser";
-            this.txtUser.Size = new System.Drawing.Size(98, 20);
+            this.txtUser.Size = new System.Drawing.Size(145, 26);
             this.txtUser.TabIndex = 3;
             this.txtUser.SelectedIndexChanged += new System.EventHandler(this.txtUser_SelectedIndexChanged);
             // 
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.txtLog);
-            this.groupBox1.Location = new System.Drawing.Point(9, 43);
-            this.groupBox1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox1.Location = new System.Drawing.Point(14, 64);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.groupBox1.Size = new System.Drawing.Size(359, 161);
+            this.groupBox1.Size = new System.Drawing.Size(538, 242);
             this.groupBox1.TabIndex = 4;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "消息日志";
             // 
             // txtLog
             // 
-            this.txtLog.Location = new System.Drawing.Point(4, 18);
-            this.txtLog.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.txtLog.Location = new System.Drawing.Point(6, 27);
             this.txtLog.Multiline = true;
             this.txtLog.Name = "txtLog";
             this.txtLog.ReadOnly = true;
-            this.txtLog.Size = new System.Drawing.Size(353, 140);
+            this.txtLog.Size = new System.Drawing.Size(528, 208);
             this.txtLog.TabIndex = 0;
             // 
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.txtMessage);
-            this.groupBox2.Location = new System.Drawing.Point(9, 207);
-            this.groupBox2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox2.Location = new System.Drawing.Point(14, 310);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.groupBox2.Size = new System.Drawing.Size(359, 161);
+            this.groupBox2.Size = new System.Drawing.Size(538, 242);
             this.groupBox2.TabIndex = 5;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "消息";
             // 
             // txtMessage
             // 
-            this.txtMessage.Location = new System.Drawing.Point(4, 18);
-            this.txtMessage.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.txtMessage.Location = new System.Drawing.Point(6, 27);
             this.txtMessage.Multiline = true;
             this.txtMessage.Name = "txtMessage";
             this.txtMessage.ReadOnly = true;
             this.txtMessage.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtMessage.Size = new System.Drawing.Size(353, 140);
+            this.txtMessage.Size = new System.Drawing.Size(528, 208);
             this.txtMessage.TabIndex = 0;
             // 
             // txtPath
             // 
-            this.txtPath.Location = new System.Drawing.Point(8, 410);
-            this.txtPath.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.txtPath.Location = new System.Drawing.Point(12, 615);
             this.txtPath.Multiline = true;
             this.txtPath.Name = "txtPath";
-            this.txtPath.Size = new System.Drawing.Size(222, 24);
+            this.txtPath.Size = new System.Drawing.Size(331, 34);
             this.txtPath.TabIndex = 6;
             // 
             // txtSend
             // 
-            this.txtSend.Location = new System.Drawing.Point(13, 376);
-            this.txtSend.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.txtSend.Location = new System.Drawing.Point(20, 564);
             this.txtSend.Name = "txtSend";
-            this.txtSend.Size = new System.Drawing.Size(355, 23);
+            this.txtSend.Size = new System.Drawing.Size(532, 34);
             this.txtSend.TabIndex = 7;
             this.txtSend.Text = "发送";
             this.txtSend.UseVisualStyleBackColor = true;
@@ -151,29 +139,29 @@
             // 
             // SelectFile
             // 
-            this.SelectFile.Location = new System.Drawing.Point(233, 410);
-            this.SelectFile.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.SelectFile.Location = new System.Drawing.Point(350, 615);
             this.SelectFile.Name = "SelectFile";
-            this.SelectFile.Size = new System.Drawing.Size(67, 23);
+            this.SelectFile.Size = new System.Drawing.Size(100, 34);
             this.SelectFile.TabIndex = 8;
             this.SelectFile.Text = "选择文件";
             this.SelectFile.UseVisualStyleBackColor = true;
+            this.SelectFile.Click += new System.EventHandler(this.SelectFile_Click);
             // 
             // SendFile
             // 
-            this.SendFile.Location = new System.Drawing.Point(304, 410);
-            this.SendFile.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.SendFile.Location = new System.Drawing.Point(456, 615);
             this.SendFile.Name = "SendFile";
-            this.SendFile.Size = new System.Drawing.Size(64, 23);
+            this.SendFile.Size = new System.Drawing.Size(96, 34);
             this.SendFile.TabIndex = 9;
             this.SendFile.Text = "发送文件";
             this.SendFile.UseVisualStyleBackColor = true;
+            this.SendFile.Click += new System.EventHandler(this.SendFile_Click);
             // 
             // SocketServer
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(377, 442);
+            this.ClientSize = new System.Drawing.Size(566, 663);
             this.Controls.Add(this.SendFile);
             this.Controls.Add(this.SelectFile);
             this.Controls.Add(this.txtSend);
@@ -184,7 +172,6 @@
             this.Controls.Add(this.SocketListen);
             this.Controls.Add(this.txtPort);
             this.Controls.Add(this.txtIP);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Name = "SocketServer";
             this.Text = "Socker服务端";
             this.groupBox1.ResumeLayout(false);

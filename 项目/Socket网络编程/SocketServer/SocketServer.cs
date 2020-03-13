@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
@@ -49,6 +50,7 @@ namespace SocketServer
                         CommunicationDic.Add(socketCommunication.RemoteEndPoint.ToString(), socketCommunication);
                         AddUser();
                         ShowLog($"{socketCommunication.RemoteEndPoint.ToString()}: 连接成功");
+                        
                         Task.Run(() =>
                         {
                             byte[] Data = new byte[1024 * 1024 * 2];
@@ -83,17 +85,20 @@ namespace SocketServer
             
             
         }
-
+        /// <summary>
+        /// 添加IP集合的跨线程方法。
+        /// </summary>
         public void AddUser()
         {
             if (txtUser.InvokeRequired)
             {
-                Action action = () => { txtUser.Items.Add(socketCommunication.RemoteEndPoint.ToString()); };
+                Action action = () => { txtUser.Items.Add(socketCommunication.RemoteEndPoint.ToString()); txtUser.Text = socketCommunication.RemoteEndPoint.ToString(); };
                 txtUser.Invoke(action, null);
             }
             else
             {
                 txtUser.Items.Add(socketCommunication.RemoteEndPoint.ToString());
+                txtUser.Text = socketCommunication.RemoteEndPoint.ToString();
             }
         }
         /// <summary>
@@ -134,10 +139,13 @@ namespace SocketServer
         {
             byte[] Data = new byte[1024 * 1024 * 2];
             Data = Encoding.UTF8.GetBytes(txtPath.Text.Trim());
+            List<byte> newBuffer = new List<byte>();
+            newBuffer.Add(0);
+            newBuffer.AddRange(Data);
             
             Socket name = CommunicationDic[txtUser.SelectedItem.ToString()];
             ShowMessage(txtPath.Text.Trim(), txtUser.SelectedItem.ToString());
-            name.Send(Data);
+            name.Send(newBuffer.ToArray());
             txtPath.Text = "";
             
         }
@@ -145,6 +153,30 @@ namespace SocketServer
         private void txtUser_SelectedIndexChanged(object sender, EventArgs e)
         {
             
+        }
+
+        private void SelectFile_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.InitialDirectory = @"E:\";
+            openFileDialog.Filter = "所有文件|*.*|文本文件|*.txt|Word文档|*.doc";
+            openFileDialog.ShowDialog();
+            txtPath.Text = openFileDialog.FileName;
+        }
+
+        private void SendFile_Click(object sender, EventArgs e)
+        {
+            FileStream fileStream = new FileStream(txtPath.Text.Trim(), FileMode.Open, FileAccess.Read);
+            byte[] Data = new byte[1024 * 1024 * 10];
+            int Length = fileStream.Read(Data, 0, Data.Length);
+            List<byte> byteList = new List<byte>();
+            byteList.Add(1);
+            byteList.AddRange(Data);
+
+            Socket name = CommunicationDic[txtUser.SelectedItem.ToString()];
+            name.Send(byteList.ToArray(), 0, Length + 1, SocketFlags.None);
+            string fileName = txtPath.Text;
+            ShowMessage($"{Path.GetFileNameWithoutExtension(fileName)}", txtUser.SelectedItem.ToString());
         }
     }
 }

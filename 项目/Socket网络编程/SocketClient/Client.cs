@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
@@ -74,19 +75,45 @@ namespace SocketClient
             Task.Run(()=> {
                 while (true)
                 {
-                    byte[] Data = new byte[1024 * 1024 * 2];
+                    byte[] Data = new byte[1024 * 1024 * 10];
                     int Result = socketCommuiation.Receive(Data);
+                    string message = String.Empty;
                     if (Result <= 0)
                     {
                         socketCommuiation.Shutdown(SocketShutdown.Both);
                         socketCommuiation.Close();
                         return;
                     }
-                    string message = Encoding.UTF8.GetString(Data);
-                    ShowMessage(message, socketCommuiation.RemoteEndPoint.ToString());
+                    switch (Data[0])
+                    {
+                        case 0:
+                            message = Encoding.UTF8.GetString(Data, 1, Result - 1);
+                            ShowMessage(message, socketCommuiation.RemoteEndPoint.ToString());
+                            break;
+                        case 1:
+                            GetFile(Result,Data);
+                            message = Encoding.UTF8.GetString(Data, 1, Result - 1);
+                            ShowMessage(message, socketCommuiation.RemoteEndPoint.ToString());
+                            break;
+                    }
                 }
             });
             
+        }
+        public void GetFile(int Result, byte[] Data)
+        {
+            
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.InitialDirectory = @"E:\";
+            saveFileDialog.Filter = "所有文件|*.*|文本文件|*.txt|Word文档|*.doc";
+            saveFileDialog.Title = "另存为";
+           
+            saveFileDialog.ShowDialog(this);
+
+            string path = saveFileDialog.FileName;
+            FileStream fileStream = new FileStream(path, FileMode.Open, FileAccess.Write);
+            fileStream.Write(Data, 1, Result-1);
+            MessageBox.Show("保存成功");
         }
     }
 }

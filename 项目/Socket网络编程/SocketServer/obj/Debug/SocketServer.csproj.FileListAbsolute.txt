@@ -20,9 +20,9 @@ D:\GitHub\C#Learn\C-LearningFiles\项目\Socket网络编程\SocketServer\obj\Deb
 F:\GIthub\Cshap\项目\Socket网络编程\SocketServer\bin\Debug\SocketServer.exe.config
 F:\GIthub\Cshap\项目\Socket网络编程\SocketServer\bin\Debug\SocketServer.exe
 F:\GIthub\Cshap\项目\Socket网络编程\SocketServer\bin\Debug\SocketServer.pdb
-F:\GIthub\Cshap\项目\Socket网络编程\SocketServer\obj\Debug\SocketServer.csprojAssemblyReference.cache
 F:\GIthub\Cshap\项目\Socket网络编程\SocketServer\obj\Debug\SocketServer.Properties.Resources.resources
 F:\GIthub\Cshap\项目\Socket网络编程\SocketServer\obj\Debug\SocketServer.SocketServer.resources
 F:\GIthub\Cshap\项目\Socket网络编程\SocketServer\obj\Debug\SocketServer.csproj.GenerateResource.cache
 F:\GIthub\Cshap\项目\Socket网络编程\SocketServer\obj\Debug\SocketServer.exe
 F:\GIthub\Cshap\项目\Socket网络编程\SocketServer\obj\Debug\SocketServer.pdb
+F:\GIthub\Cshap\项目\Socket网络编程\SocketServer\obj\Debug\SocketServer.csproj.CoreCompileInputs.cache

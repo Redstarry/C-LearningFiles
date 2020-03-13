@@ -17,3 +17,4 @@ F:\GIthub\Cshap\项目\Socket网络编程\SocketClient\obj\Debug\SocketClient.ex
 F:\GIthub\Cshap\项目\Socket网络编程\SocketClient\obj\Debug\SocketClient.pdb
 F:\GIthub\Cshap\项目\Socket网络编程\SocketClient\obj\Debug\SocketClient.csprojAssemblyReference.cache
 D:\GitHub\C#Learn\C-LearningFiles\项目\Socket网络编程\SocketClient\obj\Debug\SocketClient.csprojAssemblyReference.cache
+F:\GIthub\Cshap\项目\Socket网络编程\SocketClient\obj\Debug\SocketClient.csproj.CoreCompileInputs.cache
