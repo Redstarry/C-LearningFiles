@@ -166,17 +166,33 @@ namespace SocketServer
 
         private void SendFile_Click(object sender, EventArgs e)
         {
-            FileStream fileStream = new FileStream(txtPath.Text.Trim(), FileMode.Open, FileAccess.Read);
-            byte[] Data = new byte[1024 * 1024 * 10];
-            int Length = fileStream.Read(Data, 0, Data.Length);
-            List<byte> byteList = new List<byte>();
-            byteList.Add(1);
-            byteList.AddRange(Data);
+            //FileStream fileStream = new FileStream(txtPath.Text.Trim(), FileMode.Open, FileAccess.Read);
+            //byte[] Data = new byte[1024 * 1024 * 10];
+            //int Length = fileStream.Read(Data, 0, Data.Length);
+            //List<byte> byteList = new List<byte>();
+            //byteList.Add(1);
+            //byteList.AddRange(Data);
 
-            Socket name = CommunicationDic[txtUser.SelectedItem.ToString()];
-            name.Send(byteList.ToArray(), 0, Length + 1, SocketFlags.None);
-            string fileName = txtPath.Text;
-            ShowMessage($"{Path.GetFileNameWithoutExtension(fileName)}", txtUser.SelectedItem.ToString());
+            //Socket name = CommunicationDic[txtUser.SelectedItem.ToString()];
+            //name.Send(byteList.ToArray(), 0, Length + 1, SocketFlags.None);
+            //string fileName = txtPath.Text;
+            //ShowMessage($"{Path.GetFileNameWithoutExtension(fileName)}", txtUser.SelectedItem.ToString());
+            using (OpenFileDialog ofd = new OpenFileDialog())
+            {
+                ofd.InitialDirectory = @"E:\";
+                ofd.Filter = "所有文件|*.*|文本文件|*.txt|Word文档|*.doc";
+                if (ofd.ShowDialog(this) != DialogResult.OK)
+                {
+                    return;
+                }
+               
+                //txtPath.Text = ofd.FileName;
+                byte[] buffer = File.ReadAllBytes(ofd.FileName);
+                byte[] NewBuffer = new byte[buffer.Length + 1];
+                NewBuffer[0] = 1;
+                Buffer.BlockCopy(buffer, 0, NewBuffer, 1, buffer.Length);
+                CommunicationDic[txtUser.SelectedItem.ToString()].Send(NewBuffer);
+            }
         }
     }
 }

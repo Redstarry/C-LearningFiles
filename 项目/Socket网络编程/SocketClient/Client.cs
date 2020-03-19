@@ -92,8 +92,9 @@ namespace SocketClient
                             break;
                         case 1:
                             GetFile(Result,Data);
-                            message = Encoding.UTF8.GetString(Data, 1, Result - 1);
-                            ShowMessage(message, socketCommuiation.RemoteEndPoint.ToString());
+                            //message = Encoding.UTF8.GetString(Data, 1, Result - 1);
+                            //ShowMessage(message, socketCommuiation.RemoteEndPoint.ToString());
+                            
                             break;
                     }
                 }
@@ -102,18 +103,51 @@ namespace SocketClient
         }
         public void GetFile(int Result, byte[] Data)
         {
-            
-            SaveFileDialog saveFileDialog = new SaveFileDialog();
-            saveFileDialog.InitialDirectory = @"E:\";
-            saveFileDialog.Filter = "所有文件|*.*|文本文件|*.txt|Word文档|*.doc";
-            saveFileDialog.Title = "另存为";
-           
-            saveFileDialog.ShowDialog(this);
 
-            string path = saveFileDialog.FileName;
-            FileStream fileStream = new FileStream(path, FileMode.Open, FileAccess.Write);
-            fileStream.Write(Data, 1, Result-1);
-            MessageBox.Show("保存成功");
+            //SaveFileDialog saveFileDialog = new SaveFileDialog();
+            //saveFileDialog.InitialDirectory = @"E:\";
+            //saveFileDialog.Filter = "所有文件|*.*|文本文件|*.txt|Word文档|*.doc";
+            //saveFileDialog.Title = "另存为";
+
+            //saveFileDialog.ShowDialog(this);
+
+            //string path = saveFileDialog.FileName;
+            //FileStream fileStream = new FileStream(path, FileMode.Open, FileAccess.Write);
+            //fileStream.Write(Data, 1, Result-1);
+            //MessageBox.Show("保存成功");
+
+            using (SaveFileDialog sfd = new SaveFileDialog())
+            {
+                sfd.InitialDirectory = @"E:\";
+                sfd.Filter = "所有文件|*.*|文本文件|*.txt|Word文档|*.doc";
+                sfd.Title = "另存为";
+                //if (ShowDia(sfd) != DialogResult.OK)
+                //{
+                //    return;
+                //}
+                ShowDia(sfd);
+                byte[] NewBuffer = new byte[Result - 1];
+                Buffer.BlockCopy(Data, 1, NewBuffer, 0, Result - 1);
+                File.WriteAllBytes(sfd.FileName, NewBuffer);
+                MessageBox.Show("保存成功");
+            }
         }
+        public void ShowDia(SaveFileDialog sfd)
+        {
+            if (this.InvokeRequired)
+            {
+                Action action = () =>
+                {
+                    sfd.ShowDialog();
+                };
+                this.Invoke(action, null);
+            }
+            else
+            {
+                 sfd.ShowDialog();
+            }
+        }
+
+
     }
 }

@@ -26,3 +26,4 @@ F:\GIthub\Cshap\项目\Socket网络编程\SocketServer\obj\Debug\SocketServer.cs
 F:\GIthub\Cshap\项目\Socket网络编程\SocketServer\obj\Debug\SocketServer.exe
 F:\GIthub\Cshap\项目\Socket网络编程\SocketServer\obj\Debug\SocketServer.pdb
 F:\GIthub\Cshap\项目\Socket网络编程\SocketServer\obj\Debug\SocketServer.csproj.CoreCompileInputs.cache
+F:\GIthub\Cshap\项目\Socket网络编程\SocketServer\obj\Debug\SocketServer.csprojAssemblyReference.cache

@@ -1,0 +1,9 @@
+F:\C#完成的项目\双色球\DoubleChromosphere\bin\Debug\DoubleChromosphere.exe.config
+F:\C#完成的项目\双色球\DoubleChromosphere\bin\Debug\DoubleChromosphere.exe
+F:\C#完成的项目\双色球\DoubleChromosphere\bin\Debug\DoubleChromosphere.pdb
+F:\C#完成的项目\双色球\DoubleChromosphere\obj\Debug\DoubleChromosphere.Form1.resources
+F:\C#完成的项目\双色球\DoubleChromosphere\obj\Debug\DoubleChromosphere.Properties.Resources.resources
+F:\C#完成的项目\双色球\DoubleChromosphere\obj\Debug\DoubleChromosphere.csproj.GenerateResource.cache
+F:\C#完成的项目\双色球\DoubleChromosphere\obj\Debug\DoubleChromosphere.exe
+F:\C#完成的项目\双色球\DoubleChromosphere\obj\Debug\DoubleChromosphere.pdb
+F:\C#完成的项目\双色球\DoubleChromosphere\obj\Debug\DoubleChromosphere.csprojAssemblyReference.cache
