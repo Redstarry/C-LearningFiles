@@ -18,69 +18,51 @@ namespace DoubleChromosphere
             InitializeComponent();
             
         }
-        Business business = new Business();
+        
         private void groupBox1_Enter(object sender, EventArgs e)
         {
 
         }
-        private static readonly object lockobject = new object();
+        
         private void btnStart_Click(object sender, EventArgs e)
         {
-            List<Label> labels = new List<Label>() { num01, num02, num03, num04, num05, num06, num07};
-            List<Task> tasks = new List<Task>();
-            business.onoff = true;
+            Business business = new Business();
+            List<Label> labels = new List<Label>() { num01, num02, num03, num04, num05, num06, num07};//Label控件集合
+            List<Task> tasks = new List<Task>();//线程集合
             Random random = new Random();
+            Business.onoff = true;
+
             foreach (var item in labels)
             {
                 tasks.Add(Task.Run(()=>{
-                    if (item.Name != "num07")
+                    if (item.Name != "num07")//判断该控件是否是蓝色球
                     {
-                        while (business.onoff)
+                        while (Business.onoff) //数字不停的滚动。
                         {
                             string num = random.Next(1, 34).ToString();
-                            lock (lockobject)//防止每个球的数字重复，获取Text的值形成一个list，然后判断随机出来的数字在list里面没有，如果有，说明就是重复值，name就需要重新随机了
-                            {
-                                List<string> list = business.GetLableValue(groupBox1);
-                                if (!list.Contains(num))
-                                {
-                                    Thread.Sleep(5);
-                                    item.Invoke(new Action(() => { item.Text = num; }));
-                                }
-                            }
+                            business.SetLableValue(item, num, groupBox1);
                         }
                     }
                     else
                     {
-                        while (business.onoff)
+                        while (Business.onoff)
                         {
                             string num = random.Next(1, 17).ToString();
-                            lock (lockobject)
-                            {
-                                List<string> list = business.GetLableValue(groupBox1);
-                                if (!list.Contains(num))
-                                {
-                                    Thread.Sleep(5);
-                                    item.Invoke(new Action(() => { item.Text = num; }));
-                                }
-                            }
+                            business.SetLableValue(item, num, groupBox1);
                         }
                     }
-                    //Task.Factory.ContinueWhenAll(tasks.ToArray(),t => {
-                    //    ShowResult();
-                    //});
                 }));
-                
             }
+            Task.Factory.ContinueWhenAll(tasks.ToArray(), t => {
+                business.ShowResult(labels);
+            });
 
             
         }
         private void btnEnd_Click(object sender, EventArgs e)
         {
-            business.onoff = false;
+            Business.onoff = false;
         }
-        public void ShowResult()
-        {
-            MessageBox.Show($"{num01}, {num02}, {num03}, {num04}, {num05},{num06}, {num07}");
-        }
+        
     }
 }

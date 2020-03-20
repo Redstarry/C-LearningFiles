@@ -7,3 +7,12 @@ F:\C#完成的项目\双色球\DoubleChromosphere\obj\Debug\DoubleChromosphere.c
 F:\C#完成的项目\双色球\DoubleChromosphere\obj\Debug\DoubleChromosphere.exe
 F:\C#完成的项目\双色球\DoubleChromosphere\obj\Debug\DoubleChromosphere.pdb
 F:\C#完成的项目\双色球\DoubleChromosphere\obj\Debug\DoubleChromosphere.csprojAssemblyReference.cache
+F:\GIthub\Cshap\项目\双色球\DoubleChromosphere\bin\Debug\DoubleChromosphere.exe.config
+F:\GIthub\Cshap\项目\双色球\DoubleChromosphere\bin\Debug\DoubleChromosphere.exe
+F:\GIthub\Cshap\项目\双色球\DoubleChromosphere\bin\Debug\DoubleChromosphere.pdb
+F:\GIthub\Cshap\项目\双色球\DoubleChromosphere\obj\Debug\DoubleChromosphere.csprojAssemblyReference.cache
+F:\GIthub\Cshap\项目\双色球\DoubleChromosphere\obj\Debug\DoubleChromosphere.Form1.resources
+F:\GIthub\Cshap\项目\双色球\DoubleChromosphere\obj\Debug\DoubleChromosphere.Properties.Resources.resources
+F:\GIthub\Cshap\项目\双色球\DoubleChromosphere\obj\Debug\DoubleChromosphere.csproj.GenerateResource.cache
+F:\GIthub\Cshap\项目\双色球\DoubleChromosphere\obj\Debug\DoubleChromosphere.exe
+F:\GIthub\Cshap\项目\双色球\DoubleChromosphere\obj\Debug\DoubleChromosphere.pdb
