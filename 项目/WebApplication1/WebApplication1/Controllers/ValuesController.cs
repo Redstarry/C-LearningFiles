@@ -34,23 +34,15 @@ namespace WebApplication1.Controllers
             
             try
             {
-                if (req.Name != null)
-                {
-                    DataRequest.Instance.Name = req.Name;
-                }
-                if (req.IDCard != null)
-                {
-                    DataRequest.Instance.IDCard = req.IDCard;
-                }
-                if (req.PhoneNumber != null)
-                {
-                    DataRequest.Instance.PhoneNumber = req.PhoneNumber;
-                }
-                if (req.Stat != null)
-                {
-                    DataRequest.Instance.Stat = req.Stat;
-                    dataOperations.IsType();
-                }
+                DataRequest.Instance.Name = req.Name;
+                DataRequest.Instance.IdCard = req.IdCard;
+                DataRequest.Instance.PhoneNumber = req.PhoneNumber;
+                DataRequest.Instance.Stat = req.Stat;
+                DataRequest.Instance.SelectField = req.SelectField;
+                DataRequest.Instance.FieldValue = req.FieldValue;
+                DataRequest.Instance.DeleDataField = req.DeleDataField;
+                DataRequest.Instance.DeleDataValue = req.DeleDataValue;
+                dataOperations.IsType();
                 
             }
             catch (Exception)

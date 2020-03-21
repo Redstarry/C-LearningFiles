@@ -1,15 +1,15 @@
 {
   "format": 1,
   "restore": {
-    "D:\\GitHub\\C#Learn\\C-LearningFiles\\项目\\WebApplication1\\WebApplication1\\WebApplication1.csproj": {}
+    "D:\\GitHub\\C#Learn\\C-LearningFiles\\项目\\WebApplication1\\WebApplication1\\联系人的API.csproj": {}
   },
   "projects": {
-    "D:\\GitHub\\C#Learn\\C-LearningFiles\\项目\\WebApplication1\\WebApplication1\\WebApplication1.csproj": {
+    "D:\\GitHub\\C#Learn\\C-LearningFiles\\项目\\WebApplication1\\WebApplication1\\联系人的API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\GitHub\\C#Learn\\C-LearningFiles\\项目\\WebApplication1\\WebApplication1\\WebApplication1.csproj",
-        "projectName": "WebApplication1",
-        "projectPath": "D:\\GitHub\\C#Learn\\C-LearningFiles\\项目\\WebApplication1\\WebApplication1\\WebApplication1.csproj",
+        "projectUniqueName": "D:\\GitHub\\C#Learn\\C-LearningFiles\\项目\\WebApplication1\\WebApplication1\\联系人的API.csproj",
+        "projectName": "联系人的API",
+        "projectPath": "D:\\GitHub\\C#Learn\\C-LearningFiles\\项目\\WebApplication1\\WebApplication1\\联系人的API.csproj",
         "packagesPath": "C:\\Users\\philip\\.nuget\\packages\\",
         "outputPath": "D:\\GitHub\\C#Learn\\C-LearningFiles\\项目\\WebApplication1\\WebApplication1\\obj\\",
         "projectStyle": "PackageReference",
