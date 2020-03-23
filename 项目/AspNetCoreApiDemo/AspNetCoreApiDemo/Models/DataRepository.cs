@@ -1,4 +1,6 @@
-﻿using System;
+﻿using AspNetCoreApiDemo.Data;
+using PetaPoco;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -55,10 +57,21 @@ namespace WebApplication5.Models
             return req;
         }
 
-        public  IEnumerable<RequestData> GetRequestDatas()
+        public IEnumerable<RequestData> GetRequestDatas(PageProp parameters)
         {
+            //var aqueryData = _context as IQueryable<RequestData>;
             var Data = Db.Query<RequestData>("select * from hnInfo");
+            Data = Data.Skip(parameters.PageSize * (parameters.PageNumber - 1)).Take(parameters.PageSize);
             return Data;
         }
+        //public Page<RequestData> GetRequestDatas(PageProp parameters)
+        //{
+        //    //var aqueryData = _context as IQueryable<RequestData>;
+        //    var Data = Db.Query<RequestData>("select * from hnInfo");
+        //    //Data = Data.Skip(parameters.PageSize * (parameters.PageNumber - 1)).Take(parameters.PageSize);
+        //    var result = Db.Page<RequestData>(1, 20, "select * from hnInfo");
+        //    return result;
+        //}
+
     }
 }

@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AspNetCoreApiDemo.Data;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using PetaPoco;
 using WebApplication5.Models;
 
 namespace AspNetCoreApiDemo.Controllers
@@ -24,10 +26,12 @@ namespace AspNetCoreApiDemo.Controllers
         
 
         [HttpGet]
-        public IEnumerable<RequestData> Get()
+        //[FromQuery] 有这个可以在url后面筛选parameters里面的属性。
+        //http://localhost:5000/api/personInfo?pageNumber=2&pagesize=5
+        public IEnumerable<RequestData> Get([FromQuery] PageProp parameters)
         {
-            
-            return dataRepository.GetRequestDatas();
+            var Data = dataRepository.GetRequestDatas(parameters);
+            return Data;
         }
         [HttpGet("item/{id}")]
         public async Task<IActionResult> Get(Guid id)

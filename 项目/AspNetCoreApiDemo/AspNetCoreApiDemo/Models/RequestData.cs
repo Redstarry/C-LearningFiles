@@ -29,7 +29,7 @@ namespace WebApplication5.Models
             {
                 yield return new ValidationResult("电话号码必须是11位", new[] { nameof(RequestData) });
             }
-            if (!Regex.IsMatch(Idcard, @"^[0 - 9] * $"))
+            if (Regex.IsMatch(Idcard, @"^[0 - 9] * $"))
             {
                 yield return new ValidationResult("身份证号码必须是纯数字", new[] { nameof(RequestData) });
                 if (Idcard.Length < 15 || Idcard.Length > 18)
