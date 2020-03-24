@@ -11,8 +11,8 @@ namespace ContactsAPI.Models
     public class ContactsDTO
     {
         public Guid Id { get; set; }
-        public string ContactName { get; set; }
-        public string ContactPhone { get; set; }
-        public string ContactIdCard { get; set; }
+        public string Name { get; set; }
+        public string Phone { get; set; }
+        public string IdCard { get; set; }
     }
 }

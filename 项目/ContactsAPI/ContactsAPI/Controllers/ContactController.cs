@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Http;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using PetaPoco;
+using ContactsAPI.Models.DataRepository;
+using Microsoft.Extensions.Configuration;
 
 namespace ContactsAPI.Controllers
 {
@@ -14,19 +16,29 @@ namespace ContactsAPI.Controllers
     [ApiController]
     public class ContactController : ControllerBase
     {
-        private IContactRepository _ContactRepository;
+        //private readonly IContactRepository _ContactRepository;
         private readonly AutoMapper.IMapper _mapper;
 
-        public ContactController(IContactRepository contactRepository, AutoMapper.IMapper mapper)
+        public ContactController(AutoMapper.IMapper mapper)
         {
-            _ContactRepository = contactRepository ?? throw new ArgumentNullException(nameof(contactRepository));
+            //_ContactRepository = contactRepository ?? throw new ArgumentNullException(nameof(contactRepository));
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+            
+
         }
+        ContactRepository contactRepository = new ContactRepository();
         [HttpGet]
-        public  async Task<ActionResult<Page<ContactsDTO>>> Get()
+        //public  async Task<ActionResult<Page<ContactsDTO>>> Get()
+        //{
+        //    var Contact = await contactRepository.GetData();
+        //    var ContactDTO = _mapper.Map<Page<ContactsDTO>>(Contact);
+        //    return ContactDTO;
+        //}
+
+        public  IEnumerable<ContactsDTO> Get()
         {
-            var Contact = await _ContactRepository.GetData();
-            var ContactDTO = _mapper.Map<Page<ContactsDTO>>(Contact);
+            var Contact = contactRepository.GetData();
+            var ContactDTO = _mapper.Map<IEnumerable<ContactsDTO>>(Contact);
             return ContactDTO;
         }
 
@@ -37,9 +49,11 @@ namespace ContactsAPI.Controllers
         }
 
         [HttpPost("add")]
-        public async Task Post()
-        { 
-        
+        public async Task<ActionResult<ContactsDTO>> Post([FromBody] ContactsDTO reg)
+        {
+            var Contact = await contactRepository.AddData(reg);
+            var ContactDTO = _mapper.Map<ContactsDTO>(Contact);
+            return ContactDTO;
         }
 
         [HttpPut("update")]

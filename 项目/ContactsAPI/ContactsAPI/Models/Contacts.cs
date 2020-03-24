@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 
 namespace ContactsAPI.Models
 {
+    [PetaPoco.TableName("hnInfo")]
     public class Contacts
     {
         public Guid Id { get; set; }

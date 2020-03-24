@@ -9,8 +9,9 @@ namespace ContactsAPI.Models
 {
     public interface IContactRepository
     {
-        Task<ActionResult<Page<Contacts>>> GetData();
-        void AddData();
+        //Task<ActionResult<Page<Contacts>>> GetData();
+        IEnumerable<Contacts> GetData();
+        Task<Contacts> AddData(ContactsDTO reg);
         void UpdateData();
         void GetSing();
         void DeleteData();
