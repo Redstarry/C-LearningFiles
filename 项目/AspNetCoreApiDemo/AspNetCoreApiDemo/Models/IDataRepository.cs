@@ -17,7 +17,8 @@ namespace WebApplication5.Models
         //Task<RequestData> GetRequestDatas();
         Task<ResponesData> GetRequestDatas(Guid id);
         Task<ResponesData> AddData(RequestData req);
-        Task<ActionResult<IEnumerable<ResponesData>>> DeleteData(Guid id);
+        //Task<ActionResult<IEnumerable<ResponesData>>> DeleteData(Guid id);
+        Task<ActionResult<string>> DeleteData(Guid id);
         Task<ResponesData> UpdateData(RequestData req,Guid id);
     }
 }

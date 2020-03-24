@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace AspNetCoreApiDemo.Models
 {
+    [PetaPoco.TableName("hnInfo")]
     public class ResponesData
     {
         [Display(Name = "编号Guid")]

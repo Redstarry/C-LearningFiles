@@ -22,24 +22,51 @@ namespace WebApplication5.Models
         }
         public async Task<ResponesData> AddData(RequestData req)
         {
+            var PhoneData = await Db.FirstAsync<string>("select phone from hnInfo where phone = @0", req.Phone);
+            if (PhoneData == req.Phone)
+            {
+                Console.WriteLine($"该{req.Phone}手机号码已存在，请重新输入");
+                _context.Phone = req.Phone;
+                return _context;
+            }
             _context.Id = System.Guid.NewGuid();
             _context.Name = req.Name;
-            _context.Phone = req.Phone;
             _context.Idcard = req.Idcard;
+            _context.Phone = req.Phone;
             await Db.InsertAsync(_context);
             return _context;
         }
 
-        public async Task<ActionResult<IEnumerable<ResponesData>>> DeleteData(Guid id)
+        //public async Task<ActionResult<IEnumerable<ResponesData>>> DeleteData(Guid id)
+        //{
+        //    var SelectData = await Db.FirstAsync<string>("Select Id from hnInfo where Id = @0", id);
+        //    if (SelectData == null || SelectData == "")
+        //    {
+        //        Console.WriteLine($"该Id{id}在数据中不存在");
+        //        return ;
+        //    }
+        //    await Db.DeleteAsync<ResponesData>("where Id = @0", id);
+        //    var Data = Db.Query<ResponesData>("select * from hnInfo");
+        //    return Data.ToList();
+        //}
+        public async Task<ActionResult<string>> DeleteData(Guid id)
         {
+            var SelectData = await Db.ExecuteScalarAsync<int>($"select count(*) from hnInfo where Id = @0", id);
+            if (SelectData <= 0)
+            {
+                return $"该Id{id}在数据中不存在";
+            }
             await Db.DeleteAsync<ResponesData>("where Id = @0", id);
-            var Data = Db.Query<ResponesData>("select * from hnInfo");
-            return Data.ToList();
+            return "删除成功";
         }
 
         public async Task<ResponesData> GetRequestDatas(Guid id)
         {
             var Data = await Db.SingleOrDefaultAsync<ResponesData>("where Id = @0", id);
+            //_context.Id = Data.Id;
+            //_context.Name = Data.Name;
+            //_context.Phone = Data.Phone;
+            //_context.Idcard = Data.Idcard;
             return Data;
         }
 

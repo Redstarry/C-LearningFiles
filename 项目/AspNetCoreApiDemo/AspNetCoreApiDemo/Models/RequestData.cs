@@ -21,15 +21,11 @@ namespace WebApplication5.Models
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
-            if (Name == "" || Phone =="" || Idcard == "")
-            {
-                yield return new ValidationResult("名字不能为空",new [] {nameof(RequestData) });
-            }
-            if (Phone.Length != 11)
+            if (Phone.Length != 11 && Phone.Length != 0)
             {
                 yield return new ValidationResult("电话号码必须是11位", new[] { nameof(RequestData) });
             }
-            if (Regex.IsMatch(Idcard, @"^[0 - 9] * $"))
+            if (Regex.IsMatch(Idcard, @"^[0 - 9] * $") && Idcard.Length != 0)
             {
                 yield return new ValidationResult("身份证号码必须是纯数字", new[] { nameof(RequestData) });
                 if (Idcard.Length < 15 || Idcard.Length > 18)
@@ -37,6 +33,7 @@ namespace WebApplication5.Models
                     yield return new ValidationResult("身份证号码的位数必须是15位到18位。", new[] { nameof(RequestData) });
                 }
             }
+
         }
     }
 }
