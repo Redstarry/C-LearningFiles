@@ -1,4 +1,6 @@
 ﻿using AspNetCoreApiDemo.Data;
+using AspNetCoreApiDemo.Models;
+using Microsoft.AspNetCore.Mvc;
 using PetaPoco;
 using System;
 using System.Collections.Generic;
@@ -10,12 +12,12 @@ namespace WebApplication5.Models
     public interface IDataRepository//<RequestData> where RequestData:class
     {
         //IEnumerable<RequestData> GetRequestDatas();
-        IEnumerable<RequestData> GetRequestDatas(PageProp parameters);
-        //Page<RequestData> GetRequestDatas(PageProp parameters);
+        //IEnumerable<RequestData> GetRequestDatas(PageProp parameters);
+        Page<ResponesData> GetRequestDatas();
         //Task<RequestData> GetRequestDatas();
-        Task<RequestData> GetRequestDatas(Guid id);
-        Task<RequestData> AddData(RequestData req);
-        Task<IEnumerable<RequestData>> DeleteData(Guid id);
-        Task<RequestData> UpdateData(RequestData req,Guid id);
+        Task<ResponesData> GetRequestDatas(Guid id);
+        Task<ResponesData> AddData(RequestData req);
+        Task<ActionResult<IEnumerable<ResponesData>>> DeleteData(Guid id);
+        Task<ResponesData> UpdateData(RequestData req,Guid id);
     }
 }

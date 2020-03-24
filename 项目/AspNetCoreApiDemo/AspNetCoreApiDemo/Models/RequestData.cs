@@ -10,8 +10,8 @@ namespace WebApplication5.Models
     [PetaPoco.TableName("hnInfo")]
     public class RequestData:IValidatableObject
     {
-        [Display(Name = "编号Guid")]
-        public Guid Id { get; set; }
+        //[Display(Name = "编号Guid")]
+        //public Guid Id { get; set; }
         [Display(Name = "姓名")]
         public string Name { get; set; }
         [Display(Name = "手机号码")]
