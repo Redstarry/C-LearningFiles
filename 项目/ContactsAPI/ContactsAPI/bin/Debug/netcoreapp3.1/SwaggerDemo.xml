@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ContactsAPI</name>
+    </assembly>
+    <members>
+        <member name="M:ContactsAPI.Controllers.ContactController.Get(ContactsAPI.Models.PageModel.Page)">
+            <summary>
+            查询全部的数据
+            </summary>
+            <param name="page"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ContactsAPI.Controllers.ContactController.Get(System.Guid)">
+            <summary>
+            根据ID查询数据
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ContactsAPI.Controllers.ContactController.Post(ContactsAPI.Models.ContactsDTO)">
+            <summary>
+            添加数据
+            </summary>
+            <param name="reg"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ContactsAPI.Controllers.ContactController.Put(System.Guid,ContactsAPI.Models.ContactsDTO)">
+            <summary>
+            根据ID更新数据
+            </summary>
+            <param name="id"></param>
+            <param name="req"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ContactsAPI.Controllers.ContactController.Delete(System.Guid)">
+            <summary>
+            根据ID删除数据
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

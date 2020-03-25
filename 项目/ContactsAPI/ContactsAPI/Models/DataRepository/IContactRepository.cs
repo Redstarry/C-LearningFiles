@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using ContactsAPI.Models.PageModel;
+using Microsoft.AspNetCore.Mvc;
 using PetaPoco;
 using System;
 using System.Collections.Generic;
@@ -10,10 +11,10 @@ namespace ContactsAPI.Models
     public interface IContactRepository
     {
         //Task<ActionResult<Page<Contacts>>> GetData();
-        IEnumerable<Contacts> GetData();
+        PageInfo<Contacts> GetData(Page page);
         Task<Contacts> AddData(ContactsDTO reg);
-        void UpdateData();
-        void GetSing();
-        void DeleteData();
+        Task<MessageRespones> UpdateData(Guid id, ContactsDTO req);
+        Task<Contacts> GetSing(Guid id);
+        Task<MessageRespones> DeleteData(Guid id);
     }
 }

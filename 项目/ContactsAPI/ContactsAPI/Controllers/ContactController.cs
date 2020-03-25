@@ -9,6 +9,9 @@ using Microsoft.AspNetCore.Mvc;
 using PetaPoco;
 using ContactsAPI.Models.DataRepository;
 using Microsoft.Extensions.Configuration;
+using ContactsAPI.Models.PageModel;
+using System.Text.Json;
+using System.Text.Encodings.Web;
 
 namespace ContactsAPI.Controllers
 {
@@ -26,46 +29,126 @@ namespace ContactsAPI.Controllers
             
 
         }
-        ContactRepository contactRepository = new ContactRepository();
-        [HttpGet]
+        ContactRepository contactRepository = new ContactRepository(new Contacts());
+
+        /// <summary>
+        /// 查询全部的数据
+        /// </summary>
+        /// <param name="page"></param>
+        /// <returns></returns>
+        [HttpGet(Name = nameof(Get))]
         //public  async Task<ActionResult<Page<ContactsDTO>>> Get()
         //{
         //    var Contact = await contactRepository.GetData();
         //    var ContactDTO = _mapper.Map<Page<ContactsDTO>>(Contact);
         //    return ContactDTO;
         //}
-
-        public  IEnumerable<ContactsDTO> Get()
+        
+        public IEnumerable<ContactsDTO> Get([FromQuery] Page page)
         {
-            var Contact = contactRepository.GetData();
+            var Contact = contactRepository.GetData(page);
+            var previousLink = Contact.HasPrevious ? CreateContactsResourceUri(page, ResourceUriType.PreviousPage) : null;
+            var NextLink = Contact.HasNext ? CreateContactsResourceUri(page, ResourceUriType.NextPage) : null;
+            var pageinationMetadata = new 
+            {
+                totalCount = Contact.TotalCount,
+                pageSize = Contact.PageSize,
+                currentPage = Contact.CurrentPage,
+                totalPages = Contact.TotalPages,
+                previousLink,
+                NextLink
+            };
+            Response.Headers.Add("X-PageinationMetadata", JsonSerializer.Serialize(pageinationMetadata, new JsonSerializerOptions
+            {
+                Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping
+            })) ;
             var ContactDTO = _mapper.Map<IEnumerable<ContactsDTO>>(Contact);
             return ContactDTO;
         }
-
+        /// <summary>
+        /// 根据ID查询数据
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet("id")]
-        public async Task Get(Guid id)
-        { 
-        
-        }
-
-        [HttpPost("add")]
-        public async Task<ActionResult<ContactsDTO>> Post([FromBody] ContactsDTO reg)
+        public async Task<ContactsDTO> Get(Guid id)
         {
-            var Contact = await contactRepository.AddData(reg);
+            var Contact = await contactRepository.GetSing(id);
             var ContactDTO = _mapper.Map<ContactsDTO>(Contact);
             return ContactDTO;
         }
+        /// <summary>
+        /// 添加数据
+        /// </summary>
+        /// <param name="reg"></param>
+        /// <returns></returns>
+        [HttpPost("add")]
+        public async Task<MessageRespones> Post([FromBody] ContactsDTO reg)
+        {
+            yanz rules = new yanz();
+            var mesage = new MessageRespones();
+            var Result = rules.Validate(reg);
 
-        [HttpPut("update")]
-        public async Task Put()
-        { 
-        
+            if (!Result.IsValid)
+            {
+                mesage.Stat = -1;
+                mesage.Mes = Result.ToString();
+                return mesage;
+            }
+            var Contact = await contactRepository.AddData(reg);
+            var ContactDTO = _mapper.Map<ContactsDTO>(Contact);
+            mesage.Stat = 1;
+            mesage.Mes = "添加成功";
+            return mesage;
+        }
+        /// <summary>
+        /// 根据ID更新数据
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="req"></param>
+        /// <returns></returns>
+        [HttpPut("update/{id}")]
+        public async Task<MessageRespones> Put(Guid id, [FromBody] ContactsDTO req)
+        {
+            return await contactRepository.UpdateData(id, req); 
         }
 
-        [HttpDelete("delete")]
-        public async Task Delete()
-        { 
-            
+        /// <summary>
+        /// 根据ID删除数据
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpDelete("delete/{id}")]
+        public async Task<MessageRespones> Delete(Guid id)
+        {
+            return await contactRepository.DeleteData(id); ;
+        }
+
+        private string CreateContactsResourceUri(Page parameters, ResourceUriType type)
+        {
+            switch (type)
+            {
+                case ResourceUriType.PreviousPage:
+                    var b = Url.Link(nameof(Get), new
+                    {
+                        pageNumber = parameters.PageNumber - 1,
+                        pageSize = parameters.PageSize
+                    });
+                    return b;
+                case ResourceUriType.NextPage:
+                    var a = Url.Link(nameof(Get), new
+                    {
+                        pageNumber = parameters.PageNumber + 1,
+                        pageSize = parameters.PageSize
+                    });
+                    return a;
+                default:
+                    return Url.Link(nameof(Get), new
+                    {
+                        pageNumber = parameters.PageNumber,
+                        pageSize = parameters.PageSize
+                    });
+            }
         }
     }
 }

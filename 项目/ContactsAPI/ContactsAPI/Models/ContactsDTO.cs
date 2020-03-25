@@ -10,7 +10,7 @@ namespace ContactsAPI.Models
     [PetaPoco.TableName("hnInfo")]
     public class ContactsDTO
     {
-        public Guid Id { get; set; }
+        private Guid Id { get; set; }
         public string Name { get; set; }
         public string Phone { get; set; }
         public string IdCard { get; set; }

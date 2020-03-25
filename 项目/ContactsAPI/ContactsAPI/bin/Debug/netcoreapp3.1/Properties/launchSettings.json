@@ -4,7 +4,7 @@
     "ContactsAPI": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "api/Contact",
+      "launchUrl": "swagger/index.html",
       "applicationUrl": "http://localhost:5000",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
