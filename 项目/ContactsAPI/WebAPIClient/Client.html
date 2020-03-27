@@ -1,0 +1,347 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Access-Control-Allow-Origin" content="*">
+    <title>Document</title>
+    <style>
+
+        *
+        {
+            margin:0;
+            padding:0;
+        }
+        body{
+
+            /* background: rgba(14, 14, 14, .3); */
+        }
+        #subject
+        {
+
+            width: 1000px;
+            margin:auto;
+            position: relative;
+        }
+        .title p
+        {
+
+            margin: 50px auto;
+            width:100px;
+        }
+        .container
+        {
+
+            height: 250px;
+        }
+        .container ul li 
+        {
+            width: 195px;
+            float: left;
+            border-right: 1px solid rgb(74, 118, 201);
+            border-bottom: 1px solid rgb(74, 118, 201);
+            line-height: 40px;
+            height: 40px;
+            text-align: center;
+            list-style: none;
+            /* border-right: none; */
+            background-color: cornflowerblue;
+            color: cornsilk;
+        }
+        .container ul li.first
+        {
+            margin-left: 10px;
+        }
+        .container ul li.last
+        {
+            border-right: none;
+            /* display: none; */
+        }
+        .container ul li.Id{
+
+            display: none;
+        }
+        .container ul li a
+        {
+            margin-left: 20px;
+        }
+        .container ul li a:hover{
+
+            cursor: pointer;
+            
+        }
+
+        .prop
+        {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top:0;
+            left: 0;
+            background:rgba(0,0,0,.4);
+        }
+        .prop .updateClick
+        {
+            position: absolute;
+            width: 1000px;
+            height: 700px;
+            top:30%;
+            left:50%;
+            /* margin-top:-50px; */
+            margin-left: -500px;
+            background: rgba(255,255,255,1);
+        }
+        .foot
+        {
+            height:100px;
+        }
+        .foot .left
+        {
+            margin-top: 5px;
+        }
+        .foot  a
+        {
+            display: block;
+            float: left;
+            width:70px;
+            height: 30px;
+            background-color: violet;
+            text-decoration: none;
+            color:black;
+            text-align: center;
+            line-height: 30px;
+            margin-left: 10px;
+            border-radius: 25px;
+            box-shadow: 0px 4px 1px black;
+        }
+        .foot .right
+        {
+            float: right;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id = "subject">
+        <div class = "title">
+            <p>WebAPIClient</p>
+        </div>
+        <div class = "Container">
+            <ul class="maindom">
+                <li class = "first">ID</li>
+                <li>姓名</li>
+                <li>手机号码</li>
+                <li>身份证</li>
+                <li class="last">操作</li>
+            </ul>
+        </div>
+        <div class = "foot">
+            <div class = "left">
+                <a href="#">新增</a>
+                <a href="#">查询</a>
+            </div>
+            <div class = "right">
+                <a href="#" class="privode">上一页</a>
+                <a href="#" class="Curren">1</a>
+                <a href="#" class="next">下一页</a>
+            </div>
+        </div>
+        
+    </div>
+    <div class="alph">
+        <div class = "updateClick" style="display: none;">
+            <span>姓名： </span>
+            <input type="text" class = "name">
+            <span>手机号码：</span>
+            <input type="text" class = "phone">
+            <span>身份证：</span>
+            <input type="text" class = "IdCard">
+            <input type="button" value="确定" class="sure">
+            <input type="button" value="取消" class= "no">
+        </div>
+    </div>
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+    <script>
+        var GuidData;
+        var oldName;
+        var oldphone;
+        var oldIdCard;
+        window.onload = function(){
+            //获取全部数据
+            sendAjax("http://localhost:5000/api/Contact", "get");
+        }
+        //动态创建标签
+        function CreateEle(eleTag,name, eleText,parent,callback)
+        {
+            var CreateElem = document.createElement(eleTag);
+            CreateElem.setAttribute("class", name);
+            CreateElem.innerText = eleText;
+            parent.appendChild(CreateElem);
+            callback();
+        }
+        //下一页
+        $(".next").click(function(){
+            var currentPage = $(".Curren").text();
+            var nextPage = parseInt(currentPage) + 1;
+            var url = "http://localhost:5000/api/Contact?PageNumber="+ nextPage +"&PageSize=5";
+            $.ajax({
+                url:url,
+                type:"get",
+                dataType:"json",
+                contentType:"application/json;charset=utf-8",
+                success:function(data)
+                {
+                    if(!$.isEmptyObject(data))
+                    {
+                        $(".maindom").siblings().remove();
+                        GetData(data);
+                        $(".Curren").text(nextPage);
+                    }
+                    
+                }
+            });
+        })
+        //上一页
+        $(".privode").click(function(){
+            var currentPage = $(".Curren").text();
+            var privodePage = parseInt(currentPage) - 1;
+            if(privodePage > 0 )
+            {
+                var url = "http://localhost:5000/api/Contact?PageNumber="+ privodePage +"&PageSize=5";
+                $.ajax({
+                url:url,
+                type:"get",
+                dataType:"json",
+                contentType:"application/json;charset=utf-8",
+                success:function(data)
+                {
+                    $(".maindom").siblings().remove();
+                    GetData(data);
+                    $(".Curren").text(privodePage);
+                    
+                }
+            });
+            }
+
+        });
+        function emty()
+        {
+
+        }
+        //更新按钮
+        function updateClient()
+        {
+            var update = document.getElementsByClassName("alph");
+            update[0].classList.add("prop");
+            $(".updateClick").css("display","block")
+            console.log($(this).parent().siblings(".Id").text());
+            GuidData = $(this).parent().siblings(".Id").text();
+            $(".name").val($(this).parent().siblings(".two").text());
+            $(".phone").val($(this).parent().siblings(".three").text());
+            $(".IdCard").val($(this).parent().siblings(".four").text());
+        }
+        
+        $(".sure").click(function(){
+            //更新
+            var url = "http://localhost:5000/api/Contact/update/" + GuidData;
+            $.ajax({
+                url:url,
+                data:JSON.stringify({
+                    "name":$(".name").val(),
+                    "phone":$(".phone").val(),
+                    "IdCard":$(".IdCard").val()}),
+                type:"put",
+                dataType:"json",
+                contentType:"application/json;charset=utf-8",
+                success:function(data)
+                {
+                    console.log(data);
+                    console.log(data["stat"]);
+                    if(data["stat"] > 0)
+                    {
+                        alert(data["mes"]);
+                        window.location.reload();
+                    }
+                }
+            });
+            $(".updateClick").css("display", "none");
+            $(".alph").removeClass("prop");
+        });
+
+        //取消
+        $(".no").click(function(){
+            $(".updateClick").css("display", "none");
+            $(".alph").removeClass("prop");
+        });
+
+        //删除按钮
+        function deleteClick()
+        {
+            var id = $(this).parent().siblings(".Id").text();
+            var url = "http://localhost:5000/api/Contact/delete/" + id;
+            $.ajax({
+                url:url,
+                type:"delete",
+                dataType:"json",
+                contentType:"application/json;charset=utf-8",
+                success:function(data)
+                {
+                    if(data["stat"] > 0)
+                    {
+                        alert(data["mes"]);
+                        window.location.reload();
+                    }
+                }
+
+            });
+        }
+        //ajax请求
+        function sendAjax(sendurl, sendtype)
+        {
+            $.ajax({
+                url:sendurl,
+                type:sendtype,
+                dataType:"json",
+                contentType:"application/json;charset=utf-8",
+                success:function(data)
+                {
+                    GetData(data);
+                }
+            });
+        }
+        function GetData(data)
+        {
+            for(var i = 0; i< data.length;i++)
+            {
+                var num = i + 1;
+                var div = document.getElementsByClassName("Container");
+
+                var CreateUl = document.createElement("ul");
+                var Ulname = "docUl" + i;
+                CreateUl.setAttribute("class", Ulname +  " boottonStyle");
+                div[0].appendChild(CreateUl);
+
+                CreateEle("li", "first", i + 1, CreateUl,emty);
+                CreateEle("li", "two", data[i]["name"], CreateUl,emty);
+                CreateEle("li", "three", data[i]["phone"], CreateUl,emty);
+                CreateEle("li", "four", data[i]["idCard"], CreateUl,emty);
+                CreateEle("li", "last","", CreateUl,function(){
+                    var Parent = document.getElementsByClassName("last")[num];
+                    var aTagupdate = document.createElement("a");
+                    var aTagDelect = document.createElement("a");
+                    aTagupdate.innerText = "更新";
+                    aTagupdate.setAttribute("onclick", "updateClient.call(this)");
+                    //aTagupdate.setAttribute("class", "update");
+                    aTagDelect.innerText = "删除";
+                    aTagDelect.setAttribute("onclick", "deleteClick.call(this)");
+
+                    Parent.appendChild(aTagupdate);
+                    Parent.appendChild(aTagDelect);
+
+                });
+                CreateEle("li", "Id", data[i]["id"],CreateUl,emty);
+            }
+        }
+    </script>
+</body>
+</html>

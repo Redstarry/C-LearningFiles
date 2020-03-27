@@ -1,7 +1,9 @@
-﻿using ContactsAPI.Models.Mapper;
+﻿using ContactsAPI.Models.config;
+using ContactsAPI.Models.Mapper;
 using ContactsAPI.Models.PageModel;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 using PetaPoco;
 using System;
 using System.Collections.Generic;
@@ -13,15 +15,20 @@ namespace ContactsAPI.Models.DataRepository
 {
     public class ContactRepository : IContactRepository
     {
-        private readonly Contacts context;
+        private readonly IOptions<ConnectionConfig> options;
 
         public PetaPoco.Database Db { get; set; }
-        public ContactRepository(Contacts _context)
+        public string ConnecStr { get; set; }
+        public string Provider { get; set; }
+        public ContactRepository(IOptions<ConnectionConfig> options)
         {
-            var ConnecStr = "server = .;database = ContactInformation;uid = sa; pwd = 123";
-            var Provider = "System.Data.SqlClient";
+            this.options = options;
+            //var ConnecStr = "server = .;database = ContactInformation;uid = sa; pwd = 123";
+            ConnecStr = options.Value.ConnectionStr;
+            //var Provider = "System.Data.SqlClient";
+            Provider = options.Value.Priovder;
             Db = new PetaPoco.Database(ConnecStr, Provider, null);
-            context = _context;
+            
         }
         public async Task<Contacts> AddData(ContactsDTO reg)
         {
@@ -73,9 +80,9 @@ namespace ContactsAPI.Models.DataRepository
         public async Task<MessageRespones> UpdateData(Guid id, ContactsDTO req)
         {
             var sql = PetaPoco.Sql.Builder.Append("set ");
-            if (req.Name != null || req.Name == "") sql.Append("name = @0", req.Name);
-            if (req.IdCard != null || req.IdCard == "") sql.Append("IdCard = @0", req.IdCard);
-            if (req.Phone != null || req.Phone == "") sql.Append("Phone = @0", req.Phone);
+            if (req.Name != null && req.Name != "") sql.Append("name = @0 ", req.Name);
+            if (req.IdCard != null && req.IdCard != "") sql.Append(", IdCard = @0 ", req.IdCard);
+            if (req.Phone != null && req.Phone != "") sql.Append(", Phone = @0 ", req.Phone);
             sql.Append(" where id = @0", id);
             //if (param.Id != null) sql.Append(" id = @0", param.Id);
             //if (param.Name != null || param.Name == "") sql.Append("name = @0", param.Name);

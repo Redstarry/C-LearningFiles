@@ -11,6 +11,9 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using AutoMapper;
 using System.IO;
+using ContactsAPI.Models.config;
+using ContactsAPI.Models.DataRepository;
+using ContactsAPI.Models;
 
 namespace ContactsAPI
 {
@@ -19,6 +22,7 @@ namespace ContactsAPI
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+            
         }
 
         public IConfiguration Configuration { get; }
@@ -27,6 +31,8 @@ namespace ContactsAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            //var cr = new ContactRepository();
+            services.AddTransient<IContactRepository,ContactRepository>();
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddSwaggerGen(option => {
 
@@ -39,6 +45,9 @@ namespace ContactsAPI
                 var xmlPath = Path.Combine(basePath, "SwaggerDemo.xml");
                 option.IncludeXmlComments(xmlPath);
             });
+            services.Configure<ConnectionConfig>(Configuration.GetSection("ConnectionStrings"));
+            services.AddCors(option => option.AddPolicy("Domain", builder=>builder.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin()));
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -49,9 +58,11 @@ namespace ContactsAPI
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseStaticFiles(); //使用html、js的中间件
+            //
             app.UseRouting();
-            
 
+            app.UseCors("Domain");
             app.UseAuthorization();
 
             app.UseSwagger();
