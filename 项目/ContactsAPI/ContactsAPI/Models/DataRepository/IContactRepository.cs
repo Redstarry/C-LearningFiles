@@ -12,6 +12,7 @@ namespace ContactsAPI.Models
     {
         //Task<ActionResult<Page<Contacts>>> GetData();
         PageInfo<Contacts> GetData(Page page);
+        IEnumerable<Contacts> Get(ContactsDTO reg);
         Task<Contacts> AddData(ContactsDTO reg);
         Task<MessageRespones> UpdateData(Guid id, ContactsDTO req);
         Task<Contacts> GetSing(Guid id);

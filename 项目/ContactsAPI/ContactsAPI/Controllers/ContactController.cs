@@ -58,6 +58,14 @@ namespace ContactsAPI.Controllers
             var ContactDTO = _mapper.Map<ContactsDTO>(Contact);
             return new JsonResult(ContactDTO);
         }
+        [HttpGet("compound")]
+        public async Task<IActionResult> GetCompound([FromQuery] ContactsDTO reg)
+        {
+            var Contact = contactRepository.Get(reg);
+            var ContactDTO = _mapper.Map<IEnumerable<ContactsDTO>>(Contact);
+            await Task.Delay(10);
+            return new JsonResult(ContactDTO);
+        }
         /// <summary>
         /// 添加数据
         /// </summary>
@@ -102,7 +110,7 @@ namespace ContactsAPI.Controllers
         [HttpDelete("delete/{id}")]
         public async Task<MessageRespones> Delete(Guid id)
         {
-            return await contactRepository.DeleteData(id); ;
+            return await contactRepository.DeleteData(id); 
         }
 
         private string CreateContactsResourceUri(Page parameters, ResourceUriType type)

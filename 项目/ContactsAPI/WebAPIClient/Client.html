@@ -14,6 +14,7 @@
         body{
 
             /* background: rgba(14, 14, 14, .3); */
+            /* position: relative; */
         }
         #subject
         {
@@ -86,7 +87,6 @@
             height: 700px;
             top:30%;
             left:50%;
-            /* margin-top:-50px; */
             margin-left: -500px;
             background: rgba(255,255,255,1);
         }
@@ -118,6 +118,74 @@
             float: right;
             margin-right: 10px;
         }
+        .on
+        {
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,.4);
+            position:absolute;
+            top:0;
+            left:0;
+        }
+        .on .WindowLoadingInterface
+        {
+            width: 300px;
+            height:400px;
+            background: white;
+            position: absolute;
+            top:50%;
+            left:50%;
+            margin-left:-100px;
+            margin-top:-300px;
+            border-radius: 20px;
+        }
+        .on .WindowLoadingInterface div
+        {
+            width: 180px;
+            height:53px;
+            margin:12px auto;
+            /* border: 1px solid red; */
+            padding-top:10px;
+            
+        }
+        .on .WindowLoadingInterface span
+        {
+            /* float: left; */
+            display: block;
+            margin-bottom: 5px;
+        }
+        .on .WindowLoadingInterface input
+        {
+            float: left;
+            
+        }
+        .on .WindowLoadingInterface a
+        {
+            display: block;
+            float: left;
+            width:70px;
+            height: 30px;
+            background-color: violet;
+            text-decoration: none;
+            color:black;
+            text-align: center;
+            line-height: 30px;
+            /* margin-left: 10px; */
+            border-radius: 25px;
+            box-shadow: 0px 4px 1px black;
+        }
+        .on .WindowLoadingInterface a:hover
+        {
+            cursor: pointer;
+        }
+        .on .WindowLoadingInterface a.ok
+        {
+            float: left;
+        }
+        .on .WindowLoadingInterface a.cancel
+        {
+            float: right;
+        }
     </style>
 </head>
 
@@ -138,7 +206,7 @@
         <div class = "foot">
             <div class = "left">
                 <a href="#">新增</a>
-                <a href="#">查询</a>
+                <a href="#" class = "select">查询</a>
             </div>
             <div class = "right">
                 <a href="#" class="privode">上一页</a>
@@ -224,6 +292,168 @@
             }
 
         });
+        //点击查询 查询界面
+        $(".select").click(function(){
+            //创建弹窗底层，挡住 主界面
+            var body = document.getElementsByTagName("body");
+            var div = document.createElement("div");
+            div.setAttribute("class", "on");
+            body[0].appendChild(div);
+            //创建功能的承载界面
+            var tanc = document.createElement("div");
+            tanc.setAttribute("class", "WindowLoadingInterface");
+            div.appendChild(tanc)
+            //ID的div
+            var idDiv = document.createElement("div");
+            idDiv.setAttribute("class", "idDiv");
+            tanc.appendChild(idDiv);
+
+            var Id = document.createElement("span");
+            Id.innerText = "Id：";
+            idDiv.appendChild(Id);
+
+            var IdInput = document.createElement("input");
+            idDiv.appendChild(IdInput);
+            //name的div
+            var idDiv = document.createElement("div");
+            idDiv.setAttribute("class", "NameDiv");
+            tanc.appendChild(idDiv);
+
+            var name = document.createElement("span");
+            name.innerText = "姓名：";
+            idDiv.appendChild(name);
+
+            var NameInput = document.createElement("input");
+            idDiv.appendChild(NameInput);
+            //phone的div
+            var idDiv = document.createElement("div");
+            idDiv.setAttribute("class", "PhoneDiv");
+            tanc.appendChild(idDiv);
+
+            var phone = document.createElement("span");
+            phone.innerText = "手机号码：";
+            idDiv.appendChild(phone);
+
+            var PhoneInput = document.createElement("input");
+            idDiv.appendChild(PhoneInput);
+            //身份证的div
+            var idDiv = document.createElement("div");
+            idDiv.setAttribute("class", "IdCardDiv");
+            tanc.appendChild(idDiv);
+
+            var IdCard = document.createElement("span");
+            IdCard.innerText = "身份证：";
+            idDiv.appendChild(IdCard);
+
+            var IdCardInput = document.createElement("input");
+            idDiv.appendChild(IdCardInput);
+            //按钮的div
+            var idDiv = document.createElement("div");
+            idDiv.setAttribute("class", "btnDiv");
+            tanc.appendChild(idDiv);
+
+            var okbtn = document.createElement("a");
+            okbtn.setAttribute("class","ok");
+            okbtn.innerText = "确定";
+            idDiv.appendChild(okbtn);
+
+            var nobtn = document.createElement("a");
+            nobtn.setAttribute("class","cancel");
+            nobtn.innerText = "取消";
+            idDiv.appendChild(nobtn);
+            $(".ok").click(okclick);
+            $(".cancel").click(noclick);
+        });
+        //查询里面的确定按钮。
+        function okclick()
+        {
+            var id = $(this).parent().siblings(".idDiv").children("input").val();
+            var name = $(this).parent().siblings(".NameDiv").children("input").val();
+            var phone = $(this).parent().siblings(".PhoneDiv").children("input").val();
+            var IdCard = $(this).parent().siblings(".IdCardDiv").children("input").val();
+            var url = "http://localhost:5000/api/Contact/compound?";
+            
+            if(id != "")
+            {
+                var reg = new RegExp(/^[0-9a-zA-Z]{8}-[0-9a-zA-Z]{4}-[0-9a-zA-Z]{4}-[0-9a-zA-Z]{4}-[0-9a-zA-Z]{12}$/);
+                if(reg.test(id))
+                {
+                    url = url + "id=" + id + "&";
+                }
+                else
+                {
+                    console.log("id错误，请输入正确的guid");
+                    return;
+                }
+            }
+
+            if(name != "")
+            {
+                url = url + "name=" + name + "&";
+            }
+            if(phone != "")
+            {
+                var reg = new RegExp(/^\d{11}$/);
+                if(phone.length == 11 && reg.test(phone) )
+                {
+                    url = url + "phone=" + phone + "&";
+                }
+                else
+                {
+                    console.log("phone错误,请输入11位手机号码");
+                    return;
+                } 
+            }
+            
+            if(IdCard != "")
+            {
+                var reg15 = new RegExp(/^\d{15}$/);
+                var reg18 = new RegExp(/^\d{18}$/);
+                if((IdCard.length == 18 || IdCard.length == 15) && (reg15.test(IdCard) || reg18.test(IdCard)))
+                {
+                    url = url + "IdCard=" + IdCard + "&";
+                }
+                else
+                {
+                    console.log("IdCard,请输入15-18位身份号码");
+                    return;
+                } 
+                
+            }
+            if(id == "" && name == "" && phone =="" && IdCard =="")
+            {
+                $(".maindom").siblings().remove();
+                sendAjax("http://localhost:5000/api/Contact", "get");
+                $(".on").remove();
+                return;
+            }
+            $.ajax({
+                url:url,
+                type:"get",
+                dataType:"json",
+                contentType:"application/json;charset=utf-8",
+                success:function(data){
+                    console.log($.isEmptyObject(data))
+                    if(!$.isEmptyObject(data))
+                    {
+                        console.log(data);
+                        $(".maindom").siblings().remove();
+                        GetData(data);
+                        $(".on").remove();
+                    }
+                    else
+                    {
+                        alert("数据不存在");
+                    }
+                    
+                }
+            });         
+        }
+        //查询里面的取消按钮
+        function noclick()
+        {
+            $(this).parent().parent().parent().remove();
+        }
         function emty()
         {
 
@@ -240,7 +470,7 @@
             $(".phone").val($(this).parent().siblings(".three").text());
             $(".IdCard").val($(this).parent().siblings(".four").text());
         }
-        
+        //更新中的确定按钮
         $(".sure").click(function(){
             //更新
             var url = "http://localhost:5000/api/Contact/update/" + GuidData;
@@ -268,7 +498,7 @@
             $(".alph").removeClass("prop");
         });
 
-        //取消
+        //更新中的取消按钮
         $(".no").click(function(){
             $(".updateClick").css("display", "none");
             $(".alph").removeClass("prop");

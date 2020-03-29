@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 
 namespace ContactsAPI.Models.DataRepository
@@ -70,7 +71,25 @@ namespace ContactsAPI.Models.DataRepository
             var contact = Db.Query<Contacts>("Select * from hnInfo");
             return PageInfo<Contacts>.Create(contact, page.PageNumber, page.PageSize);
         }
+        public  IEnumerable<Contacts> Get(ContactsDTO reg)
+        {
+            var sql = PetaPoco.Sql.Builder
+                .Select("*")
+                .From("hnInfo");
+            if (reg.Id != null && reg.Id.ToString() != "" && reg.Id != Guid.Empty) sql.Where("id = @0",reg.Id);
+            if (reg.Name != null && reg.Name != "") sql.Where("name=@0",reg.Name);
+            if (reg.Phone != null && reg.Phone != "") sql.Where("Phone=@0", reg.Phone);
+            if (reg.IdCard != null && reg.IdCard != "") sql.Where("IdCard=@0", reg.IdCard);
+            //PropertyInfo[] propertyInformation = reg.GetType().GetProperties();
+            //foreach (var item in propertyInformation)
+            //{
+            //    if(item.PropertyType.)
+            //}
+            var Contact = Db.Query<Contacts>(sql);
+            return Contact;
 
+
+        }
         public async Task<Contacts> GetSing(Guid id)
         {
             var Contact = await Db.SingleOrDefaultAsync<Contacts>("where Id = @0", id);
