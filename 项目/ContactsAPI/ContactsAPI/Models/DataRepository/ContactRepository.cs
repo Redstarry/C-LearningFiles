@@ -69,6 +69,7 @@ namespace ContactsAPI.Models.DataRepository
         public  PageInfo<Contacts> GetData(Page page)
         {
             var contact = Db.Query<Contacts>("Select * from hnInfo");
+            //var a = contact.Skip(pageSize * (pagenum - 1)).take(pagesize);
             return PageInfo<Contacts>.Create(contact, page.PageNumber, page.PageSize);
         }
         public  IEnumerable<Contacts> Get(ContactsDTO reg)

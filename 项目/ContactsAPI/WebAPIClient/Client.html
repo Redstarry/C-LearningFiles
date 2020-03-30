@@ -196,7 +196,7 @@
         </div>
         <div class = "Container">
             <ul class="maindom">
-                <li class = "first">ID</li>
+                <li class = "first">编号</li>
                 <li>姓名</li>
                 <li>手机号码</li>
                 <li>身份证</li>
@@ -205,7 +205,7 @@
         </div>
         <div class = "foot">
             <div class = "left">
-                <a href="#">新增</a>
+                <a href="#" class="addAlert">新增</a>
                 <a href="#" class = "select">查询</a>
             </div>
             <div class = "right">
@@ -294,6 +294,15 @@
         });
         //点击查询 查询界面
         $(".select").click(function(){
+            createAlert(okclick);
+        });
+        //点击新增，新建窗口
+        $(".addAlert").click(function(){
+            createAlert(addokclick);
+            $(".idDiv").remove();
+        });
+        function createAlert(okclick)
+        {
             //创建弹窗底层，挡住 主界面
             var body = document.getElementsByTagName("body");
             var div = document.createElement("div");
@@ -363,7 +372,7 @@
             idDiv.appendChild(nobtn);
             $(".ok").click(okclick);
             $(".cancel").click(noclick);
-        });
+        }
         //查询里面的确定按钮。
         function okclick()
         {
@@ -450,6 +459,46 @@
             });         
         }
         //查询里面的取消按钮
+
+        //新增里面的确定按钮
+        function addokclick()
+        {
+            //var id = $(this).parent().siblings(".idDiv").children("input").val();
+            var name = $(this).parent().siblings(".NameDiv").children("input").val();
+            var phone = $(this).parent().siblings(".PhoneDiv").children("input").val();
+            var IdCard = $(this).parent().siblings(".IdCardDiv").children("input").val();
+            if(name !=""&&phone != "" &&IdCard !="")
+            {
+                $.ajax({
+                    url:"http://localhost:5000/api/Contact/add",
+                    data:JSON.stringify({
+                        "name":name,
+                        "phone":phone,
+                        "IdCard":IdCard
+                    }),
+                    type:"post",
+                    contentType:"application/json;charset=utf-8",
+                    success:function(data)
+                    {
+                        if(data["stat"]>0)
+                        {
+                            alert(data["mes"]);
+                            window.location.reload();
+                            $(".maindom").siblings().remove();
+                            $(".on").remove();
+                        }
+                        else
+                        {
+                            alert("添加数据失败");
+                        }
+                    }
+                });
+            }
+            else
+            {
+                alert("姓名或电话号码或身份证为空");
+            }
+        }
         function noclick()
         {
             $(this).parent().parent().parent().remove();
