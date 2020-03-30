@@ -1,0 +1,30 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <environment include="Development">
+        <link href="#" rel="stylesheet" asp-href-include="css/*" />
+    </environment>
+
+    <environment exclude="Development">
+        <link href="#" rel="stylesheet" asp-href-include="css/*" />
+    </environment>
+</head>
+<body class=" container"> 
+    <div class="row">
+        <div class="col-md-2">
+            <img src="~/images/icon.png" alt="Logo" asp-append-version="true" style="height:60px;"/>
+        </div>
+        <div class="col-md-10">
+            <span class="h2">@ViewBag.Title</span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            @RenderBody()
+        </div>
+    </div>
+</body>
+</html>

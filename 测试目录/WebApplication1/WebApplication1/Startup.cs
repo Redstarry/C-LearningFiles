@@ -41,7 +41,7 @@ namespace WebApplication1
             {
                 endpoints.MapControllerRoute(
                     "defalut",
-                    "{controller=home}/{action=index}/{id?}"
+                    "{controller=Department}/{action=index}/{id?}"
                     );
                 //endpoints.MapControllers();
             });
