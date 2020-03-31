@@ -16,30 +16,33 @@ namespace ContactsAPI.Models.DataRepository
 {
     public class ContactRepository : IContactRepository
     {
-        private readonly IOptions<ConnectionConfig> options;
+        private readonly AutoMapper.IMapper _mapper;
 
         public PetaPoco.Database Db { get; set; }
         public string ConnecStr { get; set; }
         public string Provider { get; set; }
-        public ContactRepository(IOptions<ConnectionConfig> options)
+        public ContactRepository(IOptions<ConnectionConfig> options, AutoMapper.IMapper mapper)
         {
-            this.options = options;
-            //var ConnecStr = "server = .;database = ContactInformation;uid = sa; pwd = 123";
+            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
             ConnecStr = options.Value.ConnectionStr;
-            //var Provider = "System.Data.SqlClient";
             Provider = options.Value.Priovder;
             Db = new PetaPoco.Database(ConnecStr, Provider, null);
             
         }
-        public async Task<Contacts> AddData(ContactsDTO reg)
+        public async Task<bool> AddData(ContactsDTO reg)
         {
-            var soucreContacts = new Contacts();
+            var soucreContacts = _mapper.Map<Contacts>(reg);
             soucreContacts.Id = System.Guid.NewGuid();
-            soucreContacts.Name = reg.Name;
-            soucreContacts.Phone = reg.Phone;
-            soucreContacts.IdCard = reg.IdCard;
-            await Db.InsertAsync(soucreContacts);
-            return soucreContacts;
+      
+            if (Convert.ToInt32(await Db.InsertAsync(soucreContacts)) > 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+            
         }
 
         public async Task<MessageRespones> DeleteData(Guid id)
@@ -58,13 +61,6 @@ namespace ContactsAPI.Models.DataRepository
             mesage.Mes = "删除失败";
             return mesage;
         }
-
-        //public async Task<ActionResult<IEnumerable<Contacts>>> GetData()
-        //{
-        //    //var contact = await Db.PageAsync<Contacts>(1, 5, "Select * from hnInfo");
-        //    var contact = await Db.QueryAsync<IEnumerable<Contacts>>("Select * from hnInfo");
-        //    return contact;
-        //}
 
         public  PageInfo<Contacts> GetData(Page page)
         {
@@ -104,17 +100,7 @@ namespace ContactsAPI.Models.DataRepository
             if (req.IdCard != null && req.IdCard != "") sql.Append(", IdCard = @0 ", req.IdCard);
             if (req.Phone != null && req.Phone != "") sql.Append(", Phone = @0 ", req.Phone);
             sql.Append(" where id = @0", id);
-            //if (param.Id != null) sql.Append(" id = @0", param.Id);
-            //if (param.Name != null || param.Name == "") sql.Append("name = @0", param.Name);
-            //if (param.Phone != null || param.Phone == "") sql.Append("Phone = @0", param.Phone);
-            //if (param.IdCard != null || param.IdCard == "") sql.Append("IdCard = @0", param.IdCard);
-
-
-
             var ContactNum = await Db.UpdateAsync<Contacts>(sql);
-            //if (req.IdCard != null || req.IdCard != "") Contact.IdCard = req.IdCard;
-            //if (req.Name != null || req.Name != "") Contact.Name = req.Name;
-            //if (req.Phone != null || req.Phone != "") Contact.Phone = req.Phone;
             var mesage = new MessageRespones();
             if (ContactNum <= 0)
             {

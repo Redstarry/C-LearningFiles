@@ -14,6 +14,7 @@ namespace ContactsAPI.Models.Mapper
             //CreateMap<Contacts, ContactsDTO>().ForMember(target => target.ContactPhone, opt => opt.MapFrom(src => src.Phone));
             //CreateMap<Contacts, ContactsDTO>().ForMember(target => target.ContactIdCard, opt => opt.MapFrom(src => src.IdCard));
             CreateMap<Contacts, ContactsDTO>();
+            CreateMap<ContactsDTO, Contacts>();
         }
     }
 }

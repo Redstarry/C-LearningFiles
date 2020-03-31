@@ -42,6 +42,7 @@ namespace ContactsAPI.Controllers
         public async Task<IActionResult> Get([FromQuery] Page page)
         {
             var Contact = contactRepository.GetData(page);
+            
             var ContactDTO = _mapper.Map<IEnumerable<ContactsDTO>>(Contact);
             await Task.Delay(10);  
             return new JsonResult(ContactDTO);
@@ -85,7 +86,12 @@ namespace ContactsAPI.Controllers
                 return new JsonResult(mesage);
             }
             var Contact = await contactRepository.AddData(reg);
-            var ContactDTO = _mapper.Map<ContactsDTO>(Contact);
+            if (!Contact)
+            {
+                mesage.Stat = -1;
+                mesage.Mes = "添加失败";
+                return new JsonResult(mesage);
+            }
             mesage.Stat = 1;
             mesage.Mes = "添加成功";
             return new JsonResult(mesage);
