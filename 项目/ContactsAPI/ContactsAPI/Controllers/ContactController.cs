@@ -19,7 +19,7 @@ using Microsoft.AspNetCore.Cors;
 namespace ContactsAPI.Controllers
 {
     [EnableCors("Domain")]
-    [Route("api/[controller]")]
+    [Route("v1/Contacts")]
     [ApiController]
     public class ContactController : ControllerBase
     {
@@ -52,14 +52,19 @@ namespace ContactsAPI.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [HttpGet("id")]
+        [HttpGet("{id}")]
         public async Task<IActionResult> Get(Guid id)
         {
             var Contact = await contactRepository.GetSing(id);
             var ContactDTO = _mapper.Map<ContactsDTO>(Contact);
             return new JsonResult(ContactDTO);
         }
-        [HttpGet("compound")]
+        /// <summary>
+        /// 以 姓名，手机号码，身份证号查询单个数据
+        /// </summary>
+        /// <param name="reg"></param>
+        /// <returns></returns>
+        [HttpGet("single")]
         public async Task<IActionResult> GetCompound([FromQuery] ContactsDTO reg)
         {
             var Contact = contactRepository.Get(reg);
@@ -72,7 +77,7 @@ namespace ContactsAPI.Controllers
         /// </summary>
         /// <param name="reg"></param>
         /// <returns></returns>
-        [HttpPost("add")]
+        [HttpPost]
         public async Task<IActionResult> Post([FromBody] ContactsDTO reg)
         {
             yanz rules = new yanz();
@@ -102,7 +107,7 @@ namespace ContactsAPI.Controllers
         /// <param name="id"></param>
         /// <param name="req"></param>
         /// <returns></returns>
-        [HttpPut("update/{id}")]
+        [HttpPut("{id}")]
         public async Task<MessageRespones> Put(Guid id, [FromBody] ContactsDTO req)
         {
             return await contactRepository.UpdateData(id, req); 
@@ -113,7 +118,7 @@ namespace ContactsAPI.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [HttpDelete("delete/{id}")]
+        [HttpDelete("{id}")]
         public async Task<MessageRespones> Delete(Guid id)
         {
             return await contactRepository.DeleteData(id); 
