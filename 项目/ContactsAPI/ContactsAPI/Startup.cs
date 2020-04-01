@@ -31,7 +31,6 @@ namespace ContactsAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            //var cr = new ContactRepository();
             services.AddTransient<IContactRepository,ContactRepository>();
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddSwaggerGen(option => {

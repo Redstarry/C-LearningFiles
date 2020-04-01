@@ -20,8 +20,7 @@ namespace ContactsAPI.Models
         private bool JudgeIdCardnumber(ContactsDTO contactsDTO, string arg)
         {
             var rx = new Regex(@"(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)");
-            var ze = rx.IsMatch(contactsDTO.IdCard);
-            return (contactsDTO.IdCard.Length == 15 || contactsDTO.IdCard.Length == 18) && ze;  
+            return rx.IsMatch(contactsDTO.IdCard);  
         }
 
         private bool judgePhone(ContactsDTO contactsDTO, string length)

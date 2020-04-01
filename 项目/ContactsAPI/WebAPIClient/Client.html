@@ -236,7 +236,7 @@
         var oldIdCard;
         window.onload = function(){
             //获取全部数据
-            sendAjax("http://localhost:5000/api/Contact", "get");
+            sendAjax("http://localhost:5000/v1/Contacts", "get");
         }
         //动态创建标签
         function CreateEle(eleTag,name, eleText,parent,callback)
@@ -251,7 +251,7 @@
         $(".next").click(function(){
             var currentPage = $(".Curren").text();
             var nextPage = parseInt(currentPage) + 1;
-            var url = "http://localhost:5000/api/Contact?PageNumber="+ nextPage +"&PageSize=5";
+            var url = "http://localhost:5000/v1/Contacts?PageNumber="+ nextPage +"&PageSize=5";
             $.ajax({
                 url:url,
                 type:"get",
@@ -275,7 +275,7 @@
             var privodePage = parseInt(currentPage) - 1;
             if(privodePage > 0 )
             {
-                var url = "http://localhost:5000/api/Contact?PageNumber="+ privodePage +"&PageSize=5";
+                var url = "http://localhost:5000/v1/Contacts?PageNumber="+ privodePage +"&PageSize=5";
                 $.ajax({
                 url:url,
                 type:"get",
@@ -380,7 +380,7 @@
             var name = $(this).parent().siblings(".NameDiv").children("input").val();
             var phone = $(this).parent().siblings(".PhoneDiv").children("input").val();
             var IdCard = $(this).parent().siblings(".IdCardDiv").children("input").val();
-            var url = "http://localhost:5000/api/Contact/compound?";
+            var url = "http://localhost:5000/v1/Contacts/single?";
             
             if(id != "")
             {
@@ -432,7 +432,7 @@
             if(id == "" && name == "" && phone =="" && IdCard =="")
             {
                 $(".maindom").siblings().remove();
-                sendAjax("http://localhost:5000/api/Contact", "get");
+                sendAjax("http://localhost:5000/v1/Contacts", "get");
                 $(".on").remove();
                 return;
             }
@@ -470,7 +470,7 @@
             if(name !=""&&phone != "" &&IdCard !="")
             {
                 $.ajax({
-                    url:"http://localhost:5000/api/Contact/add",
+                    url:"http://localhost:5000/v1/Contacts",
                     data:JSON.stringify({
                         "name":name,
                         "phone":phone,
@@ -522,7 +522,7 @@
         //更新中的确定按钮
         $(".sure").click(function(){
             //更新
-            var url = "http://localhost:5000/api/Contact/update/" + GuidData;
+            var url = "http://localhost:5000/v1/Contacts/" + GuidData;
             $.ajax({
                 url:url,
                 data:JSON.stringify({
@@ -557,7 +557,7 @@
         function deleteClick()
         {
             var id = $(this).parent().siblings(".Id").text();
-            var url = "http://localhost:5000/api/Contact/delete/" + id;
+            var url = "http://localhost:5000/v1/Contacts/" + id;
             $.ajax({
                 url:url,
                 type:"delete",

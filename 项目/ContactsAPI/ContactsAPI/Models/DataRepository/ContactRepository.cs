@@ -65,7 +65,6 @@ namespace ContactsAPI.Models.DataRepository
         public  PageInfo<Contacts> GetData(Page page)
         {
             var contact = Db.Query<Contacts>("Select * from hnInfo");
-            //var a = contact.Skip(pageSize * (pagenum - 1)).take(pagesize);
             return PageInfo<Contacts>.Create(contact, page.PageNumber, page.PageSize);
         }
         public  IEnumerable<Contacts> Get(ContactsDTO reg)
@@ -77,11 +76,6 @@ namespace ContactsAPI.Models.DataRepository
             if (reg.Name != null && reg.Name != "") sql.Where("name=@0",reg.Name);
             if (reg.Phone != null && reg.Phone != "") sql.Where("Phone=@0", reg.Phone);
             if (reg.IdCard != null && reg.IdCard != "") sql.Where("IdCard=@0", reg.IdCard);
-            //PropertyInfo[] propertyInformation = reg.GetType().GetProperties();
-            //foreach (var item in propertyInformation)
-            //{
-            //    if(item.PropertyType.)
-            //}
             var Contact = Db.Query<Contacts>(sql);
             return Contact;
 
@@ -95,13 +89,20 @@ namespace ContactsAPI.Models.DataRepository
 
         public async Task<MessageRespones> UpdateData(Guid id, ContactsDTO req)
         {
+            var mesage = new MessageRespones();
+            if (await Db.SingleOrDefaultAsync<Contacts>("where id = @0", id) == null)
+            {
+                mesage.Stat = -1;
+                mesage.Mes = "修改的数据不存在";
+                return mesage;
+            }
             var sql = PetaPoco.Sql.Builder.Append("set ");
             if (req.Name != null && req.Name != "") sql.Append("name = @0 ", req.Name);
             if (req.IdCard != null && req.IdCard != "") sql.Append(", IdCard = @0 ", req.IdCard);
             if (req.Phone != null && req.Phone != "") sql.Append(", Phone = @0 ", req.Phone);
             sql.Append(" where id = @0", id);
             var ContactNum = await Db.UpdateAsync<Contacts>(sql);
-            var mesage = new MessageRespones();
+            
             if (ContactNum <= 0)
             {
                 mesage.Stat = -1;

@@ -60,7 +60,7 @@ namespace ContactsAPI.Controllers
             return new JsonResult(ContactDTO);
         }
         /// <summary>
-        /// 以 姓名，手机号码，身份证号查询单个数据
+        /// 以 姓名，手机号码，身份证号查询数据
         /// </summary>
         /// <param name="reg"></param>
         /// <returns></returns>

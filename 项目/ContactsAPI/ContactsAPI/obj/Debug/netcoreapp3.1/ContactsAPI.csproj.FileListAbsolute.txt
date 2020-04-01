@@ -330,7 +330,6 @@ F:\GIthub\Cshap\项目\ContactsAPI\ContactsAPI\bin\Debug\netcoreapp3.1\netcoreap
 F:\GIthub\Cshap\项目\ContactsAPI\ContactsAPI\bin\Debug\netcoreapp3.1\netcoreapp3.1\runtimes\unix\lib\netcoreapp3.0\System.Drawing.Common.dll
 F:\GIthub\Cshap\项目\ContactsAPI\ContactsAPI\bin\Debug\netcoreapp3.1\netcoreapp3.1\runtimes\win\lib\netcoreapp3.0\System.Drawing.Common.dll
 F:\GIthub\Cshap\项目\ContactsAPI\ContactsAPI\bin\Debug\netcoreapp3.1\netcoreapp3.1\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
-F:\GIthub\Cshap\项目\ContactsAPI\ContactsAPI\obj\Debug\netcoreapp3.1\ContactsAPI.csprojAssemblyReference.cache
 D:\GitHub\C#Learn\C-LearningFiles\项目\ContactsAPI\ContactsAPI\bin\Debug\netcoreapp3.1\netcoreapp3.1\appsettings.Development.json
 D:\GitHub\C#Learn\C-LearningFiles\项目\ContactsAPI\ContactsAPI\bin\Debug\netcoreapp3.1\netcoreapp3.1\appsettings.json
 D:\GitHub\C#Learn\C-LearningFiles\项目\ContactsAPI\ContactsAPI\bin\Debug\netcoreapp3.1\netcoreapp3.1\Properties\launchSettings.json
