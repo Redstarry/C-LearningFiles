@@ -26,8 +26,9 @@ namespace ContactsAPI.Models.DataRepository
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
             ConnecStr = options.Value.ConnectionStr;
             Provider = options.Value.Priovder;
-            Db = new PetaPoco.Database(ConnecStr, Provider, null);
-            
+            //Db = new PetaPoco.Database(ConnecStr, Provider, null);
+            Db = new PetaPoco.Database("server = .;database = ContactInformation;uid = sa; pwd = 123", "System.Data.SqlClient", null);
+
         }
         public async Task<bool> AddData(ContactsDTO reg)
         {
