@@ -41,11 +41,10 @@ namespace ContactsAPI.Controllers
         [HttpGet(Name = nameof(Get))]
         public async Task<IActionResult> Get([FromQuery] Page page)
         {
-            var Contact = contactRepository.GetData(page);
-            
-            var ContactDTO = _mapper.Map<IEnumerable<ContactsDTO>>(Contact);
-            await Task.Delay(10);  
-            return new JsonResult(ContactDTO);
+            //var ContactDTO = _mapper.Map<IEnumerable<ContactsDTO>>(Contact);
+            //await Task.Delay(10);
+            //return new JsonResult(ContactDTO);
+            return Ok(await contactRepository.GetData(page));
         }
         /// <summary>
         /// 根据ID查询数据
@@ -55,45 +54,19 @@ namespace ContactsAPI.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(Guid id)
         {
-            var Contact = await contactRepository.GetSingle(id);
-            var ContactDTO = _mapper.Map<ContactsDTO>(Contact);
-            return new JsonResult(ContactDTO);
+            //var ContactDTO = _mapper.Map<ContactsDTO>(Contact);
+            //return new JsonResult(ContactDTO);
+            return Ok(await contactRepository.GetSingle(id));
         }
-        ///// <summary>
-        ///// 以 姓名，手机号码，身份证号查询数据
-        ///// </summary>
-        ///// <param name="reg"></param>
-        ///// <returns></returns>
-        //[HttpGet("single")]
-        //public async Task<IActionResult> GetCompound([FromQuery] ContactsDTO reg)
-        //{
-        //    var Contact = contactRepository.Get(reg);
-        //    if (Contact == null)
-        //    {
-        //        ContactsDTO[] contacts = new ContactsDTO[0];
-        //        return new JsonResult(contacts);
-        //    }
-        //    var ContactDTO = _mapper.Map<IEnumerable<ContactsDTO>>(Contact);
-        //    await Task.Delay(10);
-        //    return new JsonResult(ContactDTO);
-        //}
         /// <summary>
-        /// 以 姓名，手机号码，身份证号查询数据
+        /// 根据 姓名，电话号码， 身份证 进行查询
         /// </summary>
         /// <param name="reg"></param>
         /// <returns></returns>
-        [HttpPost("single")]
-        public async Task<IActionResult> PostByPropGetInfo([FromBody] ContactsDTO reg)
+        [HttpPost("propselect")]
+        public async Task<IActionResult> PostByPropGetInfo([FromBody]ContactsDTO reg)
         {
-            var ContactOrContacts = contactRepository.Get(reg);
-            if (ContactOrContacts == null)
-            {
-                ContactsDTO[] contacts = new ContactsDTO[0];
-                return new JsonResult(contacts);
-            }
-            var ContactDTO = _mapper.Map<IEnumerable<ContactsDTO>>(ContactOrContacts);
-            await Task.Delay(10);
-            return new JsonResult(ContactDTO);
+            return Ok(await contactRepository.Get(reg));
         }
         /// <summary>
         /// 添加数据
@@ -104,25 +77,13 @@ namespace ContactsAPI.Controllers
         public async Task<IActionResult> Post([FromBody] ContactsDTO reg)
         {
             yanz rules = new yanz();
-            var mesage = new MessageRespones();
             var Result = rules.Validate(reg);
 
             if (!Result.IsValid)
             {
-                mesage.Stat = -1;
-                mesage.Mes = Result.ToString();
-                return new JsonResult(mesage);
+                return Ok(new ResultDTO(200, Result.ToString(), "", ResultStatus.Error));
             }
-            var Contact = await contactRepository.AddData(reg);
-            if (!Contact)
-            {
-                mesage.Stat = -1;
-                mesage.Mes = "添加失败";
-                return new JsonResult(mesage);
-            }
-            mesage.Stat = 1;
-            mesage.Mes = "添加成功";
-            return new JsonResult(mesage);
+            return Ok(await contactRepository.AddData(reg));
         }
         /// <summary>
         /// 根据ID更新数据
@@ -131,9 +92,9 @@ namespace ContactsAPI.Controllers
         /// <param name="req"></param>
         /// <returns></returns>
         [HttpPut("{id}")]
-        public async Task<MessageRespones> Put(Guid id, [FromBody] ContactsDTO req)
+        public async Task<IActionResult> Put(Guid id, [FromBody] ContactsDTO req)
         {
-            return await contactRepository.UpdateData(id, req); 
+            return Ok(await contactRepository.UpdateData(id, req));
         }
 
         /// <summary>
@@ -142,9 +103,9 @@ namespace ContactsAPI.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpDelete("{id}")]
-        public async Task<MessageRespones> Delete(Guid id)
+        public async Task<IActionResult> Delete(Guid id)
         {
-            return await contactRepository.DeleteData(id); 
+            return Ok(await contactRepository.DeleteData(id));
         }
 
         private string CreateContactsResourceUri(Page parameters, ResourceUriType type)

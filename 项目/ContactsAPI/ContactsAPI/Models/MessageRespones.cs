@@ -7,7 +7,13 @@ namespace ContactsAPI.Models
 {
     public class MessageRespones
     {
+        /// <summary>
+        /// 状态码
+        /// </summary>
         public int Stat { get; set; }
+        /// <summary>
+        /// 消息
+        /// </summary>
         public string Mes { get; set; }
 
         public  void Suceess()

@@ -23,61 +23,61 @@ namespace XUnitTestProject1.Func
         }
 
 
-        public async Task<MessageRespones> TextPostInfo(ContactsDTO contactsDTO)
+        public async Task<ResultDTO> TextPostInfo(ContactsDTO contactsDTO)
         {
             var content = new StringContent(JsonConvert.SerializeObject(contactsDTO), Encoding.UTF8, "Application/json");
             var response = await _client.PostAsync(@"http://localhost:5000/v1/Contacts", content);
             var stringResponse = await response.Content.ReadAsStringAsync();
-            var result = JsonConvert.DeserializeObject<MessageRespones>(stringResponse);
+            var result = JsonConvert.DeserializeObject<ResultDTO>(stringResponse);
             return result;
         }
 
-        public async Task<MessageRespones> TextPutInfo(ContactsDTO contactsDTO, string id)
+        public async Task<ResultDTO> TextPutInfo(ContactsDTO contactsDTO, string id)
         {
             var content = new StringContent(JsonConvert.SerializeObject(contactsDTO), Encoding.UTF8, "application/json");
             var response = await _client.PutAsync(@"http://localhost:5000/v1/Contacts/" + id, content);
 
             var stringResponse = await response.Content.ReadAsStringAsync();
 
-            var result = JsonConvert.DeserializeObject<MessageRespones>(stringResponse);
+            var result = JsonConvert.DeserializeObject<ResultDTO>(stringResponse);
             return result;
         }
 
-        public async Task<MessageRespones> TextDeleteInfo(string id)
+        public async Task<ResultDTO> TextDeleteInfo(string id)
         {
             var response = await _client.DeleteAsync(@"http://localhost:5000/v1/Contacts/"+id);
             var stringResponse = await response.Content.ReadAsStringAsync();
 
-            var result = JsonConvert.DeserializeObject<MessageRespones>(stringResponse);
+            var result = JsonConvert.DeserializeObject<ResultDTO>(stringResponse);
             return result;
         }
 
-        public async Task<IEnumerable<ContactsDTO>> TextGetAllInfo(int pageSize, int pageNumber)
+        public async Task<ResultDTO> TextGetAllInfo(int pageSize, int pageNumber)
         {
             var response = await _client.GetAsync(@"http://localhost:5000/v1/Contacts/?pageNumber=" + pageNumber + @"&pageSize=" + pageSize );
             var stringResponse = await response.Content.ReadAsStringAsync();
             Output.WriteLine(stringResponse);
-            var result = JsonConvert.DeserializeObject<IEnumerable<ContactsDTO>>(stringResponse);
+            var result = JsonConvert.DeserializeObject<ResultDTO>(stringResponse);
             return result;
         }
 
-        public async Task<ContactsDTO> TextGetSingle(string id)
+        public async Task<ResultDTO> TextGetSingle(string id)
         {
             var response = await _client.GetAsync(@"http://localhost:5000/v1/Contacts/" + id);
             var stringResponse = await response.Content.ReadAsStringAsync();
             Output.WriteLine(stringResponse);
-            var result = JsonConvert.DeserializeObject<ContactsDTO>(stringResponse);
+            var result = JsonConvert.DeserializeObject<ResultDTO>(stringResponse);
 
             return result;
         }
 
-        public async Task<IEnumerable<ContactsDTO>> TextGetByPropInfo(ContactsDTO contactsDTO)
+        public async Task<ResultDTO> TextGetByPropInfo(ContactsDTO contactsDTO)
         {
-            var conent = new StringContent(JsonConvert.SerializeObject(contactsDTO), Encoding.UTF8, "appliccation/json");
-            var response = await _client.PostAsync(@"http://localhost:5000/v1/Contacts/single", conent);
+            var conent = new StringContent(JsonConvert.SerializeObject(contactsDTO), Encoding.UTF8, "application/json");
+            var response = await _client.PostAsync(@"http://localhost:5000/v1/Contacts/propselect", conent);
             var stringResonse = await response.Content.ReadAsStringAsync();
             Output.WriteLine(stringResonse);
-            var result = JsonConvert.DeserializeObject<IEnumerable<ContactsDTO>>(stringResonse);
+            var result = JsonConvert.DeserializeObject<ResultDTO>(stringResonse);
             return result;
         }
     }

@@ -31,23 +31,23 @@ namespace ContactsAPI.Models.DataRepository
             Db = new PetaPoco.Database("server = .;database = ContactInformation;uid = sa; pwd = 123", "System.Data.SqlClient", null);
 
         }
-        public async Task<bool> AddData(ContactsDTO reg)
+        public async Task<ResultDTO> AddData(ContactsDTO reg)
         {
             var soucreContacts = _mapper.Map<Contacts>(reg);
             soucreContacts.Id = System.Guid.NewGuid();
-      
             if (await Db.InsertAsync(soucreContacts) != null)
             {
-                return true;
+                var result = _mapper.Map<ContactsDTO>(soucreContacts);
+                return new ResultDTO(200, "添加成功", soucreContacts, ResultStatus.Suceess); 
             }
             else
             {
-                return false;
+                return new ResultDTO(200, "添加失败", reg, ResultStatus.Fail);
             }
             
         }
 
-        public async Task<MessageRespones> DeleteData(Guid id)
+        public async Task<ResultDTO> DeleteData(Guid id)
         {
             var ContactNum = await Db.ExecuteScalarAsync<int>("Select Count(*) from hnInfo where id = @0", id);
             if (ContactNum <= 0) Console.WriteLine($"该ID{id}不存在");
@@ -55,25 +55,26 @@ namespace ContactsAPI.Models.DataRepository
             var mesage = new MessageRespones();
             if (Contact > 0)
             {
-                mesage.Stat = 1;
-                mesage.Mes = "删除成功";
-                return mesage;
+                return new ResultDTO(200, "删除成功", "", ResultStatus.Suceess);
             }
-            mesage.Stat = -1;
-            mesage.Mes = "删除失败";
-            return mesage;
+            return new ResultDTO(200, "删除失败", "", ResultStatus.Fail);
         }
 
-        public  PageInfo<Contacts> GetData(Page page)
+        public async Task<ResultDTO> GetData(Page page)
         {
             var contact = Db.Query<Contacts>("Select * from hnInfo");
-            return PageInfo<Contacts>.Create(contact, page.PageNumber, page.PageSize);
+            await Task.Delay(10);
+            var pageContact = PageInfo<Contacts>.Create(contact, page.PageNumber, page.PageSize);
+            if (pageContact.Count == 0)return new ResultDTO(200, "获取失败", pageContact, ResultStatus.Fail);
+            return new ResultDTO(200, "获取成功", pageContact, ResultStatus.Suceess);
         }
-        public  IEnumerable<Contacts> Get(ContactsDTO reg)
+        public async Task<ResultDTO> Get(ContactsDTO reg)
         {
-            if (reg.Name == null && reg.Phone == null && reg.IdCard == null)
+            IEnumerable<Contacts> Contact = null;
+            if ((reg.Name == null || reg.Name == "") && (reg.Phone == null || reg.Phone == "") && (reg.IdCard == null || reg.IdCard == ""))
             {
-                return null;
+                //return null;
+                return new ResultDTO(200, "获取失败，条件不能全部为空", "", ResultStatus.Fail);
             }
             var sql = PetaPoco.Sql.Builder
                 .Select("*")
@@ -82,31 +83,28 @@ namespace ContactsAPI.Models.DataRepository
             if (reg.Name != null && reg.Name != "") sql.Where("name=@0",reg.Name);
             if (reg.Phone != null && reg.Phone != "") sql.Where("Phone=@0", reg.Phone);
             if (reg.IdCard != null && reg.IdCard != "") sql.Where("IdCard=@0", reg.IdCard);
-            var Contact = Db.Query<Contacts>(sql);
-            return Contact;
+            Contact =  Db.Query<Contacts>(sql);
+            await Task.Delay(10);
+            return new ResultDTO(200, "获取成功", Contact, ResultStatus.Suceess);
 
 
         }
-        public async Task<Contacts> GetSingle(Guid id)
+        public async Task<ResultDTO> GetSingle(Guid id)
         {
             var Contact = await Db.SingleOrDefaultAsync<Contacts>("where Id = @0", id);
-            return Contact;
+            return new ResultDTO(200, "查询成功", Contact, ResultStatus.Suceess);
         }
 
-        public async Task<MessageRespones> UpdateData(Guid id, ContactsDTO req)
+        public async Task<ResultDTO> UpdateData(Guid id , ContactsDTO req)
         {
             var mesage = new MessageRespones();
             if (req.Name == "" && req.Phone == "" && req.IdCard == "")
             {
-                mesage.Stat = -1;
-                mesage.Mes = "没有修改后的数据。";
-                return mesage;
+                return new ResultDTO(200, "没有修改后的数据。", "", ResultStatus.Fail);
             }
             if (await Db.SingleOrDefaultAsync<Contacts>("where id = @0", id) == null)
             {
-                mesage.Stat = -1;
-                mesage.Mes = "修改的数据不存在";
-                return mesage;
+                return new ResultDTO(200, "修改的数据不存在。", "", ResultStatus.Fail);
             }
             var sql = PetaPoco.Sql.Builder.Append("set ");
             if (req.Name != null && req.Name != "") sql.Append("name = @0 ", req.Name);
@@ -114,16 +112,13 @@ namespace ContactsAPI.Models.DataRepository
             if (req.Phone != null && req.Phone != "") sql.Append(", Phone = @0 ", req.Phone);
             sql.Append(" where id = @0", id);
             var ContactNum = await Db.UpdateAsync<Contacts>(sql);
-            
             if (ContactNum <= 0)
             {
-                mesage.Stat = -1;
-                mesage.Mes = "更新失败";
-                return mesage;
+                return new ResultDTO(200, "更新失败。", "", ResultStatus.Fail);
             }
-            mesage.Stat = 1;
-            mesage.Mes = "更新成功";
-            return mesage;
+            var selectData = await Db.SingleOrDefaultAsync<Contacts>("where Id = @0", id);
+
+            return new ResultDTO(200, "更新成功。", _mapper.Map<ContactsDTO>(selectData), ResultStatus.Suceess);
 
         }
     }

@@ -32,7 +32,11 @@
         .container
         {
 
-            height: 250px;
+            /* height: 250px; */
+        }
+        .container ul
+        {
+            height:40px;
         }
         .container ul li 
         {
@@ -93,6 +97,7 @@
         .foot
         {
             height:100px;
+            margin-top:20px;
         }
         .foot .left
         {
@@ -380,55 +385,54 @@
             var name = $(this).parent().siblings(".NameDiv").children("input").val();
             var phone = $(this).parent().siblings(".PhoneDiv").children("input").val();
             var IdCard = $(this).parent().siblings(".IdCardDiv").children("input").val();
-            var url = "http://localhost:5000/v1/Contacts/single?";
             
-            if(id != "")
-            {
-                var reg = new RegExp(/^[0-9a-zA-Z]{8}-[0-9a-zA-Z]{4}-[0-9a-zA-Z]{4}-[0-9a-zA-Z]{4}-[0-9a-zA-Z]{12}$/);
-                if(reg.test(id))
-                {
-                    url = url + "id=" + id + "&";
-                }
-                else
-                {
-                    console.log("id错误，请输入正确的guid");
-                    return;
-                }
-            }
+            // if(id != "")
+            // {
+            //     var reg = new RegExp(/^[0-9a-zA-Z]{8}-[0-9a-zA-Z]{4}-[0-9a-zA-Z]{4}-[0-9a-zA-Z]{4}-[0-9a-zA-Z]{12}$/);
+            //     if(reg.test(id))
+            //     {
+            //         url = url + "id=" + id + "&";
+            //     }
+            //     else
+            //     {
+            //         console.log("id错误，请输入正确的guid");
+            //         return;
+            //     }
+            // }
 
-            if(name != "")
-            {
-                url = url + "name=" + name + "&";
-            }
-            if(phone != "")
-            {
-                var reg = new RegExp(/^\d{11}$/);
-                if(phone.length == 11 && reg.test(phone) )
-                {
-                    url = url + "phone=" + phone + "&";
-                }
-                else
-                {
-                    console.log("phone错误,请输入11位手机号码");
-                    return;
-                } 
-            }
+            // if(name != "")
+            // {
+            //     url = url + "name=" + name + "&";
+            // }
+            // if(phone != "")
+            // {
+            //     var reg = new RegExp(/^\d{11}$/);
+            //     if(phone.length == 11 && reg.test(phone) )
+            //     {
+            //         url = url + "phone=" + phone + "&";
+            //     }
+            //     else
+            //     {
+            //         console.log("phone错误,请输入11位手机号码");
+            //         return;
+            //     } 
+            // }
             
-            if(IdCard != "")
-            {
-                var reg15 = new RegExp(/^\d{15}$/);
-                var reg18 = new RegExp(/^\d{18}$/);
-                if((IdCard.length == 18 || IdCard.length == 15) && (reg15.test(IdCard) || reg18.test(IdCard)))
-                {
-                    url = url + "IdCard=" + IdCard + "&";
-                }
-                else
-                {
-                    console.log("IdCard,请输入15-18位身份号码");
-                    return;
-                } 
+            // if(IdCard != "")
+            // {
+            //     var reg15 = new RegExp(/^\d{15}$/);
+            //     var reg18 = new RegExp(/^\d{18}$/);
+            //     if((IdCard.length == 18 || IdCard.length == 15) && (reg15.test(IdCard) || reg18.test(IdCard)))
+            //     {
+            //         url = url + "IdCard=" + IdCard + "&";
+            //     }
+            //     else
+            //     {
+            //         console.log("IdCard,请输入15-18位身份号码");
+            //         return;
+            //     } 
                 
-            }
+            // }
             if(id == "" && name == "" && phone =="" && IdCard =="")
             {
                 $(".maindom").siblings().remove();
@@ -437,9 +441,13 @@
                 return;
             }
             $.ajax({
-                url:url,
-                type:"get",
-                dataType:"json",
+                url:"http://localhost:5000/v1/Contacts/propselect",
+                type:"post",
+                data:JSON.stringify({
+                        "name":name,
+                        "phone":phone,
+                        "IdCard":IdCard
+                    }),
                 contentType:"application/json;charset=utf-8",
                 success:function(data){
                     console.log($.isEmptyObject(data))

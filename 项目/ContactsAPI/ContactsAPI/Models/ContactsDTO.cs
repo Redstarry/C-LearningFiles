@@ -13,8 +13,17 @@ namespace ContactsAPI.Models
     public class ContactsDTO
     {
         public Guid Id { get; set; }
+        /// <summary>
+        /// 姓名
+        /// </summary>
         public string Name { get; set; }
+        /// <summary>
+        /// 手机号码 11位号码
+        /// </summary>
         public string Phone { get; set; }
+        /// <summary>
+        /// 身份证号 15位或18位，可以带X
+        /// </summary>
         public string IdCard { get; set; }
     }
     

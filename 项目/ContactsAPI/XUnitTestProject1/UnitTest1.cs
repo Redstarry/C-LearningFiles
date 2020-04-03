@@ -88,10 +88,10 @@ namespace XUnitTestProject1
         //}
         #endregion
         [Theory]
-        [InlineData("zzz", "15396324581", "789654023258041")]
-        [InlineData("zzz", "15396324582", "789654123208745412")]
-        [InlineData("zzz", "15396324581", "789654123258042413")]
-        [InlineData("zzz", "15396324581", "78965412320874141x")]
+        [InlineData("xx", "15396324581", "789654025258041")]
+        [InlineData("zxz", "15396324582", "789654023208745412")]
+        [InlineData("zx", "15396324581", "789664123258042413")]
+        [InlineData("x", "15396324581", "78965412320884141x")]
         public async Task PostInfoSuceess(string name,string phone,string idcard)
         {
             var data = new ContactsDTO() { 
@@ -102,8 +102,8 @@ namespace XUnitTestProject1
             };
             //var exPostInfo = new Funca();
             var result =  await funca.TextPostInfo(data);
-            Output.WriteLine(result.Mes);
-            Assert.Equal(1, result.Stat);
+            Output.WriteLine(result.Message);
+            Assert.Equal(ResultStatus.Suceess, result.ResultStatus);
         }
         [Theory]
         [InlineData("111111111111111111111111", "15396324581", "78965412325874142x")]
@@ -119,8 +119,8 @@ namespace XUnitTestProject1
             };
             //var exPostInfo = new Funca();
             var result = await funca.TextPostInfo(data);
-            Output.WriteLine(result.Mes);
-            Assert.Equal(-1, result.Stat);
+            Output.WriteLine(result.Message);
+            Assert.Equal(ResultStatus.Error, result.ResultStatus);
         }
 
         /// <summary>
@@ -144,8 +144,8 @@ namespace XUnitTestProject1
             };
             //var exPutInfo = new Funca();
             var result = await funca.TextPutInfo(data, id);
-            Output.WriteLine(result.Mes);
-            Assert.Equal(1, result.Stat);
+            Output.WriteLine(result.Message);
+            Assert.Equal(ResultStatus.Suceess, result.ResultStatus);
         }
 
         /// <summary>
@@ -170,8 +170,8 @@ namespace XUnitTestProject1
             };
             //var exPutInfo = new Funca();
             var result = await funca.TextPutInfo(data, id);
-            Output.WriteLine(result.Mes);
-            Assert.Equal(-1, result.Stat);
+            Output.WriteLine(result.Message);
+            Assert.Equal(ResultStatus.Fail, result.ResultStatus);
         }
 
 
@@ -181,13 +181,13 @@ namespace XUnitTestProject1
         /// <param name="id"></param>
         /// <returns></returns>
         [Theory]
-        [InlineData("5facbfd3-706e-4cf8-8ea8-294f629cbbda")]
+        [InlineData("0405deda-d3ab-4e25-ab9f-cf0b67066092")]
         public async Task DeleteInfoSuceess(string id)
         {
             //var exDeleteInfo = new Funca();
             var result = await funca.TextDeleteInfo(id);
-            Output.WriteLine(result.Mes);
-            Assert.Equal(1, result.Stat);
+            Output.WriteLine(result.Message);
+            Assert.Equal(ResultStatus.Suceess, result.ResultStatus);
         }
 
         /// <summary>
@@ -201,8 +201,8 @@ namespace XUnitTestProject1
         {
             //var exDeleteInfo = new Funca();
             var result = await funca.TextDeleteInfo(id);
-            Output.WriteLine(result.Mes);
-            Assert.Equal(-1, result.Stat);
+            Output.WriteLine(result.Message);
+            Assert.Equal(ResultStatus.Fail, result.ResultStatus);
         }
 
 
@@ -236,7 +236,7 @@ namespace XUnitTestProject1
         public async Task GetAllInfoSuceess(int pageSize, int pageNumber)
         {
             var result = await funca.TextGetAllInfo(pageSize, pageNumber);
-            Assert.NotEmpty(result);
+            Assert.Equal(ResultStatus.Suceess, result.ResultStatus);
         }
 
 
@@ -247,11 +247,11 @@ namespace XUnitTestProject1
         /// <param name="pageNumber"></param>
         /// <returns></returns>
         [Theory]
-        [InlineData(21, 2)]
+        [InlineData(32, 3)]
         public async Task GetAllInfoError(int pageSize, int pageNumber)
         {
             var result = await funca.TextGetAllInfo(pageSize, pageNumber);
-            Assert.Empty(result);
+            Assert.Equal(ResultStatus.Fail, result.ResultStatus);
         }
 
 
@@ -265,7 +265,7 @@ namespace XUnitTestProject1
         public async Task GetSingleSuceess(string id)
         {
             var result = await funca.TextGetSingle(id);
-            Assert.NotNull(result);
+            Assert.NotNull(result.Result);
         }
 
         /// <summary>
@@ -278,7 +278,7 @@ namespace XUnitTestProject1
         public async Task GetSingleError(string id)
         {
             var result = await funca.TextGetSingle(id);
-            Assert.Null(result);
+            Assert.Null(result.Result);
         }
 
         /// <summary>
@@ -293,6 +293,7 @@ namespace XUnitTestProject1
         [InlineData("", "15396324581", "")]
         [InlineData("", "", "612301199105180419")]
         [InlineData("qwe", "15385421698", "963258741321456987")]
+        [InlineData("444", "15390417715", "963258741321456987")]
         public async Task GetByPropInfoSuceess(string name ,string phone, string idcard)
         {
             var data = new ContactsDTO()
@@ -303,7 +304,7 @@ namespace XUnitTestProject1
             };
             var result = await funca.TextGetByPropInfo(data);
             
-            Assert.NotEmpty(result);
+            Assert.NotNull(result.Result);
         }
 
         /// <summary>
@@ -315,7 +316,7 @@ namespace XUnitTestProject1
         /// <returns></returns>
         [Theory]
         [InlineData("", "", "")]
-        [InlineData("444", "15390417715", "963258741321456987")]
+        
         public async Task GetByPropInfoError(string name, string phone, string idcard)
         {
             var data = new ContactsDTO()
@@ -326,7 +327,7 @@ namespace XUnitTestProject1
             };
             var result = await funca.TextGetByPropInfo(data);
 
-            Assert.Empty(result);
+            Assert.Equal(ResultStatus.Fail, result.ResultStatus);
         }
     }
 

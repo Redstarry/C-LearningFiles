@@ -33,7 +33,8 @@ namespace ContactsAPI
             services.AddControllers();
             services.AddTransient<IContactRepository,ContactRepository>();
             services.AddAutoMapper(typeof(Startup)); //AppDomain.CurrentDomain.GetAssemblies()
-            services.AddSwaggerGen(option => {
+            services.AddSwaggerGen(option =>
+            {
 
                 option.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
                 {

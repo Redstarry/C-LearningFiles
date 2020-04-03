@@ -11,11 +11,11 @@ namespace ContactsAPI.Models
     public interface IContactRepository
     {
         //Task<ActionResult<Page<Contacts>>> GetData();
-        PageInfo<Contacts> GetData(Page page);
-        IEnumerable<Contacts> Get(ContactsDTO reg);
-        Task<bool> AddData(ContactsDTO reg);
-        Task<MessageRespones> UpdateData(Guid id, ContactsDTO req);
-        Task<Contacts> GetSingle(Guid id);
-        Task<MessageRespones> DeleteData(Guid id);
+        Task<ResultDTO> GetData(Page page);
+        Task<ResultDTO> Get(ContactsDTO reg);
+        Task<ResultDTO> AddData(ContactsDTO reg);
+        Task<ResultDTO> UpdateData(Guid id, ContactsDTO req);
+        Task<ResultDTO> GetSingle(Guid id);
+        Task<ResultDTO> DeleteData(Guid id);
     }
 }

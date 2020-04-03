@@ -20,7 +20,7 @@
         </member>
         <member name="M:ContactsAPI.Controllers.ContactController.PostByPropGetInfo(ContactsAPI.Models.ContactsDTO)">
             <summary>
-            以 姓名，手机号码，身份证号查询数据
+            根据 姓名，电话号码， 身份证 进行查询
             </summary>
             <param name="reg"></param>
             <returns></returns>
@@ -46,6 +46,31 @@
             </summary>
             <param name="id"></param>
             <returns></returns>
+        </member>
+        <member name="P:ContactsAPI.Models.ContactsDTO.Name">
+            <summary>
+            姓名
+            </summary>
+        </member>
+        <member name="P:ContactsAPI.Models.ContactsDTO.Phone">
+            <summary>
+            手机号码 11位号码
+            </summary>
+        </member>
+        <member name="P:ContactsAPI.Models.ContactsDTO.IdCard">
+            <summary>
+            身份证号 15位或18位，可以带X
+            </summary>
+        </member>
+        <member name="P:ContactsAPI.Models.MessageRespones.Stat">
+            <summary>
+            状态码
+            </summary>
+        </member>
+        <member name="P:ContactsAPI.Models.MessageRespones.Mes">
+            <summary>
+            消息
+            </summary>
         </member>
     </members>
 </doc>

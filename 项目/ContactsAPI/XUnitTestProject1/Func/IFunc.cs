@@ -9,15 +9,15 @@ namespace XUnitTestProject1.Func
 {
     public interface IFunc
     {
-        Task<MessageRespones> TextPostInfo(ContactsDTO contactsDTO);
-        Task<MessageRespones> TextPutInfo(ContactsDTO contactsDTO, string id);
+        Task<ResultDTO> TextPostInfo(ContactsDTO contactsDTO);
+        Task<ResultDTO> TextPutInfo(ContactsDTO contactsDTO, string id);
 
-        Task<MessageRespones> TextDeleteInfo(string id);
+        Task<ResultDTO> TextDeleteInfo(string id);
 
-        Task<IEnumerable<ContactsDTO>> TextGetAllInfo(int pageSize, int pageNumber);
+        Task<ResultDTO> TextGetAllInfo(int pageSize, int pageNumber);
 
-        Task<ContactsDTO> TextGetSingle(string id);
+        Task<ResultDTO> TextGetSingle(string id);
 
-        Task<IEnumerable<ContactsDTO>> TextGetByPropInfo(ContactsDTO contactsDTO);
+        Task<ResultDTO> TextGetByPropInfo(ContactsDTO contactsDTO);
     }
 }
