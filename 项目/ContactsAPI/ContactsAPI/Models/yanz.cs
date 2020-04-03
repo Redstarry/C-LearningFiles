@@ -11,10 +11,29 @@ namespace ContactsAPI.Models
     {
         public yanz()
         {
-            RuleFor(p => p.Name).NotEmpty();
+            RuleFor(p => p.Name).NotEmpty().Must(JudgeName).WithMessage("汉语名字不能超过5个字，英文名字不能超过10个字母");
             RuleFor(p => p.Phone).NotEmpty().WithMessage("电话号码为空").Must(judgePhone).WithMessage("电话号码长度必须是11位且格式正确");
             RuleFor(p => p.IdCard).NotEmpty().Must(JudgeIdCardnumber).WithMessage("身份证号位必须是15位或18位或格式不正确"); 
 
+        }
+
+        private bool JudgeName(ContactsDTO contactsDTO,string arg)
+        {
+            var rx = new Regex(@"[\u4E00-\u9FA5]+$");
+            var name = contactsDTO.Name.Trim();
+            if (rx.IsMatch(name))
+            {
+                if (name.Length <= 5)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            if (name.Length <= 10) return true;
+            else return false;
         }
 
         private bool JudgeIdCardnumber(ContactsDTO contactsDTO, string arg)

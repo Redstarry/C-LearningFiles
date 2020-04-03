@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 using PetaPoco;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
@@ -35,7 +36,7 @@ namespace ContactsAPI.Models.DataRepository
             var soucreContacts = _mapper.Map<Contacts>(reg);
             soucreContacts.Id = System.Guid.NewGuid();
       
-            if (Convert.ToInt32(await Db.InsertAsync(soucreContacts)) > 0)
+            if (await Db.InsertAsync(soucreContacts) != null)
             {
                 return true;
             }
@@ -70,6 +71,10 @@ namespace ContactsAPI.Models.DataRepository
         }
         public  IEnumerable<Contacts> Get(ContactsDTO reg)
         {
+            if (reg.Name == null && reg.Phone == null && reg.IdCard == null)
+            {
+                return null;
+            }
             var sql = PetaPoco.Sql.Builder
                 .Select("*")
                 .From("hnInfo");
@@ -82,7 +87,7 @@ namespace ContactsAPI.Models.DataRepository
 
 
         }
-        public async Task<Contacts> GetSing(Guid id)
+        public async Task<Contacts> GetSingle(Guid id)
         {
             var Contact = await Db.SingleOrDefaultAsync<Contacts>("where Id = @0", id);
             return Contact;
@@ -91,6 +96,12 @@ namespace ContactsAPI.Models.DataRepository
         public async Task<MessageRespones> UpdateData(Guid id, ContactsDTO req)
         {
             var mesage = new MessageRespones();
+            if (req.Name == "" && req.Phone == "" && req.IdCard == "")
+            {
+                mesage.Stat = -1;
+                mesage.Mes = "没有修改后的数据。";
+                return mesage;
+            }
             if (await Db.SingleOrDefaultAsync<Contacts>("where id = @0", id) == null)
             {
                 mesage.Stat = -1;

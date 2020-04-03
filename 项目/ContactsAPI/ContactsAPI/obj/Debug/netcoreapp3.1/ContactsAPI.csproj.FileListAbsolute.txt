@@ -438,3 +438,4 @@ D:\GitHub\C#Learn\C-LearningFiles\项目\ContactsAPI\ContactsAPI\bin\Debug\netco
 D:\GitHub\C#Learn\C-LearningFiles\项目\ContactsAPI\ContactsAPI\bin\Debug\netcoreapp3.1\netcoreapp3.1\runtimes\win\lib\netcoreapp3.0\System.Drawing.Common.dll
 D:\GitHub\C#Learn\C-LearningFiles\项目\ContactsAPI\ContactsAPI\bin\Debug\netcoreapp3.1\netcoreapp3.1\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
 D:\GitHub\C#Learn\C-LearningFiles\项目\ContactsAPI\ContactsAPI\obj\Debug\netcoreapp3.1\ContactsAPI.MvcApplicationPartsAssemblyInfo.cs
+F:\GIthub\Cshap\项目\ContactsAPI\ContactsAPI\obj\Debug\netcoreapp3.1\ContactsAPI.csprojAssemblyReference.cache

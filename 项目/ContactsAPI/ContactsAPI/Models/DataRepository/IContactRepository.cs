@@ -15,7 +15,7 @@ namespace ContactsAPI.Models
         IEnumerable<Contacts> Get(ContactsDTO reg);
         Task<bool> AddData(ContactsDTO reg);
         Task<MessageRespones> UpdateData(Guid id, ContactsDTO req);
-        Task<Contacts> GetSing(Guid id);
+        Task<Contacts> GetSingle(Guid id);
         Task<MessageRespones> DeleteData(Guid id);
     }
 }

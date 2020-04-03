@@ -55,20 +55,43 @@ namespace ContactsAPI.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(Guid id)
         {
-            var Contact = await contactRepository.GetSing(id);
+            var Contact = await contactRepository.GetSingle(id);
             var ContactDTO = _mapper.Map<ContactsDTO>(Contact);
             return new JsonResult(ContactDTO);
         }
+        ///// <summary>
+        ///// 以 姓名，手机号码，身份证号查询数据
+        ///// </summary>
+        ///// <param name="reg"></param>
+        ///// <returns></returns>
+        //[HttpGet("single")]
+        //public async Task<IActionResult> GetCompound([FromQuery] ContactsDTO reg)
+        //{
+        //    var Contact = contactRepository.Get(reg);
+        //    if (Contact == null)
+        //    {
+        //        ContactsDTO[] contacts = new ContactsDTO[0];
+        //        return new JsonResult(contacts);
+        //    }
+        //    var ContactDTO = _mapper.Map<IEnumerable<ContactsDTO>>(Contact);
+        //    await Task.Delay(10);
+        //    return new JsonResult(ContactDTO);
+        //}
         /// <summary>
         /// 以 姓名，手机号码，身份证号查询数据
         /// </summary>
         /// <param name="reg"></param>
         /// <returns></returns>
-        [HttpGet("single")]
-        public async Task<IActionResult> GetCompound([FromQuery] ContactsDTO reg)
+        [HttpPost("single")]
+        public async Task<IActionResult> PostByPropGetInfo([FromBody] ContactsDTO reg)
         {
-            var Contact = contactRepository.Get(reg);
-            var ContactDTO = _mapper.Map<IEnumerable<ContactsDTO>>(Contact);
+            var ContactOrContacts = contactRepository.Get(reg);
+            if (ContactOrContacts == null)
+            {
+                ContactsDTO[] contacts = new ContactsDTO[0];
+                return new JsonResult(contacts);
+            }
+            var ContactDTO = _mapper.Map<IEnumerable<ContactsDTO>>(ContactOrContacts);
             await Task.Delay(10);
             return new JsonResult(ContactDTO);
         }
