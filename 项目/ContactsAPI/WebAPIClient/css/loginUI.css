@@ -1,0 +1,30 @@
+*{
+
+    margin:0;
+    padding:0;
+}
+
+body{
+
+    position: relative;
+    height:1080px;
+}
+
+#login
+{
+    width:1000px;
+    height:600px;
+    position: fixed;
+    top:0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    margin: auto;
+}
+#login div
+{
+    background-color: rebeccapurple;
+    float: left;
+    width: 100px;
+    
+}
