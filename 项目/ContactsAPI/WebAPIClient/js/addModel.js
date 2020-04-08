@@ -1,36 +1,37 @@
-
-$(".login").click(function (e) { 
-    var user = $("#user").val();
-    var pwd = $("#pwd").val();
-    if(user == "" && pwd == "")
-    {
-        alert("账号或密码错误");
-        return;
-    }
-    var data = login(user,pwd);
-
+$(".add").click(function (e) { 
+    
+    createModel("新增");
 });
 
-function login(user, pwd) {
-    var data = $.ajax({
-        type: "Post",
-        url: "https://localhost:4880/v1/contacts/login",
-        data: JSON.stringify({
-            "UserName":user,
-            "Pwd":pwd
-        }),
-        contentType:"application/json;charset=utf-8",
-        success: function (response) 
-        {
-            localStorage.setItem("Token" , response["result"]["jwttoken"]);
-            if(response["resultStatus"] == 1)
-            {
-                $(window).attr("location", "Client.html");
-            }
-            else
-            {
-                alert("账号或密码错误");
-            }
-        }
-    });
+function createModel(title) {
+    
+    var modelDom = $("<div>").attr("class", "modelDom");
+    $("body").append(modelDom);
+    var centerdiv = $("<div>").attr("class", "container centerdiv");
+    $(".modelDom").append(centerdiv);
+    var title = $("<h2>").attr("class","text-center mt-4").html(title);
+    $(".centerdiv").append(title);
+    var row1 = $("<div>").attr("class", "row row1");
+    $(".centerdiv").append(row1);
+    var row1col1 = $("<div>").attr("class", "col-3");
+    var row1col2 = $("<div>").attr("class", "col-6");
+    $(".row1").append(row1col1, row1col2);
+    var form = $("<form>");
+    $(row1col2).append(form);
+    var nameform = $("<div>").attr("class","form-group");
+    $(form).append(nameform);
+    var namelabel = $("<label>").html("姓名：");
+    var nameinput = $("<input>").attr("class","form-control").attr({"type":"text","id":"name"});
+    $(nameform).append(namelabel,nameinput);
+    var phoneform = $("<div>").attr("class","form-group");
+    $(form).append(phoneform);
+    var phonelabel = $("<label>").html("电话号码：");
+    var phoneinput = $("<input>").attr("class","form-control").attr({"type":"text","id":"phone","maxlength":"11"});
+    $(phoneform).append(phonelabel,phoneinput);
+
+    var idcardform = $("<div>").attr("class","form-group");
+    $(form).append(idcardform);
+    var idcardlabel = $("<label>").html("身份证号码：");
+    var idcardinput = $("<input>").attr("class","form-control").attr({"type":"text","id":"idcard","maxlength":"18"});
+    $(idcardform).append(idcardlabel,idcardinput);
 }
