@@ -336,12 +336,18 @@ F:\GIthub\Cshap\项目\ContactsAPI\ContactsAPI\bin\Debug\netcoreapp3.1\netcoreap
 F:\GIthub\Cshap\项目\ContactsAPI\ContactsAPI\bin\Debug\netcoreapp3.1\netcoreapp3.1\FluentValidation.dll
 F:\GIthub\Cshap\项目\ContactsAPI\ContactsAPI\bin\Debug\netcoreapp3.1\netcoreapp3.1\FluentValidation.AspNetCore.dll
 F:\GIthub\Cshap\项目\ContactsAPI\ContactsAPI\bin\Debug\netcoreapp3.1\netcoreapp3.1\FluentValidation.DependencyInjectionExtensions.dll
+F:\GIthub\Cshap\项目\ContactsAPI\ContactsAPI\bin\Debug\netcoreapp3.1\netcoreapp3.1\Microsoft.AspNetCore.Authentication.JwtBearer.dll
 F:\GIthub\Cshap\项目\ContactsAPI\ContactsAPI\bin\Debug\netcoreapp3.1\netcoreapp3.1\Microsoft.AspNetCore.Razor.Language.dll
 F:\GIthub\Cshap\项目\ContactsAPI\ContactsAPI\bin\Debug\netcoreapp3.1\netcoreapp3.1\Microsoft.CodeAnalysis.dll
 F:\GIthub\Cshap\项目\ContactsAPI\ContactsAPI\bin\Debug\netcoreapp3.1\netcoreapp3.1\Microsoft.CodeAnalysis.CSharp.dll
 F:\GIthub\Cshap\项目\ContactsAPI\ContactsAPI\bin\Debug\netcoreapp3.1\netcoreapp3.1\Microsoft.CodeAnalysis.CSharp.Workspaces.dll
 F:\GIthub\Cshap\项目\ContactsAPI\ContactsAPI\bin\Debug\netcoreapp3.1\netcoreapp3.1\Microsoft.CodeAnalysis.Razor.dll
 F:\GIthub\Cshap\项目\ContactsAPI\ContactsAPI\bin\Debug\netcoreapp3.1\netcoreapp3.1\Microsoft.CodeAnalysis.Workspaces.dll
+F:\GIthub\Cshap\项目\ContactsAPI\ContactsAPI\bin\Debug\netcoreapp3.1\netcoreapp3.1\Microsoft.IdentityModel.JsonWebTokens.dll
+F:\GIthub\Cshap\项目\ContactsAPI\ContactsAPI\bin\Debug\netcoreapp3.1\netcoreapp3.1\Microsoft.IdentityModel.Logging.dll
+F:\GIthub\Cshap\项目\ContactsAPI\ContactsAPI\bin\Debug\netcoreapp3.1\netcoreapp3.1\Microsoft.IdentityModel.Protocols.dll
+F:\GIthub\Cshap\项目\ContactsAPI\ContactsAPI\bin\Debug\netcoreapp3.1\netcoreapp3.1\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+F:\GIthub\Cshap\项目\ContactsAPI\ContactsAPI\bin\Debug\netcoreapp3.1\netcoreapp3.1\Microsoft.IdentityModel.Tokens.dll
 F:\GIthub\Cshap\项目\ContactsAPI\ContactsAPI\bin\Debug\netcoreapp3.1\netcoreapp3.1\Microsoft.OpenApi.dll
 F:\GIthub\Cshap\项目\ContactsAPI\ContactsAPI\bin\Debug\netcoreapp3.1\netcoreapp3.1\Microsoft.VisualStudio.Web.CodeGeneration.dll
 F:\GIthub\Cshap\项目\ContactsAPI\ContactsAPI\bin\Debug\netcoreapp3.1\netcoreapp3.1\Microsoft.VisualStudio.Web.CodeGeneration.Contracts.dll
@@ -366,6 +372,7 @@ F:\GIthub\Cshap\项目\ContactsAPI\ContactsAPI\bin\Debug\netcoreapp3.1\netcoreap
 F:\GIthub\Cshap\项目\ContactsAPI\ContactsAPI\bin\Debug\netcoreapp3.1\netcoreapp3.1\System.Configuration.ConfigurationManager.dll
 F:\GIthub\Cshap\项目\ContactsAPI\ContactsAPI\bin\Debug\netcoreapp3.1\netcoreapp3.1\System.Data.SqlClient.dll
 F:\GIthub\Cshap\项目\ContactsAPI\ContactsAPI\bin\Debug\netcoreapp3.1\netcoreapp3.1\System.Drawing.Common.dll
+F:\GIthub\Cshap\项目\ContactsAPI\ContactsAPI\bin\Debug\netcoreapp3.1\netcoreapp3.1\System.IdentityModel.Tokens.Jwt.dll
 F:\GIthub\Cshap\项目\ContactsAPI\ContactsAPI\bin\Debug\netcoreapp3.1\netcoreapp3.1\System.Security.Cryptography.ProtectedData.dll
 F:\GIthub\Cshap\项目\ContactsAPI\ContactsAPI\bin\Debug\netcoreapp3.1\netcoreapp3.1\cs\Microsoft.CodeAnalysis.resources.dll
 F:\GIthub\Cshap\项目\ContactsAPI\ContactsAPI\bin\Debug\netcoreapp3.1\netcoreapp3.1\de\Microsoft.CodeAnalysis.resources.dll

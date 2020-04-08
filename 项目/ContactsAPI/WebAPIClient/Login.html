@@ -11,9 +11,38 @@
     <title>Document</title>
 </head>
 <body>
-    <div id="login">
-        <div class="logo"></div>
-        <div class="info"></div>
+    <div class="container" style="margin-top: 270px;">
+        <div class="row">
+            <div class="col-12 bg-info headimg text-center align-item-center">
+                <img src="./img/1.jpg" alt="头像" class = "rounded-circle dogimg">
+            </div>
+        </div>
+        <div class="row mt-4">
+            <div class="col-3"></div>
+            <div class="col-6">
+                <form>
+                    <div class="form-group">
+                        <label for="UserName">用户名：</label>
+                        <input type="text" class="form-control" id = "user">
+                    </div>
+                    <div class="form-group">
+                        <label for="pwd">密码：</label>
+                        <input type="password" class="form-control" id = "pwd">
+                    </div>
+                </form>
+            </div>
+            <div class="col-3"></div>
+        </div>
+        <div class="row">
+            <div class="col-3 offset-3">
+                <button class="btn btn-success login">登录</button>
+            </div>
+            <div class="col-3">
+                <button class="btn btn-info register">注册</button>
+            </div>
+        </div>
+        <div class="row  mt-4" style="height: 72px; background-color: darkgray;"></div>
     </div>
+    <script src="./js/addModel.js"></script>
 </body>
 </html>

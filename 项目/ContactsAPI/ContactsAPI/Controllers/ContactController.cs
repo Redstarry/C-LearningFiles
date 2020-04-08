@@ -15,9 +15,12 @@ using System.Text.Encodings.Web;
 using Microsoft.Extensions.Options;
 using ContactsAPI.Models.config;
 using Microsoft.AspNetCore.Cors;
+using ContactsAPI.Models.LoginInfo;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ContactsAPI.Controllers
 {
+    //[Authorize]
     [EnableCors("Domain")]
     [Route("v1/Contacts")]
     [ApiController]
@@ -38,7 +41,9 @@ namespace ContactsAPI.Controllers
         /// </summary>
         /// <param name="page"></param>
         /// <returns></returns>
+        
         [HttpGet(Name = nameof(Get))]
+        [Authorize]
         public async Task<IActionResult> Get([FromQuery] Page page)
         {
             //var ContactDTO = _mapper.Map<IEnumerable<ContactsDTO>>(Contact);
@@ -51,6 +56,7 @@ namespace ContactsAPI.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
+        [Authorize]
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(Guid id)
         {
@@ -63,16 +69,23 @@ namespace ContactsAPI.Controllers
         /// </summary>
         /// <param name="reg"></param>
         /// <returns></returns>
+        [Authorize]
         [HttpPost("propselect")]
         public async Task<IActionResult> PostByPropGetInfo([FromBody]ContactsDTO reg)
         {
             return Ok(await contactRepository.Get(reg));
+        }
+        [HttpPost("login")]
+        public async Task<IActionResult> PostLogin(UserInfo userInfo)
+        {
+            return Ok(await contactRepository.UserInfo(userInfo));
         }
         /// <summary>
         /// 添加数据
         /// </summary>
         /// <param name="reg"></param>
         /// <returns></returns>
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] ContactsDTO reg)
         {
@@ -91,6 +104,7 @@ namespace ContactsAPI.Controllers
         /// <param name="id"></param>
         /// <param name="req"></param>
         /// <returns></returns>
+        [Authorize]
         [HttpPut("{id}")]
         public async Task<IActionResult> Put(Guid id, [FromBody] ContactsDTO req)
         {
@@ -102,6 +116,7 @@ namespace ContactsAPI.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
+        [Authorize]
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(Guid id)
         {

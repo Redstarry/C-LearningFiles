@@ -1,4 +1,5 @@
 ﻿using ContactsAPI.Models.config;
+using ContactsAPI.Models.LoginInfo;
 using ContactsAPI.Models.Mapper;
 using ContactsAPI.Models.PageModel;
 using Microsoft.AspNetCore.Mvc;
@@ -11,7 +12,12 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
 using System.Reflection;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using System.IdentityModel.Tokens.Jwt;
+using Microsoft.IdentityModel.Logging;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace ContactsAPI.Models.DataRepository
 {
@@ -120,6 +126,43 @@ namespace ContactsAPI.Models.DataRepository
 
             return new ResultDTO(200, "更新成功。", _mapper.Map<ContactsDTO>(selectData), ResultStatus.Suceess);
 
+        }
+        public async Task<ResultDTO> UserInfo(UserInfo userInfo)
+        {
+            var selectUserInfo = await Db.SingleOrDefaultAsync<UserInfo>("where UserName = @0", userInfo.UserName);
+            if (!(userInfo.UserName.Equals(selectUserInfo.UserName) && userInfo.Pwd.Equals(selectUserInfo.Pwd)))
+            {
+                return new ResultDTO(200, "账号或密码错误", "", ResultStatus.Error);
+            }
+            var nbf = DateTime.Now;
+            var exp = nbf.AddMinutes(5);
+            var myClaim = new[] {
+                //new Claim(ClaimTypes.Name,selectUserInfo.UserName),
+
+                new Claim(JwtRegisteredClaimNames.Sub,selectUserInfo.UserName),
+                new Claim("Company", "hn"),
+                new Claim("author", "tp"),
+                new Claim(JwtRegisteredClaimNames.Exp,$"{new DateTimeOffset(exp).ToUnixTimeSeconds()}"),
+                new Claim(JwtRegisteredClaimNames.Nbf,$"{new DateTimeOffset(nbf).ToUnixTimeSeconds()}")
+            };
+            IdentityModelEventSource.ShowPII = true;
+
+            var authKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("123456789963258741"));
+
+            var token = new JwtSecurityToken(
+                    issuer:"tp",
+                    expires:exp,
+                    audience:"everyone",
+                    notBefore:nbf,
+                    claims:myClaim,
+                    signingCredentials: new SigningCredentials(authKey, SecurityAlgorithms.HmacSha256)
+                );
+            var tokenAndTime = new {
+                jwttoken = new JwtSecurityTokenHandler().WriteToken(token),
+                overdue = token.ValidTo
+            };
+            return new ResultDTO(200, "验证通过", tokenAndTime, ResultStatus.Suceess);
+           
         }
     }
 }

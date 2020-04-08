@@ -14,6 +14,11 @@ using System.IO;
 using ContactsAPI.Models.config;
 using ContactsAPI.Models.DataRepository;
 using ContactsAPI.Models;
+using System.IdentityModel.Tokens.Jwt;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Logging;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace ContactsAPI
 {
@@ -47,6 +52,32 @@ namespace ContactsAPI
             });
             services.Configure<ConnectionConfig>(Configuration.GetSection("ConnectionStrings"));
             services.AddCors(option => option.AddPolicy("Domain", builder=>builder.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin()));
+            services.AddAuthentication(options => {
+                options.DefaultAuthenticateScheme = "JwtBearToken"; //默认的身份验证模式
+                options.DefaultChallengeScheme = "JwtBearToken";
+                options.DefaultScheme = "JwtBearToken"; //默认模式
+
+            }).AddJwtBearer("JwtBearToken", options => {
+                //options.SaveToken = true;
+                options.RequireHttpsMetadata = false;
+                options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+                {
+                    SaveSigninToken = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("123456789963258741")),
+
+                    ValidateIssuer = true,
+                    ValidIssuer = "tp",
+
+                    ValidateAudience = true,
+                    ValidAudience = "everyone",
+
+                    ValidateLifetime = true,
+
+                    //ClockSkew = TimeSpan.FromMinutes(5)
+
+                };
+                
+            });
             
         }
 
@@ -60,9 +91,11 @@ namespace ContactsAPI
 
             app.UseStaticFiles(); //使用html、js的中间件
             //
+            app.UseHttpsRedirection();
             app.UseRouting();
-
+            
             app.UseCors("Domain");
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseSwagger();

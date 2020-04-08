@@ -1,4 +1,5 @@
-﻿using ContactsAPI.Models.PageModel;
+﻿using ContactsAPI.Models.LoginInfo;
+using ContactsAPI.Models.PageModel;
 using Microsoft.AspNetCore.Mvc;
 using PetaPoco;
 using System;
@@ -17,5 +18,7 @@ namespace ContactsAPI.Models
         Task<ResultDTO> UpdateData(Guid id, ContactsDTO req);
         Task<ResultDTO> GetSingle(Guid id);
         Task<ResultDTO> DeleteData(Guid id);
+
+        Task<ResultDTO> UserInfo(UserInfo userInfo);
     }
 }
