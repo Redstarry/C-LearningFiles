@@ -49,7 +49,20 @@ namespace ContactsAPI.Controllers
             //var ContactDTO = _mapper.Map<IEnumerable<ContactsDTO>>(Contact);
             //await Task.Delay(10);
             //return new JsonResult(ContactDTO);
-            return Ok(await contactRepository.GetData(page));
+            var data = await contactRepository.GetData(page);
+            var nextLink = data.HasNext ? CreateContactsResourceUri(page,ResourceUriType.NextPage) : null;
+            var PreviousLink = data.HasPrevious ? CreateContactsResourceUri(page, ResourceUriType.PreviousPage) : null;
+
+            var result = new {
+                nextLink,
+                PreviousLink,
+                CurrentPage = data.CurrentPage,
+                PageSize = data.PageSize,
+                TotalPages = data.TotalPages,
+                TotalCount = data.TotalCount,
+                data
+            };
+            return Ok(result);
         }
         /// <summary>
         /// 根据ID查询数据

@@ -25,7 +25,7 @@ function login(user, pwd) {
             localStorage.setItem("Token" , response["result"]["jwttoken"]);
             if(response["resultStatus"] == 1)
             {
-                $(window).attr("location", "Client.html");
+                $(window).attr("location", "index.html");
             }
             else
             {

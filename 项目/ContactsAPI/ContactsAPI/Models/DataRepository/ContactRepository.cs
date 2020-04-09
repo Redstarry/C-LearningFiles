@@ -41,6 +41,11 @@ namespace ContactsAPI.Models.DataRepository
         {
             var soucreContacts = _mapper.Map<Contacts>(reg);
             soucreContacts.Id = System.Guid.NewGuid();
+            var selectData = await Db.SingleOrDefaultAsync<Contacts>("where phone = @0",soucreContacts.Phone);
+            if (selectData != null)
+            {
+                return new ResultDTO(200,"该号码已存在", selectData,ResultStatus.Error);
+            }
             if (await Db.InsertAsync(soucreContacts) != null)
             {
                 var result = _mapper.Map<ContactsDTO>(soucreContacts);
@@ -66,13 +71,14 @@ namespace ContactsAPI.Models.DataRepository
             return new ResultDTO(200, "删除失败", "", ResultStatus.Fail);
         }
 
-        public async Task<ResultDTO> GetData(Page page)
+        public async Task<PageInfo<Contacts>> GetData(Page page)
         {
             var contact = Db.Query<Contacts>("Select * from hnInfo");
             await Task.Delay(10);
             var pageContact = PageInfo<Contacts>.Create(contact, page.PageNumber, page.PageSize);
-            if (pageContact.Count == 0)return new ResultDTO(200, "获取失败", pageContact, ResultStatus.Fail);
-            return new ResultDTO(200, "获取成功", pageContact, ResultStatus.Suceess);
+            //if (pageContact.Count == 0)return new ResultDTO(200, "获取失败", pageContact, ResultStatus.Fail);
+            //return new ResultDTO(200, "获取成功", pageContact, ResultStatus.Suceess);
+            return pageContact;
         }
         public async Task<ResultDTO> Get(ContactsDTO reg)
         {
@@ -164,5 +170,7 @@ namespace ContactsAPI.Models.DataRepository
             return new ResultDTO(200, "验证通过", tokenAndTime, ResultStatus.Suceess);
            
         }
+
+
     }
 }

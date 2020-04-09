@@ -12,7 +12,7 @@ namespace ContactsAPI.Models
     public interface IContactRepository
     {
         //Task<ActionResult<Page<Contacts>>> GetData();
-        Task<ResultDTO> GetData(Page page);
+        Task<PageInfo<Contacts>> GetData(Page page);
         Task<ResultDTO> Get(ContactsDTO reg);
         Task<ResultDTO> AddData(ContactsDTO reg);
         Task<ResultDTO> UpdateData(Guid id, ContactsDTO req);

@@ -1,12 +1,18 @@
+// 点击“新增”按钮 创建的弹出框
 $(".add").click(function (e) { 
     
-    createModel("新增");
+    createModel("新增", "addyesbtn", "addnobtn","addyesclick()", "addnoclick()");
 });
-
-function createModel(title) {
+// 点击“查询”按钮 创建的弹窗框
+$(".update").click(function(){
+    createModel("查询", "updateYesBtn", "updateNoBtn","updateyesclick()","updatenoclick()");
+});
+// “新增”、“查询” 按钮，共有的创建弹窗的函数
+function createModel(title, yesbtnName, nobtnName, addyesclick, addnoclick) {
     
     var modelDom = $("<div>").attr("class", "modelDom");
-    $("body").append(modelDom);
+    //$("body").append(modelDom);
+    $(".container").after(modelDom);
     var centerdiv = $("<div>").attr("class", "container centerdiv");
     $(".modelDom").append(centerdiv);
     var title = $("<h2>").attr("class","text-center mt-4").html(title);
@@ -34,4 +40,16 @@ function createModel(title) {
     var idcardlabel = $("<label>").html("身份证号码：");
     var idcardinput = $("<input>").attr("class","form-control").attr({"type":"text","id":"idcard","maxlength":"18"});
     $(idcardform).append(idcardlabel,idcardinput);
+
+
+    var row2 = $("<div>").attr("class","row row2");
+    $(".centerdiv").append(row2);
+
+    var row2col = $("<div>").attr("class","col-6 offset-3");
+    $(".row2").append(row2col);
+
+    var yesbutton = $("<button>").attr("class","btn btn-info float-left " + yesbtnName).html("确定").attr("onclick",addyesclick);
+    var nobutton = $("<button>").attr("class","btn btn-warning float-right " + nobtnName).html("取消").attr("onclick",addnoclick);
+
+    $(row2col).append(yesbutton, nobutton);
 }
