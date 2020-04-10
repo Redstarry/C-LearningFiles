@@ -2,9 +2,14 @@ html,body
 {
     height: 100%;
     width: 100%;
-    overflow: hidden;
+    /* overflow: hidden; */
 }
 body
 {
     position: relative;
+    background: no-repeat url("../img/bg.png");
+}
+h1
+{
+    color:white;
 }

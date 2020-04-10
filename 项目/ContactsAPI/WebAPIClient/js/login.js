@@ -23,9 +23,10 @@ function login(user, pwd) {
         success: function (response) 
         {
             localStorage.setItem("Token" , response["result"]["jwttoken"]);
+            localStorage.setItem("expDate",response["result"]["overdue"]);
             if(response["resultStatus"] == 1)
             {
-                $(window).attr("location", "index.html");
+                $(window).attr("location", "./html/index.html");
             }
             else
             {

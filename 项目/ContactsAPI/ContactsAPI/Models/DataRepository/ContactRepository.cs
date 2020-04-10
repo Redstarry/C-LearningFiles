@@ -107,21 +107,21 @@ namespace ContactsAPI.Models.DataRepository
             return new ResultDTO(200, "查询成功", Contact, ResultStatus.Suceess);
         }
 
-        public async Task<ResultDTO> UpdateData(Guid id , ContactsDTO req)
+        public async Task<ResultDTO> UpdateData(Guid id,ContactsDTO req)
         {
-            var mesage = new MessageRespones();
-            if (req.Name == "" && req.Phone == "" && req.IdCard == "")
+            var contactReq = _mapper.Map<Contacts>(req);
+            if (contactReq.Name == "" && contactReq.Phone == "" && contactReq.IdCard == "")
             {
                 return new ResultDTO(200, "没有修改后的数据。", "", ResultStatus.Fail);
             }
-            if (await Db.SingleOrDefaultAsync<Contacts>("where id = @0", id) == null)
+            if (await Db.SingleOrDefaultAsync<Contacts>("where Id = @0", id) == null)
             {
                 return new ResultDTO(200, "修改的数据不存在。", "", ResultStatus.Fail);
             }
             var sql = PetaPoco.Sql.Builder.Append("set ");
-            if (req.Name != null && req.Name != "") sql.Append("name = @0 ", req.Name);
-            if (req.IdCard != null && req.IdCard != "") sql.Append(", IdCard = @0 ", req.IdCard);
-            if (req.Phone != null && req.Phone != "") sql.Append(", Phone = @0 ", req.Phone);
+            if (contactReq.Name != null && contactReq.Name != "") sql.Append("name = @0 ", contactReq.Name);
+            if (contactReq.IdCard != null && contactReq.IdCard != "") sql.Append(", IdCard = @0 ", contactReq.IdCard);
+            if (contactReq.Phone != null && contactReq.Phone != "") sql.Append(", Phone = @0 ", contactReq.Phone);
             sql.Append(" where id = @0", id);
             var ContactNum = await Db.UpdateAsync<Contacts>(sql);
             if (ContactNum <= 0)
@@ -165,7 +165,8 @@ namespace ContactsAPI.Models.DataRepository
                 );
             var tokenAndTime = new {
                 jwttoken = new JwtSecurityTokenHandler().WriteToken(token),
-                overdue = token.ValidTo
+                //overdue = token.ValidTo.ToLocalTime()
+                overdue = new DateTimeOffset(token.ValidTo).ToUnixTimeSeconds()
             };
             return new ResultDTO(200, "验证通过", tokenAndTime, ResultStatus.Suceess);
            

@@ -1,11 +1,11 @@
 // 点击“新增”按钮 创建的弹出框
 $(".add").click(function (e) { 
     
-    createModel("新增", "addyesbtn", "addnobtn","addyesclick()", "addnoclick()");
+    createModel("新增", "addyesbtn", "addnobtn","addyesclick()", "closeDom()");
 });
 // 点击“查询”按钮 创建的弹窗框
-$(".update").click(function(){
-    createModel("查询", "updateYesBtn", "updateNoBtn","updateyesclick()","updatenoclick()");
+$(".select").click(function(){
+    createModel("查询", "selectYesBtn", "selectNoBtn","selectyesclick()","closeDom()");
 });
 // “新增”、“查询” 按钮，共有的创建弹窗的函数
 function createModel(title, yesbtnName, nobtnName, addyesclick, addnoclick) {

@@ -15,7 +15,7 @@ namespace ContactsAPI.Models
         Task<PageInfo<Contacts>> GetData(Page page);
         Task<ResultDTO> Get(ContactsDTO reg);
         Task<ResultDTO> AddData(ContactsDTO reg);
-        Task<ResultDTO> UpdateData(Guid id, ContactsDTO req);
+        Task<ResultDTO> UpdateData(Guid id ,ContactsDTO req);
         Task<ResultDTO> GetSingle(Guid id);
         Task<ResultDTO> DeleteData(Guid id);
 

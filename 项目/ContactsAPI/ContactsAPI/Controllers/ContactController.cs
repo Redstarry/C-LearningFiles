@@ -119,9 +119,9 @@ namespace ContactsAPI.Controllers
         /// <returns></returns>
         [Authorize]
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(Guid id, [FromBody] ContactsDTO req)
+        public async Task<IActionResult> Put(Guid id ,[FromBody] ContactsDTO req)
         {
-            return Ok(await contactRepository.UpdateData(id, req));
+            return Ok(await contactRepository.UpdateData(id,req));
         }
 
         /// <summary>
