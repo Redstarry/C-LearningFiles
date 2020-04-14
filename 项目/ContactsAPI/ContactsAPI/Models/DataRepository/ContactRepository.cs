@@ -18,19 +18,23 @@ using System.IdentityModel.Tokens.Jwt;
 using Microsoft.IdentityModel.Logging;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using Hangfire;
+using ContactsAPI.Models.HangfireInfo;
 
 namespace ContactsAPI.Models.DataRepository
 {
     public class ContactRepository : IContactRepository
     {
         private readonly AutoMapper.IMapper _mapper;
+        private readonly HangfireLogger _content;
 
         public PetaPoco.Database Db { get; set; }
         public string ConnecStr { get; set; }
         public string Provider { get; set; }
-        public ContactRepository(IOptions<ConnectionConfig> options, AutoMapper.IMapper mapper)
+        public ContactRepository(IOptions<ConnectionConfig> options, AutoMapper.IMapper mapper, HangfireLogger content)
         {
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+            _content = content;
             ConnecStr = options.Value.ConnectionStr;
             Provider = options.Value.Priovder;
             //Db = new PetaPoco.Database(ConnecStr, Provider, null);
@@ -133,6 +137,7 @@ namespace ContactsAPI.Models.DataRepository
             return new ResultDTO(200, "更新成功。", _mapper.Map<ContactsDTO>(selectData), ResultStatus.Suceess);
 
         }
+
         public async Task<ResultDTO> UserInfo(UserInfo userInfo)
         {
             var selectUserInfo = await Db.SingleOrDefaultAsync<UserInfo>("where UserName = @0", userInfo.UserName);
@@ -172,6 +177,35 @@ namespace ContactsAPI.Models.DataRepository
            
         }
 
+        public async Task<ResultDTO> StartTask(string RequestInfo)
+        {
+            var maxId = Db.ExecuteScalar<int>("select max(id) from HangfireInfo");
+            var requestDateTime = DateTime.Now.ToString("F");
+            HangfireLogger hangfireLog;
+            if (RequestInfo == "")
+            {
+                hangfireLog = new HangfireLogger(maxId + 1, RequestInfo, "Perform", TaskStatusCode.Fail, requestDateTime, "");
+                Db.Insert(hangfireLog);
+                return new ResultDTO(400, "请求失败，Id不能为空", ResultStatus.Fail);
+            }
+            await Task.Delay(10);
+            RecurringJob.AddOrUpdate(() => Perform(), "0 0 12 * * ?");
+            hangfireLog = new HangfireLogger(maxId + 1, RequestInfo, "Perform", TaskStatusCode.Success, requestDateTime,"12:00:00");
+            Db.Insert(hangfireLog);
+            return new ResultDTO(200,"请求成功，任务已开启", ResultStatus.Suceess);
+        }
 
+        private void Perform()
+        {
+            Console.WriteLine("已开启任务：Perform");
+            //var maxId = Db.ExecuteScalar<int>("select max(id) from HangfireInfo");
+            //_content.id = maxId + 1;
+            //_content.RequestInfo = RequestInfo;
+            //_content.TaskName = "Perform";
+            //_content.TaskStatus = TaskStatusCode.Success;
+            //_content.RequestTime = requestDateTime;
+            //_content.ExecutionTime = "12:00:00";
+            //Db.Insert(_content);
+        }
     }
 }

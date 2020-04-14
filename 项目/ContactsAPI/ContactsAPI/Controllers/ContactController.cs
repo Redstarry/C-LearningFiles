@@ -93,6 +93,11 @@ namespace ContactsAPI.Controllers
         {
             return Ok(await contactRepository.UserInfo(userInfo));
         }
+        [HttpPost("Tasks")]
+        public async Task<IActionResult> TimedTasks(string RequestInfo)
+        {
+            return Ok(await contactRepository.StartTask(RequestInfo));
+        }
         /// <summary>
         /// 添加数据
         /// </summary>

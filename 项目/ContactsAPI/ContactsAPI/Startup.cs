@@ -19,6 +19,8 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Logging;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using Hangfire;
+using Hangfire.Dashboard;
 
 namespace ContactsAPI
 {
@@ -36,8 +38,13 @@ namespace ContactsAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            //注册数据库操作服务
             services.AddTransient<IContactRepository,ContactRepository>();
+            //HangFire 服务注册
+            services.AddHangfire(options => options.UseSqlServerStorage("server=.; uid = sa; pwd = 123; database = ContactInformation"));
+            //Mapper(数据库实体与DTO之间的映射)
             services.AddAutoMapper(typeof(Startup)); //AppDomain.CurrentDomain.GetAssemblies()
+            //API 文档的注册
             services.AddSwaggerGen(option =>
             {
 
@@ -51,7 +58,9 @@ namespace ContactsAPI
                 option.IncludeXmlComments(xmlPath);
             });
             services.Configure<ConnectionConfig>(Configuration.GetSection("ConnectionStrings"));
+            //解决跨域的Core服务注册
             services.AddCors(option => option.AddPolicy("Domain", builder=>builder.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin()));
+            // JWT 服务注册
             services.AddAuthentication(options => {
                 options.DefaultAuthenticateScheme = "JwtBearToken"; //默认的身份验证模式
                 options.DefaultChallengeScheme = "JwtBearToken";
@@ -78,7 +87,7 @@ namespace ContactsAPI
                 };
                 
             });
-            
+           
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -90,14 +99,28 @@ namespace ContactsAPI
             }
 
             app.UseStaticFiles(); //使用html、js的中间件
-            //
+            
+            // 把http请求转换成https请求
             app.UseHttpsRedirection();
             app.UseRouting();
             
+            //跨域配置
             app.UseCors("Domain");
+
+            //JWT配置
             app.UseAuthentication();
             app.UseAuthorization();
 
+            // HangFire 配置 ("/hangfire" 更改URL映射)
+            app.UseHangfireDashboard("/hangfire", new DashboardOptions {
+                IsReadOnlyFunc = (DashboardContext context) => true // 开启只读视图，默认是关闭
+            });
+            app.UseHangfireServer(new BackgroundJobServerOptions
+            { 
+                Queues = new[] { "default"}            
+            });
+
+            // API文档配置
             app.UseSwagger();
             app.UseSwaggerUI(option => {
                 option.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");

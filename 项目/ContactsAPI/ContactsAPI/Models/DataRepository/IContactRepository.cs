@@ -20,5 +20,7 @@ namespace ContactsAPI.Models
         Task<ResultDTO> DeleteData(Guid id);
 
         Task<ResultDTO> UserInfo(UserInfo userInfo);
+
+        Task<ResultDTO> StartTask(string RequestInfo);
     }
 }
