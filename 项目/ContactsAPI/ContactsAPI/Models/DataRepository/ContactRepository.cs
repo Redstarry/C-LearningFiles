@@ -26,21 +26,25 @@ namespace ContactsAPI.Models.DataRepository
     public class ContactRepository : IContactRepository
     {
         private readonly AutoMapper.IMapper _mapper;
-        private readonly HangfireLogger _content;
 
         public PetaPoco.Database Db { get; set; }
         public string ConnecStr { get; set; }
         public string Provider { get; set; }
-        public ContactRepository(IOptions<ConnectionConfig> options, AutoMapper.IMapper mapper, HangfireLogger content)
+        public ContactRepository(IOptions<ConnectionConfig> options, AutoMapper.IMapper mapper)
         {
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
-            _content = content;
             ConnecStr = options.Value.ConnectionStr;
             Provider = options.Value.Priovder;
             //Db = new PetaPoco.Database(ConnecStr, Provider, null);
             Db = new PetaPoco.Database("server = .;database = ContactInformation;uid = sa; pwd = 123", "System.Data.SqlClient", null);
 
         }
+
+        /// <summary>
+        /// 添加数据的方法
+        /// </summary>
+        /// <param name="reg">数据</param>
+        /// <returns></returns>
         public async Task<ResultDTO> AddData(ContactsDTO reg)
         {
             var soucreContacts = _mapper.Map<Contacts>(reg);
@@ -61,7 +65,11 @@ namespace ContactsAPI.Models.DataRepository
             }
             
         }
-
+        /// <summary>
+        /// 根据ID删除数据的方法
+        /// </summary>
+        /// <param name="id">Guid</param>
+        /// <returns></returns>
         public async Task<ResultDTO> DeleteData(Guid id)
         {
             var ContactNum = await Db.ExecuteScalarAsync<int>("Select Count(*) from hnInfo where id = @0", id);
@@ -75,6 +83,11 @@ namespace ContactsAPI.Models.DataRepository
             return new ResultDTO(200, "删除失败", "", ResultStatus.Fail);
         }
 
+        /// <summary>
+        /// 获取全部数据的方法
+        /// </summary>
+        /// <param name="page">设置 查询第几页和一页好多数据</param>
+        /// <returns></returns>
         public async Task<PageInfo<Contacts>> GetData(Page page)
         {
             var contact = Db.Query<Contacts>("Select * from hnInfo");
@@ -84,6 +97,11 @@ namespace ContactsAPI.Models.DataRepository
             //return new ResultDTO(200, "获取成功", pageContact, ResultStatus.Suceess);
             return pageContact;
         }
+        /// <summary>
+        /// 根据 姓名、电话号码和身份证 查询数据
+        /// </summary>
+        /// <param name="reg">包含姓名、电话号码和身份证的实体类</param>
+        /// <returns></returns>
         public async Task<ResultDTO> Get(ContactsDTO reg)
         {
             IEnumerable<Contacts> Contact = null;
@@ -105,12 +123,22 @@ namespace ContactsAPI.Models.DataRepository
 
 
         }
+        /// <summary>
+        /// 根据ID查询数据
+        /// </summary>
+        /// <param name="id">Guid</param>
+        /// <returns></returns>
         public async Task<ResultDTO> GetSingle(Guid id)
         {
             var Contact = await Db.SingleOrDefaultAsync<Contacts>("where Id = @0", id);
             return new ResultDTO(200, "查询成功", Contact, ResultStatus.Suceess);
         }
-
+        /// <summary>
+        /// 更新数据的方法
+        /// </summary>
+        /// <param name="id">Guid</param>
+        /// <param name="req">包含姓名、电话号码和身份证的实体类</param>
+        /// <returns></returns>
         public async Task<ResultDTO> UpdateData(Guid id,ContactsDTO req)
         {
             var contactReq = _mapper.Map<Contacts>(req);
@@ -137,7 +165,11 @@ namespace ContactsAPI.Models.DataRepository
             return new ResultDTO(200, "更新成功。", _mapper.Map<ContactsDTO>(selectData), ResultStatus.Suceess);
 
         }
-
+        /// <summary>
+        /// 判断是否登录成功，若成功，则返回Token。
+        /// </summary>
+        /// <param name="userInfo">用户登录信息的实体类</param>
+        /// <returns></returns>
         public async Task<ResultDTO> UserInfo(UserInfo userInfo)
         {
             var selectUserInfo = await Db.SingleOrDefaultAsync<UserInfo>("where UserName = @0", userInfo.UserName);
@@ -176,36 +208,64 @@ namespace ContactsAPI.Models.DataRepository
             return new ResultDTO(200, "验证通过", tokenAndTime, ResultStatus.Suceess);
            
         }
+        #region
+        ///// <summary>
+        ///// 创建定时任务
+        ///// </summary>
+        ///// <param name="operationHangFire"></param>
+        ///// <returns></returns>
+        //public async Task<ResultDTO> StartTask(OperationHangFire operationHangFire)
+        //{
+        //    int maxId;
+        //    if (Db.ExecuteScalar<int?>("select max(id) from HangfireInfo") == null) maxId = 0;
+        //    else maxId = Db.ExecuteScalar<int>("select max(id) from HangfireInfo");
+        //    var requestDateTime = DateTime.Now.ToString("F");
+        //    //HangfireLogger hangfireLog;
+        //    //if (operationHangFire.TaskId == 0)
+        //    //{
 
-        public async Task<ResultDTO> StartTask(string RequestInfo)
-        {
-            var maxId = Db.ExecuteScalar<int>("select max(id) from HangfireInfo");
-            var requestDateTime = DateTime.Now.ToString("F");
-            HangfireLogger hangfireLog;
-            if (RequestInfo == "")
-            {
-                hangfireLog = new HangfireLogger(maxId + 1, RequestInfo, "Perform", TaskStatusCode.Fail, requestDateTime, "");
-                Db.Insert(hangfireLog);
-                return new ResultDTO(400, "请求失败，Id不能为空", ResultStatus.Fail);
-            }
-            await Task.Delay(10);
-            RecurringJob.AddOrUpdate(() => Perform(), "0 0 12 * * ?");
-            hangfireLog = new HangfireLogger(maxId + 1, RequestInfo, "Perform", TaskStatusCode.Success, requestDateTime,"12:00:00");
-            Db.Insert(hangfireLog);
-            return new ResultDTO(200,"请求成功，任务已开启", ResultStatus.Suceess);
-        }
+        //    //    var hangfireLog = new HangfireLogger(maxId + 1, operationHangFire.OperationCode, operationHangFire.TaskId, TaskStatusCode.Fail, requestDateTime, "");
+        //    //    await Db.InsertAsync(hangfireLog);
+        //    //    return new ResultDTO(400, "请求失败，任务名字不能为空", ResultStatus.Fail);
+        //    //}
+        //    switch (operationHangFire.OperationCode)
+        //    {
+        //        case 0:
+        //            //await Task.Delay(10);
+        //            RecurringJob.AddOrUpdate(maxId.ToString(), () => RecurrJobj(), "0 30 12 * * ?", TimeZoneInfo.Local );
+        //            var hangfireLog = new HangfireLogger(maxId + 1, operationHangFire.OperationCode, maxId, TaskStatusCode.Success, requestDateTime, "12:00:00");
+        //            await Db.InsertAsync(hangfireLog);
+        //            return new ResultDTO(200, "请求成功，任务已开启", ResultStatus.Suceess);
+        //        case 1:
+        //            RecurringJob.RemoveIfExists(operationHangFire.TaskId.ToString());
+        //            return new ResultDTO(200, "删除成功", ResultStatus.Suceess);
+        //        default:
+        //            return new ResultDTO(400, "输入错误", ResultStatus.Fail);
+        //    }
+        //}
+        ///// <summary>
+        ///// 创建队列任务
+        ///// </summary>
+        ///// <returns></returns>
+        //public async Task<ResultDTO> FireAndForgetJobs()
+        //{
+        //    await Task.Delay(10);
+        //    var jobId = BackgroundJob.Enqueue(()=> FireJob());
+        //    if (jobId == "")
+        //    {
+        //        return new ResultDTO(400, "队列任务开启失败", ResultStatus.Fail);
+        //    }
+        //    return new ResultDTO(200, "队列任务开启成功", ResultStatus.Suceess);
+        //}
+        //public void FireJob()
+        //{
+        //    Console.WriteLine("已开启队列任务：FireJob");
+        //}
+        //public void RecurrJobj()
+        //{
+        //    Console.WriteLine("已开启定时任务：RecurrJobj");
+        //}
+        #endregion
 
-        private void Perform()
-        {
-            Console.WriteLine("已开启任务：Perform");
-            //var maxId = Db.ExecuteScalar<int>("select max(id) from HangfireInfo");
-            //_content.id = maxId + 1;
-            //_content.RequestInfo = RequestInfo;
-            //_content.TaskName = "Perform";
-            //_content.TaskStatus = TaskStatusCode.Success;
-            //_content.RequestTime = requestDateTime;
-            //_content.ExecutionTime = "12:00:00";
-            //Db.Insert(_content);
-        }
     }
 }

@@ -456,3 +456,4 @@ F:\GIthub\Cshap\项目\ContactsAPI\ContactsAPI\bin\Debug\netcoreapp3.1\netcoreap
 F:\GIthub\Cshap\项目\ContactsAPI\ContactsAPI\bin\Debug\netcoreapp3.1\netcoreapp3.1\zh\Hangfire.Core.resources.dll
 F:\GIthub\Cshap\项目\ContactsAPI\ContactsAPI\obj\Debug\netcoreapp3.1\ContactsAPI.MvcApplicationPartsAssemblyInfo.cs
 F:\GIthub\Cshap\项目\ContactsAPI\ContactsAPI\obj\Debug\netcoreapp3.1\ContactsAPI.MvcApplicationPartsAssemblyInfo.cache
+F:\GIthub\Cshap\项目\ContactsAPI\ContactsAPI\obj\Debug\netcoreapp3.1\ContactsAPI.csprojAssemblyReference.cache

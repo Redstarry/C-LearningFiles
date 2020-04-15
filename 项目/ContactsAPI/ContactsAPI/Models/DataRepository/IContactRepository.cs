@@ -1,4 +1,5 @@
-﻿using ContactsAPI.Models.LoginInfo;
+﻿using ContactsAPI.Models.HangfireInfo;
+using ContactsAPI.Models.LoginInfo;
 using ContactsAPI.Models.PageModel;
 using Microsoft.AspNetCore.Mvc;
 using PetaPoco;
@@ -21,6 +22,7 @@ namespace ContactsAPI.Models
 
         Task<ResultDTO> UserInfo(UserInfo userInfo);
 
-        Task<ResultDTO> StartTask(string RequestInfo);
+        //Task<ResultDTO> StartTask(OperationHangFire RequestInfo);
+        //Task<ResultDTO> FireAndForgetJobs();
     }
 }

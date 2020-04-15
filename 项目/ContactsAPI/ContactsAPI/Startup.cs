@@ -21,6 +21,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Hangfire;
 using Hangfire.Dashboard;
+using ContactsAPI.Models.HangfireInfo;
 
 namespace ContactsAPI
 {
@@ -40,6 +41,7 @@ namespace ContactsAPI
             services.AddControllers();
             //注册数据库操作服务
             services.AddTransient<IContactRepository,ContactRepository>();
+            services.AddTransient<IHangFireCRUD, HangFireCRUD>();
             //HangFire 服务注册
             services.AddHangfire(options => options.UseSqlServerStorage("server=.; uid = sa; pwd = 123; database = ContactInformation"));
             //Mapper(数据库实体与DTO之间的映射)
@@ -112,9 +114,10 @@ namespace ContactsAPI
             app.UseAuthorization();
 
             // HangFire 配置 ("/hangfire" 更改URL映射)
-            app.UseHangfireDashboard("/hangfire", new DashboardOptions {
-                IsReadOnlyFunc = (DashboardContext context) => true // 开启只读视图，默认是关闭
-            });
+            app.UseHangfireDashboard("/hangfire", new DashboardOptions
+            {
+                IsReadOnlyFunc = (DashboardContext context) => false // 开启只读视图，默认是关闭
+            }) ;
             app.UseHangfireServer(new BackgroundJobServerOptions
             { 
                 Queues = new[] { "default"}            

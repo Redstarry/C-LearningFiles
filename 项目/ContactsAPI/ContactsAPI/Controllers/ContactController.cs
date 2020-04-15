@@ -17,6 +17,7 @@ using ContactsAPI.Models.config;
 using Microsoft.AspNetCore.Cors;
 using ContactsAPI.Models.LoginInfo;
 using Microsoft.AspNetCore.Authorization;
+using ContactsAPI.Models.HangfireInfo;
 
 namespace ContactsAPI.Controllers
 {
@@ -93,11 +94,27 @@ namespace ContactsAPI.Controllers
         {
             return Ok(await contactRepository.UserInfo(userInfo));
         }
-        [HttpPost("Tasks")]
-        public async Task<IActionResult> TimedTasks(string RequestInfo)
-        {
-            return Ok(await contactRepository.StartTask(RequestInfo));
-        }
+        #region
+        ///// <summary>
+        ///// 创建定时任务
+        ///// </summary>
+        ///// <param name="RequestInfo"></param>
+        ///// <returns></returns>
+        //[HttpPost("TimedTasks")]
+        //public async Task<IActionResult> TimedTasks(OperationHangFire RequestInfo)
+        //{
+        //    return Ok(await contactRepository.StartTask(RequestInfo));
+        //}
+        ///// <summary>
+        ///// 创建队列任务
+        ///// </summary>
+        ///// <returns></returns>
+        //[HttpPost("FireAndForgetJobs")]
+        //public async Task<IActionResult> FireAndForgetJobs()
+        //{
+        //    return Ok(await contactRepository.FireAndForgetJobs());
+        //}
+        #endregion
         /// <summary>
         /// 添加数据
         /// </summary>
