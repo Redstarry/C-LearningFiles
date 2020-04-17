@@ -27,7 +27,7 @@ namespace ContactsAPI.Models.HangfireInfo
             var requestDateTime = DateTime.Now.ToString("F");
             var NewMaxId = MaxId + 1;
             RecurringJob.AddOrUpdate(NewMaxId.ToString(), () => RecurrJobj(), "0 30 12 * * ?", TimeZoneInfo.Local);
-            var hangfireLog = new HangfireLogger(NewMaxId, 0, NewMaxId.ToString(), "Recurring jobs", TaskStatusCode.Success, requestDateTime, "12:00:00");
+            var hangfireLog = new HangfireLogger(NewMaxId, 0, NewMaxId.ToString(), "", "Recurring jobs", TaskStatusCode.Success, requestDateTime, "12:00:00");
             await Db.InsertAsync(hangfireLog);
             return new ResultDTO(200, "请求成功，任务已开启", ResultStatus.Suceess);
         }
@@ -40,7 +40,7 @@ namespace ContactsAPI.Models.HangfireInfo
         {
             var NewMaxId = MaxId + 1;
             RecurringJob.RemoveIfExists(TaskId);
-            hangFireLog = new HangfireLogger(NewMaxId, 1, NewMaxId.ToString(), "Recurring jobs", TaskStatusCode.Success, DateTime.Now.ToString("F"), "");
+            hangFireLog = new HangfireLogger(NewMaxId, 1, TaskId.ToString(),"", "Recurring jobs", TaskStatusCode.Success, DateTime.Now.ToString("F"), "");
             await Db.InsertAsync(hangFireLog);
             return new ResultDTO(200,"删除成功",ResultStatus.Suceess);
 
@@ -53,7 +53,7 @@ namespace ContactsAPI.Models.HangfireInfo
         {
             var jobId = BackgroundJob.Enqueue(() => FireJob());
             var NewMaxId = MaxId + 1;
-            hangFireLog = new HangfireLogger(NewMaxId, 0, jobId, "Fire-and-forget jobs", TaskStatusCode.Success, DateTime.Now.ToString("F"), DateTime.Now.ToString("F"));
+            hangFireLog = new HangfireLogger(NewMaxId, 0, jobId, "", "Fire-and-forget jobs", TaskStatusCode.Success, DateTime.Now.ToString("F"), DateTime.Now.ToString("F"));
             await Db.InsertAsync(hangFireLog);
             return new ResultDTO(200, "队列任务开启成功", ResultStatus.Suceess);
         }
@@ -65,49 +65,51 @@ namespace ContactsAPI.Models.HangfireInfo
         {
             var NewMaxId = MaxId + 1;
             var jobId = BackgroundJob.Schedule(()=> DelayedJob(),TimeSpan.FromMinutes(10));
-            hangFireLog = new HangfireLogger(NewMaxId, 0, jobId, "Delayed-jobs", TaskStatusCode.Success, DateTime.Now.ToString("F"), DateTimeOffset.Now.AddMinutes(10).ToString("F"));
+            hangFireLog = new HangfireLogger(NewMaxId, 0, jobId, "", "Delayed-jobs", TaskStatusCode.Success, DateTime.Now.ToString("F"), DateTimeOffset.Now.AddMinutes(10).ToString("F"));
             await Db.InsertAsync(hangFireLog);
             return new ResultDTO(200, "延时任务开启成功", ResultStatus.Suceess);
         }
+       
         /// <summary>
         /// 删除延时任务
         /// </summary>
-        /// <param name="jobId">延时任务的任务id</param>
+        /// <param name="jobId">延时任务ID</param>
         /// <returns></returns>
         public async Task<ResultDTO> DeleDelayedJobs(string jobId)
         {
             BackgroundJob.Delete(jobId);
             await Task.Delay(10);
             var NewMaxId = MaxId + 1;
-            hangFireLog = new HangfireLogger(NewMaxId, 1, jobId, "Delayed-jobs", TaskStatusCode.Success, DateTime.Now.ToString("F"), "");
+            hangFireLog = new HangfireLogger(NewMaxId, 1, jobId,"", "Delayed-jobs", TaskStatusCode.Success, DateTime.Now.ToString("F"), "");
             await Db.InsertAsync(hangFireLog);
             return new ResultDTO(200, "删除延时任务成功", ResultStatus.Suceess);
         }
         /// <summary>
         /// 创建连续性任务
         /// </summary>
-        /// <param name="jobId"></param>
+        /// <param name="jobId">任务编号</param>
         /// <returns></returns>
         public async Task<ResultDTO> ContinuationsJobs(string jobId)
         {
             var NewMaxId = MaxId + 1;
-            var intJobId = Convert.ToInt32(jobId);
+            var id = await Db.ExecuteScalarAsync<string>("select max(TaskId) from HangfireInfo");
+            var intJobId = Convert.ToInt32(id);
             BackgroundJob.ContinueJobWith(jobId, ()=> ContinuationsJob());
-            var datetime = Db.ExecuteScalar<string>("select ExecutionTime from HangfireInfo where TaskId = @0", jobId);
-            hangFireLog = new HangfireLogger(NewMaxId, 0, (intJobId + 1).ToString(), "Continuations-jobs", TaskStatusCode.Success, DateTime.Now.ToString("F"), datetime);
+            var datetime = await Db.ExecuteScalarAsync<string>("select ExecutionTime from HangfireInfo where TaskId = @0", jobId);
+            hangFireLog = new HangfireLogger(NewMaxId, 0, (intJobId + 1).ToString(), jobId , "Continuations-jobs", TaskStatusCode.Success, DateTime.Now.ToString("F"), datetime);
             await Db.InsertAsync(hangFireLog);
             return new ResultDTO(200, "连续性任务开启成功", ResultStatus.Suceess);
         }
         /// <summary>
         /// 删除连续性任务
         /// </summary>
-        /// <param name="jobId"></param>
+        /// <param name="jobId">任务编号</param>
         /// <returns></returns>
         public async Task<ResultDTO> DeleContinuationsJobs(string jobId)
         {
             var NewMaxId = MaxId + 1;
             BackgroundJob.Delete(jobId);
-            hangFireLog = new HangfireLogger(NewMaxId, 1, jobId, "ContinuationsJobs", TaskStatusCode.Success, DateTime.Now.ToString("F"), "");
+            hangFireLog = new HangfireLogger(NewMaxId, 1, jobId, "", "ContinuationsJobs", TaskStatusCode.Success, DateTime.Now.ToString("F"), "");
             await Db.InsertAsync(hangFireLog);
             return new ResultDTO(200, "删除连续性任务成功", ResultStatus.Suceess);
         }

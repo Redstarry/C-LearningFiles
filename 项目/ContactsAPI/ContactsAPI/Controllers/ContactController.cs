@@ -40,7 +40,7 @@ namespace ContactsAPI.Controllers
         /// <summary>
         /// 查询全部的数据
         /// </summary>
-        /// <param name="page"></param>
+        /// <param name="page">里面包含pageSize(一页的数量)和pageNumber(查询的页数)</param>
         /// <returns></returns>
         
         [HttpGet(Name = nameof(Get))]
@@ -68,7 +68,7 @@ namespace ContactsAPI.Controllers
         /// <summary>
         /// 根据ID查询数据
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="id">查询数据的Guid</param>
         /// <returns></returns>
         [Authorize]
         [HttpGet("{id}")]
@@ -81,7 +81,7 @@ namespace ContactsAPI.Controllers
         /// <summary>
         /// 根据 姓名，电话号码， 身份证 进行查询
         /// </summary>
-        /// <param name="reg"></param>
+        /// <param name="reg">里面包含姓名，电话号码， 身份证 </param>
         /// <returns></returns>
         [Authorize]
         [HttpPost("propselect")]
@@ -89,6 +89,11 @@ namespace ContactsAPI.Controllers
         {
             return Ok(await contactRepository.Get(reg));
         }
+        /// <summary>
+        /// 登录验证接口
+        /// </summary>
+        /// <param name="userInfo">用户名和密码</param>
+        /// <returns></returns>
         [HttpPost("login")]
         public async Task<IActionResult> PostLogin(UserInfo userInfo)
         {
@@ -118,7 +123,7 @@ namespace ContactsAPI.Controllers
         /// <summary>
         /// 添加数据
         /// </summary>
-        /// <param name="reg"></param>
+        /// <param name="reg">添加的详细数据</param>
         /// <returns></returns>
         [Authorize]
         [HttpPost]
@@ -136,8 +141,8 @@ namespace ContactsAPI.Controllers
         /// <summary>
         /// 根据ID更新数据
         /// </summary>
-        /// <param name="id"></param>
-        /// <param name="req"></param>
+        /// <param name="id">更新的数据ID</param>
+        /// <param name="req">更新后的数据内容</param>
         /// <returns></returns>
         [Authorize]
         [HttpPut("{id}")]
@@ -149,7 +154,7 @@ namespace ContactsAPI.Controllers
         /// <summary>
         /// 根据ID删除数据
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="id">要删除数据的ID</param>
         /// <returns></returns>
         [Authorize]
         [HttpDelete("{id}")]

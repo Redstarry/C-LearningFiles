@@ -1,0 +1,9 @@
+F:\GIthub\Cshap\项目\ContactsAPI\QuartZ\obj\Debug\QuartZ.csprojAssemblyReference.cache
+F:\GIthub\Cshap\项目\ContactsAPI\QuartZ\bin\Debug\QuartZ.exe.config
+F:\GIthub\Cshap\项目\ContactsAPI\QuartZ\bin\Debug\QuartZ.exe
+F:\GIthub\Cshap\项目\ContactsAPI\QuartZ\bin\Debug\QuartZ.pdb
+F:\GIthub\Cshap\项目\ContactsAPI\QuartZ\bin\Debug\Quartz.dll
+F:\GIthub\Cshap\项目\ContactsAPI\QuartZ\bin\Debug\Quartz.xml
+F:\GIthub\Cshap\项目\ContactsAPI\QuartZ\obj\Debug\QuartZ.csproj.CopyComplete
+F:\GIthub\Cshap\项目\ContactsAPI\QuartZ\obj\Debug\QuartZ.exe
+F:\GIthub\Cshap\项目\ContactsAPI\QuartZ\obj\Debug\QuartZ.pdb

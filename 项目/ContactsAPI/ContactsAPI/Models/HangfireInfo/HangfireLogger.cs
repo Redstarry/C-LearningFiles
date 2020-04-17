@@ -25,6 +25,10 @@ namespace ContactsAPI.Models.HangfireInfo
         /// </summary>
         public string TaskId { get; set; }
         /// <summary>
+        /// 任务的父级
+        /// </summary>
+        public string Parent { get; set; }
+        /// <summary>
         /// 任务类型
         /// </summary>
         public string TaskType { get; set; }
@@ -40,11 +44,12 @@ namespace ContactsAPI.Models.HangfireInfo
         /// 执行的时间
         /// </summary>
         public string ExecutionTime { get; set; }
-        public HangfireLogger(int Id, int RequestInfoCode, string TaskId,string TaskType, TaskStatusCode TaskStatus, string RequestTime, string ExecutionTime)
+        public HangfireLogger(int Id, int RequestInfoCode, string TaskId, string Parent,string TaskType, TaskStatusCode TaskStatus, string RequestTime, string ExecutionTime)
         {
             this.Id = Id;
             this.RequestInfoCode = RequestInfoCode;
             this.TaskId = TaskId;
+            this.Parent = Parent;
             this.TaskType = TaskType;
             this.TaskStatus = TaskStatus;
             this.RequestTime = RequestTime;

@@ -22,6 +22,9 @@ using System.Text;
 using Hangfire;
 using Hangfire.Dashboard;
 using ContactsAPI.Models.HangfireInfo;
+using ContactsAPI.Models.Quartz;
+using Quartz.Impl;
+using Quartz;
 
 namespace ContactsAPI
 {
@@ -42,6 +45,8 @@ namespace ContactsAPI
             //注册数据库操作服务
             services.AddTransient<IContactRepository,ContactRepository>();
             services.AddTransient<IHangFireCRUD, HangFireCRUD>();
+            services.AddTransient<IQuartzServer, QuartzServer>();
+            services.AddTransient<ISchedulerFactory, StdSchedulerFactory>(); //使用Quartz
             //HangFire 服务注册
             services.AddHangfire(options => options.UseSqlServerStorage("server=.; uid = sa; pwd = 123; database = ContactInformation"));
             //Mapper(数据库实体与DTO之间的映射)
@@ -120,7 +125,12 @@ namespace ContactsAPI
             }) ;
             app.UseHangfireServer(new BackgroundJobServerOptions
             { 
-                Queues = new[] { "default"}            
+                //Queues = new[] { "default"},
+                ShutdownTimeout = TimeSpan.FromMinutes(30),
+                Queues = new[] { "default" },
+                WorkerCount = Math.Max(Environment.ProcessorCount,20)
+
+
             });
 
             // API文档配置

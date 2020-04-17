@@ -1,0 +1,6 @@
+F:\GIthub\Cshap\项目\ContactsAPI\AddDemoData\bin\Debug\AddDemoData.exe.config
+F:\GIthub\Cshap\项目\ContactsAPI\AddDemoData\bin\Debug\AddDemoData.exe
+F:\GIthub\Cshap\项目\ContactsAPI\AddDemoData\bin\Debug\AddDemoData.pdb
+F:\GIthub\Cshap\项目\ContactsAPI\AddDemoData\obj\Debug\AddDemoData.csprojAssemblyReference.cache
+F:\GIthub\Cshap\项目\ContactsAPI\AddDemoData\obj\Debug\AddDemoData.exe
+F:\GIthub\Cshap\项目\ContactsAPI\AddDemoData\obj\Debug\AddDemoData.pdb

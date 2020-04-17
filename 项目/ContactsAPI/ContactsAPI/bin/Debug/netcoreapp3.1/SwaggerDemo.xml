@@ -8,43 +8,50 @@
             <summary>
             查询全部的数据
             </summary>
-            <param name="page"></param>
+            <param name="page">里面包含pageSize(一页的数量)和pageNumber(查询的页数)</param>
             <returns></returns>
         </member>
         <member name="M:ContactsAPI.Controllers.ContactController.Get(System.Guid)">
             <summary>
             根据ID查询数据
             </summary>
-            <param name="id"></param>
+            <param name="id">查询数据的Guid</param>
             <returns></returns>
         </member>
         <member name="M:ContactsAPI.Controllers.ContactController.PostByPropGetInfo(ContactsAPI.Models.ContactsDTO)">
             <summary>
             根据 姓名，电话号码， 身份证 进行查询
             </summary>
-            <param name="reg"></param>
+            <param name="reg">里面包含姓名，电话号码， 身份证 </param>
+            <returns></returns>
+        </member>
+        <member name="M:ContactsAPI.Controllers.ContactController.PostLogin(ContactsAPI.Models.LoginInfo.UserInfo)">
+            <summary>
+            登录验证接口
+            </summary>
+            <param name="userInfo">用户名和密码</param>
             <returns></returns>
         </member>
         <member name="M:ContactsAPI.Controllers.ContactController.Post(ContactsAPI.Models.ContactsDTO)">
             <summary>
             添加数据
             </summary>
-            <param name="reg"></param>
+            <param name="reg">添加的详细数据</param>
             <returns></returns>
         </member>
         <member name="M:ContactsAPI.Controllers.ContactController.Put(System.Guid,ContactsAPI.Models.ContactsDTO)">
             <summary>
             根据ID更新数据
             </summary>
-            <param name="id"></param>
-            <param name="req"></param>
+            <param name="id">更新的数据ID</param>
+            <param name="req">更新后的数据内容</param>
             <returns></returns>
         </member>
         <member name="M:ContactsAPI.Controllers.ContactController.Delete(System.Guid)">
             <summary>
             根据ID删除数据
             </summary>
-            <param name="id"></param>
+            <param name="id">要删除数据的ID</param>
             <returns></returns>
         </member>
         <member name="M:ContactsAPI.Controllers.HangFireController.TimedTasks">
@@ -76,21 +83,21 @@
             <summary>
             删除延时任务
             </summary>
-            <param name="jobId"></param>
+            <param name="jobId">延时任务的ID</param>
             <returns></returns>
         </member>
         <member name="M:ContactsAPI.Controllers.HangFireController.ContinuationsJobs(System.String)">
             <summary>
             创建连续性任务
             </summary>
-            <param name="jobId"></param>
+            <param name="jobId">父级任务的ID</param>
             <returns></returns>
         </member>
         <member name="M:ContactsAPI.Controllers.HangFireController.DeleContinuationsJobs(System.String)">
             <summary>
             删除连续性任务
             </summary>
-            <param name="jobId"></param>
+            <param name="jobId">删除连续性任务的ID</param>
             <returns></returns>
         </member>
         <member name="P:ContactsAPI.Models.ContactsDTO.Name">
@@ -187,21 +194,21 @@
             <summary>
             删除延时任务
             </summary>
-            <param name="jobId">延时任务的任务id</param>
+            <param name="jobId">延时任务ID</param>
             <returns></returns>
         </member>
         <member name="M:ContactsAPI.Models.HangfireInfo.HangFireCRUD.ContinuationsJobs(System.String)">
             <summary>
             创建连续性任务
             </summary>
-            <param name="jobId"></param>
+            <param name="jobId">任务编号</param>
             <returns></returns>
         </member>
         <member name="M:ContactsAPI.Models.HangfireInfo.HangFireCRUD.DeleContinuationsJobs(System.String)">
             <summary>
             删除连续性任务
             </summary>
-            <param name="jobId"></param>
+            <param name="jobId">任务编号</param>
             <returns></returns>
         </member>
         <member name="P:ContactsAPI.Models.HangfireInfo.HangfireLogger.Id">
@@ -217,6 +224,11 @@
         <member name="P:ContactsAPI.Models.HangfireInfo.HangfireLogger.TaskId">
             <summary>
             任务的名字
+            </summary>
+        </member>
+        <member name="P:ContactsAPI.Models.HangfireInfo.HangfireLogger.Parent">
+            <summary>
+            任务的父级
             </summary>
         </member>
         <member name="P:ContactsAPI.Models.HangfireInfo.HangfireLogger.TaskType">

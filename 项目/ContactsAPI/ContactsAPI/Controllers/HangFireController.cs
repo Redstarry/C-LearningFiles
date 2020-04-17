@@ -60,7 +60,7 @@ namespace ContactsAPI.Controllers
         /// <summary>
         /// 删除延时任务
         /// </summary>
-        /// <param name="jobId"></param>
+        /// <param name="jobId">延时任务的ID</param>
         /// <returns></returns>
         [HttpDelete("DeleDelayedJobs")]
         public async Task<IActionResult> DeleDelayedJobs(string jobId)
@@ -70,7 +70,7 @@ namespace ContactsAPI.Controllers
         /// <summary>
         /// 创建连续性任务
         /// </summary>
-        /// <param name="jobId"></param>
+        /// <param name="jobId">父级任务的ID</param>
         /// <returns></returns>
         [HttpPost("ContinuationsJobs")]
         public async Task<IActionResult> ContinuationsJobs(string jobId)
@@ -80,7 +80,7 @@ namespace ContactsAPI.Controllers
         /// <summary>
         /// 删除连续性任务
         /// </summary>
-        /// <param name="jobId"></param>
+        /// <param name="jobId">删除连续性任务的ID</param>
         /// <returns></returns>
         [HttpDelete("DeleContinuationsJobs")]
         public async Task<IActionResult> DeleContinuationsJobs(string jobId)
