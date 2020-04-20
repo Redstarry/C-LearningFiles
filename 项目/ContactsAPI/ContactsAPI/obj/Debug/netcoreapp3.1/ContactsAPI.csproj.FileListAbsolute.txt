@@ -456,5 +456,10 @@ F:\GIthub\Cshap\项目\ContactsAPI\ContactsAPI\obj\Debug\netcoreapp3.1\ContactsA
 F:\GIthub\Cshap\项目\ContactsAPI\ContactsAPI\obj\Debug\netcoreapp3.1\ContactsAPI.pdb
 F:\GIthub\Cshap\项目\ContactsAPI\ContactsAPI\obj\Debug\netcoreapp3.1\ContactsAPI.csprojAssemblyReference.cache
 F:\GIthub\Cshap\项目\ContactsAPI\ContactsAPI\bin\Debug\netcoreapp3.1\netcoreapp3.1\Quartz.dll
+F:\GIthub\Cshap\项目\ContactsAPI\ContactsAPI\bin\Debug\netcoreapp3.1\netcoreapp3.1\Microsoft.Bcl.AsyncInterfaces.dll
+F:\GIthub\Cshap\项目\ContactsAPI\ContactsAPI\bin\Debug\netcoreapp3.1\netcoreapp3.1\Pipelines.Sockets.Unofficial.dll
+F:\GIthub\Cshap\项目\ContactsAPI\ContactsAPI\bin\Debug\netcoreapp3.1\netcoreapp3.1\StackExchange.Redis.dll
+F:\GIthub\Cshap\项目\ContactsAPI\ContactsAPI\bin\Debug\netcoreapp3.1\netcoreapp3.1\System.Diagnostics.PerformanceCounter.dll
+F:\GIthub\Cshap\项目\ContactsAPI\ContactsAPI\bin\Debug\netcoreapp3.1\netcoreapp3.1\runtimes\win\lib\netcoreapp2.0\System.Diagnostics.PerformanceCounter.dll
 F:\GIthub\Cshap\项目\ContactsAPI\ContactsAPI\obj\Debug\netcoreapp3.1\ContactsAPI.MvcApplicationPartsAssemblyInfo.cs
 F:\GIthub\Cshap\项目\ContactsAPI\ContactsAPI\obj\Debug\netcoreapp3.1\ContactsAPI.MvcApplicationPartsAssemblyInfo.cache

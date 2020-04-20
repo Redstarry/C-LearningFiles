@@ -288,14 +288,14 @@ namespace 同步_异步
                     string name = $"button8_Click_{i}";
                     tasks.Add(Task.Run(()=> {
                         Console.WriteLine(name);
-                        if (name.Equals("button8_Click_10"))
-                        {
-                            throw new Exception("button8_Click_10异常");
-                        }
-                        else if (name.Equals("button8_Click_15"))
-                        {
-                            throw new Exception("button8_Click_15异常");
-                        }
+                        //if (name.Equals("button8_Click_10"))
+                        //{
+                        //    throw new Exception("button8_Click_10异常");
+                        //}
+                        //else if (name.Equals("button8_Click_15"))
+                        //{
+                        //    throw new Exception("button8_Click_15异常");
+                        //}
                     }));
                 }
                 Task.WaitAll(tasks.ToArray());

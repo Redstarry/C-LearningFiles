@@ -25,6 +25,8 @@ using ContactsAPI.Models.HangfireInfo;
 using ContactsAPI.Models.Quartz;
 using Quartz.Impl;
 using Quartz;
+using StackExchange;
+using ContactsAPI.Models.Redis;
 
 namespace ContactsAPI
 {
@@ -94,7 +96,6 @@ namespace ContactsAPI
                 };
                 
             });
-           
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

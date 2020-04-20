@@ -271,5 +271,25 @@
             消息
             </summary>
         </member>
+        <member name="P:ContactsAPI.Models.Quartz.RequestDuartzInfo.TaskName">
+            <summary>
+            任务的名字
+            </summary>
+        </member>
+        <member name="P:ContactsAPI.Models.Quartz.RequestDuartzInfo.GroupName">
+            <summary>
+            任务组的名字
+            </summary>
+        </member>
+        <member name="P:ContactsAPI.Models.Quartz.RequestDuartzInfo.ExDate">
+            <summary>
+            任务执行的时间，使用cron格式
+            </summary>
+        </member>
+        <member name="P:ContactsAPI.Models.Quartz.RequestDuartzInfo.id">
+            <summary>
+            操作任务的ID
+            </summary>
+        </member>
     </members>
 </doc>

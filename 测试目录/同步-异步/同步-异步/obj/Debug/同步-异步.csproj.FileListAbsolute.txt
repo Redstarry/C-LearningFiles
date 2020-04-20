@@ -26,3 +26,5 @@ F:\GIthub\Cshap\测试目录\同步-异步\同步-异步\obj\Debug\同步_异步
 F:\GIthub\Cshap\测试目录\同步-异步\同步-异步\obj\Debug\同步-异步.csproj.GenerateResource.cache
 F:\GIthub\Cshap\测试目录\同步-异步\同步-异步\obj\Debug\同步-异步.exe
 F:\GIthub\Cshap\测试目录\同步-异步\同步-异步\obj\Debug\同步-异步.pdb
+F:\GIthub\Cshap\测试目录\同步-异步\同步-异步\obj\Debug\同步-异步.csprojAssemblyReference.cache
+F:\GIthub\Cshap\测试目录\同步-异步\同步-异步\obj\Debug\同步-异步.csproj.CoreCompileInputs.cache

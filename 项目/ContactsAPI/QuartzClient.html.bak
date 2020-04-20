@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <script>
+        var index = 1;
+        function SendAjax() {
+            if(index < 10000)
+            {
+                setTimeout(SendAjax,3000);
+                index ++;
+            }
+            $.ajax({
+                async:true,
+                type: "post",
+                url: "https://localhost:4880/api/Quartz",
+                data: JSON.stringify({
+                    "TaskName":"job" + index,
+                    "GroupName":"Demo",
+                    "exDate":"* */5 * * * ?",
+                    "id":index.toString()
+                }),
+                contentType: "application/json;charset=utf-8",
+                success: function (response) {
+                    // console.log(response.message);
+                }
+            });
+                
+        }
+        SendAjax();
+    </script>
+</body>
+</html>
